@@ -2,34 +2,100 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Diamond Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuky Top-Up</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>cuky Top-up</h1>
-        <p>Pilih game untuk top-up :</p>
+    <div class="background-wave"></div>
 
-        <div class="game-selection">
-            <div class="game">
-                <a href="/checkout?game=Mobile Legends">
-                    <img src="{{ url_for('static', filename='ml.jpeg') }}" alt="ML">
-                    <p>Mobile Legends</p>
-                </a>
-            </div>
-            <div class="game">
-                <a href="/checkout?game=Free Fire">
-                    <img src="{{ url_for('static', filename='ff.jpeg') }}" alt="FF">
-                    <p>Free Fire</p>
-                </a>
-            </div>
-            <div class="game">
-                <a href="/checkout?game=PUBG">
-                    <img src="{{ url_for('static', filename='pubg.jpeg') }}" alt="PUBG">
-                    <p>PUBG</p>
-                </a>
+    <!-- Dark Mode Toggle -->
+    <button id="toggle-dark" aria-label="Toggle Dark Mode">🌗</button>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" id="search" placeholder="🔍 Cari game...">
+    </div>
+
+    <div class="container">
+        <div class="content-box">
+            <h1>🎮 cuky <span style="color:#0099ff;">Top-up</span></h1>
+            <p>Pilih game untuk top-up:</p>
+
+            <div class="game-selection">
+                <div class="game" data-name="mobile legends">
+                    <a href="/checkout?game=Mobile Legends">
+                        <img src="{{ url_for('static', filename='ml.jpeg') }}" alt="Mobile Legends">
+                        <p>Mobile Legends</p>
+                    </a>
+                </div>
+                <div class="game" data-name="free fire">
+                    <a href="/checkout?game=Free Fire">
+                        <img src="{{ url_for('static', filename='ff.jpeg') }}" alt="Free Fire">
+                        <p>Free Fire</p>
+                    </a>
+                </div>
+                <div class="game" data-name="pubg">
+                    <a href="/checkout?game=PUBG">
+                        <img src="{{ url_for('static', filename='pubg.jpeg') }}" alt="PUBG">
+                        <p>PUBG</p>
+                    </a>
+                </div>
             </div>
         </div>
+
+        <footer>
+            &copy; 2025 Cuky Store. All rights reserved.
+        </footer>
     </div>
+
+    <!-- Chat Icon -->
+    <div id="chat-icon">💬</div>
+
+    <script>
+        // Tilt effect for game logos
+        VanillaTilt.init(document.querySelectorAll(".game"), {
+            max: 15,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.3,
+        });
+
+        // Search functionality
+        document.getElementById("search").addEventListener("input", function() {
+            const keyword = this.value.toLowerCase();
+            document.querySelectorAll(".game").forEach(game => {
+                const name = game.getAttribute("data-name");
+                game.style.display = name.includes(keyword) ? "block" : "none";
+            });
+        });
+
+        // Dark mode toggle
+        const btn = document.getElementById("toggle-dark");
+        btn.addEventListener("click", () => {
+            document.body.classList.toggle("dark");
+            localStorage.setItem("dark-mode", document.body.classList.contains("dark") ? "enabled" : "disabled");
+        });
+
+        // Auto dark mode + welcome alert
+        window.onload = () => {
+            alert("Selamat datang di Cuky Top-Up! 🎮");
+
+            const hour = new Date().getHours();
+            if (hour >= 18 || hour < 6) {
+                document.body.classList.add("dark");
+            }
+
+            if (localStorage.getItem("dark-mode") === "enabled") {
+                document.body.classList.add("dark");
+            }
+        };
+
+        // Chat icon functionality
+        document.getElementById("chat-icon").addEventListener("click", () => {
+            alert("Hai! Ada yang bisa kami bantu? 😊 (Fitur ini masih coming soon)");
+        });
+    </script>
 </body>
 </html>
