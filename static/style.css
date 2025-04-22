@@ -14,7 +14,6 @@ body {
     color: #eee;
 }
 
-/* Background subtle pattern */
 .background-wave {
     position: fixed;
     width: 100%;
@@ -25,7 +24,6 @@ body {
     z-index: -1;
 }
 
-/* Container */
 .container {
     text-align: center;
     padding: 4rem 2rem;
@@ -47,7 +45,6 @@ h1 {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Subtitle */
 .content-box p {
     font-size: 1.6rem;
     margin-bottom: 3rem;
@@ -97,13 +94,6 @@ h1 {
     border-color: #666;
     background-image: url('https://cdn-icons-png.flaticon.com/512/622/622669.png');
     filter: brightness(0.8);
-}
-
-
-.dark .search-bar input {
-    background: #2c2c2c;
-    color: #f0f0f0;
-    border-color: #666;
 }
 
 /* Game Cards */
@@ -193,13 +183,58 @@ h1 {
     box-shadow: 0 0 25px #ff5d8f;
 }
 
-/* Footer */
-footer {
-    margin-top: 5rem;
+/* Left Quotes */
+.left-quotes {
+    position: fixed;
+    left: 2%;
+    top: 25%;
+    background: #fff5c7;
+    padding: 10px 20px;
+    border-radius: 10px;
     font-size: 1.2rem;
-    color: #888;
+    color: #2e2e2e;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.dark footer {
-    color: #aaa;
+.dark .left-quotes {
+    background: #444;
+    color: #fff;
+}
+
+/* Footer */
+footer {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 50px;
+    color: #555;
+    position: relative;
+    bottom: 20px;
+}
+
+/* Adjusted footer position */
+footer {
+    margin-bottom: 10px;  /* Adjusted margin to move footer up a bit */
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .game-selection {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .game {
+        width: 80%;
+        margin-bottom: 2rem;
+    }
+
+    .search-bar input {
+        width: 90%;
+        font-size: 1rem;
+    }
+
+    footer {
+        font-size: 1rem;
+        margin-top: 30px;
+    }
 }
