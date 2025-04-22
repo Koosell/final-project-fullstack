@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Checkout - {{ game }}</h1>
+        <p>Silakan isi detail di bawah ini untuk melanjutkan pembelian diamond.</p>
+
+        <form action="/checkout" method="POST">
+            <input type="hidden" name="game" value="{{ game }}">
+
+            <label for="game_id">ID Game:</label><br>
+            <input type="text" name="game_id" required><br><br>
+
+            <label for="jumlah">Jumlah Diamond:</label><br>
+            <select name="jumlah">
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+            </select><br><br>
+
+            <label for="metode">Metode Pembayaran:</label><br>
+            <select name="metode">
+                <option value="OVO">OVO</option>
+                <option value="Dana">Dana</option>
+                <option value="Bank Transfer">Bank Transfer</option>
+            </select><br><br>
+
+            <button type="submit">Bayar Sekarang</button>
+        </form>
+    </div>
+</body>
+</html>

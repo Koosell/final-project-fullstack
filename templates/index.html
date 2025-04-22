@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Diamond Store</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>cuky Top-up</h1>
+        <p>Pilih game untuk top-up :</p>
+
+        <div class="game-selection">
+            <div class="game">
+                <a href="/checkout?game=Mobile Legends">
+                    <img src="{{ url_for('static', filename='ml.jpeg') }}" alt="ML">
+                    <p>Mobile Legends</p>
+                </a>
+            </div>
+            <div class="game">
+                <a href="/checkout?game=Free Fire">
+                    <img src="{{ url_for('static', filename='ff.jpeg') }}" alt="FF">
+                    <p>Free Fire</p>
+                </a>
+            </div>
+            <div class="game">
+                <a href="/checkout?game=PUBG">
+                    <img src="{{ url_for('static', filename='pubg.jpeg') }}" alt="PUBG">
+                    <p>PUBG</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
