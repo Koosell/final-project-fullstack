@@ -215,26 +215,154 @@ footer {
 footer {
     margin-bottom: 10px;  /* Adjusted margin to move footer up a bit */
 }
+/* === Checkout Page Styling === */
+.checkout-container {
+    max-width: 500px;
+    margin: 5rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
 
-/* Responsiveness */
-@media (max-width: 768px) {
-    .game-selection {
-        flex-direction: column;
-        align-items: center;
+.dark .checkout-container {
+    background: #2c2c2c;
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+}
+
+.checkout-container h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    background: linear-gradient(90deg, #FFD93D, #FF5D8F, #4CC9F0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    animation: fadeInDown 1s ease forwards;
+}
+
+.checkout-container p {
+    text-align: center;
+    color: #555;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+}
+
+.dark .checkout-container p {
+    color: #ccc;
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Floating Label Input */
+.form-group {
+    position: relative;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 1.2rem 1rem;
+    border: 2px solid #ffd93d;
+    border-radius: 12px;
+    background: #fffaf0;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #ff5d8f;
+    box-shadow: 0 0 10px #ff5d8f88;
+}
+
+/* Floating Label */
+.form-group label {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 0 0.3rem;
+    color: #888;
+    transition: 0.3s ease all;
+    pointer-events: none;
+    background: #fffaf0;
+    font-size: 1rem;
+}
+
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 12px;
+    font-size: 0.75rem;
+    color: #ff5d8f;
+    background: #fffaf0;
+}
+
+.dark .form-group input,
+.dark .form-group select {
+    background-color: #2c2c2c;
+    color: #fff;
+    border-color: #666;
+}
+
+.dark .form-group label {
+    background: #2c2c2c;
+    color: #aaa;
+}
+
+/* Tombol Checkout */
+button {
+    padding: 1rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #FFD93D, #FF5D8F);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(255, 93, 143, 0.3);
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #ff5d8f88;
+}
+
+.dark button {
+    box-shadow: 0 6px 20px rgba(255, 217, 61, 0.2);
+}
+
+/* Responsive Checkout */
+@media (max-width: 600px) {
+    .checkout-container {
+        margin: 2rem 1rem;
+        padding: 1.5rem;
     }
 
-    .game {
-        width: 80%;
-        margin-bottom: 2rem;
+    .checkout-container h1 {
+        font-size: 2rem;
     }
 
-    .search-bar input {
-        width: 90%;
+    .form-group input,
+    .form-group select {
+        padding: 1rem;
+    }
+
+    button {
         font-size: 1rem;
-    }
-
-    footer {
-        font-size: 1rem;
-        margin-top: 30px;
     }
 }
+
