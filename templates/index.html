@@ -1,6 +1,34 @@
 <!DOCTYPE html>
 <html lang="id">
+  <!-- PROMO SLIDER -->
+<section class="promo-section">
+  <h2 class="promo-title">🎉 Promo Menarik Buat Kamu!</h2>
+  <div class="swiper promoSwiper">
+    <div class="swiper-wrapper">
+      <!-- Slide 1 -->
+      <div class="swiper-slide promo-card yellow">
+        <img src="static/promo1.jpg" alt="Promo MLBB" class="promo-img">
+        <div class="promo-info">
+          <h3>Diskon 30% Mobile Legends</h3>
+          <p>Berlaku s.d. 30 April 2025</p>
+        </div>
+      </div>
+      <!-- Slide 2 -->
+      <div class="swiper-slide promo-card pink">
+        <img src="static/promo2.jpg" alt="Promo Free Fire" class="promo-img">
+        <div class="promo-info">
+          <h3>Bonus Diamond Free Fire</h3>
+          <p>Top-up minimal 100 diamond</p>
+        </div>
+      </div>
+      <!-- Tambahkan lebih banyak promo jika ada -->
+    </div>
+  </div>
+</section>
+
 <head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cuky TopUp</title>
@@ -8,6 +36,25 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 </head>
 <body>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <script>
+     const promoSwiper = new Swiper(".promoSwiper", {
+    slidesPerView: 1.2,
+    spaceBetween: 15,
+    loop: true,
+    autoplay: {
+      delay: 3500,
+      disableOnInteraction: false
+    },
+    breakpoints: {
+      640: { slidesPerView: 2.2 },
+      1024: { slidesPerView: 3.2 }
+    }
+  });
+  </script>
+
+  </script>
+  
   <div class="background-wave"></div>
 
   <button id="toggle-dark">🌗</button>
@@ -58,6 +105,7 @@
   </div>
 
   <div id="chat-icon">💬</div>
+  
 
   <script>
     VanillaTilt.init(document.querySelectorAll(".game"), {
