@@ -188,7 +188,7 @@ h1 {
     position: fixed;
     left: 2%;
     top: 25%;
-    background: #e8c898;
+    background: #fcf2eb;
     padding: 10px 20px;
     border-radius: 10px;
     font-size: 1.2rem;
@@ -399,11 +399,13 @@ button:hover {
 }
 
 .promo-img {
-    width: 80px;
-    height: 80px;
+    width: 500px; /* Ukuran gambar lebih besar */
+    height: 200px; /* Ukuran gambar lebih besar */
     border-radius: 12px;
     object-fit: cover;
 }
+
+
 
 .promo-info h3 {
     font-size: 1rem;
