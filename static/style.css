@@ -417,3 +417,82 @@ button:hover {
     font-size: 0.875rem;
     color: #555;
 }
+/* Navbar Style */
+/* Floating Glassmorphism Navbar */
+.navbar {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 1100px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+  }
+  
+  .navbar .logo a {
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    text-decoration: none;
+  }
+  
+  .navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+  }
+  
+  .navbar .nav-links li a {
+    color: #ffffff;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .navbar .nav-links li a:hover {
+    color: #ffcc00;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 10px 20px;
+    }
+    .navbar .nav-links {
+      display: none; /* Tambah menu hamburger nanti */
+    }
+  }
+  /* Login Button */
+.login-btn a {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #FFD93D, #FF5D8F);
+    color: white;
+    font-weight: bold;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 93, 143, 0.4);
+}
+
+.login-btn a:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #FFD93D;
+}
+@media (max-width: 768px) {
+    .login-btn {
+        display: none; /* Atau atur sesuai kebutuhan, bisa tetap tampil */
+    }
+}
+
+  

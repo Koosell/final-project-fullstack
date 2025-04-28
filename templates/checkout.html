@@ -2,44 +2,31 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Checkout</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Cuky Top-Up</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="background-motif"></div>
-
     <div class="checkout-container">
-        <h1>Checkout - {{ game }}</h1>
-        <p>Silakan isi detail di bawah ini untuk melanjutkan pembelian diamond.</p>
-
+        <h1>Checkout - Game: {{ game }}</h1>
         <form action="/checkout" method="POST">
-            <input type="hidden" name="game" value="{{ game }}">
-
             <div class="form-group">
-                <input type="text" name="game_id" id="game_id" required>
                 <label for="game_id">ID Game</label>
+                <input type="text" name="game_id" id="game_id" required>
             </div>
-
             <div class="form-group">
-                <select name="jumlah" required>
-                    <option disabled selected value="">Pilih Jumlah Diamond</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                    <option value="200">200</option>
+                <label for="jumlah">Jumlah Diamond</label>
+                <input type="number" name="jumlah" id="jumlah" required>
+            </div>
+            <div class="form-group">
+                <label for="metode">Metode Pembayaran</label>
+                <select name="metode" id="metode" required>
+                    <option value="bank_transfer">Bank Transfer</option>
+                    <option value="e-wallet">E-Wallet</option>
+                    <option value="credit_card">Kartu Kredit</option>
                 </select>
             </div>
-
-            <div class="form-group">
-                <select name="metode" required>
-                    <option disabled selected value="">Pilih Metode Pembayaran</option>
-                    <option value="OVO">OVO</option>
-                    <option value="Dana">Dana</option>
-                    <option value="Bank Transfer">Bank Transfer</option>
-                </select>
-            </div>
-
-            <button type="submit">Bayar Sekarang</button>
+            <button type="submit">Konfirmasi Pembelian</button>
         </form>
     </div>
 </body>
