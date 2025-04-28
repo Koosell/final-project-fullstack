@@ -12,7 +12,7 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      background: linear-gradient(135deg, #FF5D8F, #4CC9F0); /* Background gradient */
+      background: linear-gradient(135deg, #FF5D8F, #4CC9F0);
       margin: 0;
       font-family: 'Poppins', sans-serif;
       color: #fff;
@@ -46,13 +46,14 @@
     .login-box button {
       display: block;
       width: 100%;
-      padding: 12px;
+      padding: 15px 0; /* Sama tinggi setiap tombol */
       margin: 10px 0;
       border: none;
       border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
       transition: background-color 0.3s;
+      text-align: center;
     }
 
     /* Google Button */
@@ -75,6 +76,16 @@
       background-color: #2d4aa5;
     }
 
+    /* Register Button */
+    .btn-register {
+      background-color: #00bfae;
+      color: white;
+      font-weight: bold;
+    }
+    .btn-register:hover {
+      background-color: #00a78e;
+    }
+
     /* Back to Home Link */
     .back-home {
       display: block;
@@ -92,27 +103,6 @@
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
-    /* Dark Mode Styling (Optional) */
-    .dark-mode .login-box {
-      background: rgba(50, 50, 50, 0.85); /* Darker background for dark mode */
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-    }
-    .dark-mode body {
-      background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
-    }
-    .dark-mode .login-box h1 {
-      color: #fff;
-    }
-    .dark-mode .btn-google {
-      background-color: #db4437;
-    }
-    .dark-mode .btn-facebook {
-      background-color: #4267B2;
-    }
-    .dark-mode .back-home {
-      color: #ccc;
-    }
   </style>
 </head>
 <body>
@@ -129,6 +119,9 @@
   <form action="/login-facebook" method="POST">
     <button type="submit" class="btn-facebook">Login dengan Facebook</button>
   </form>
+
+  <!-- Register Button -->
+  <a href="/register" class="btn-register">Daftar Akun Baru</a>
 
   <!-- Back to Home link -->
   <a href="/" class="back-home">← Kembali ke Beranda</a>

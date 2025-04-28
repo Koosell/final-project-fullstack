@@ -2,37 +2,36 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-# Route untuk halaman utama (Beranda)
+# Halaman Utama
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# Route untuk halaman login
+# Halaman Login
 @app.route('/login')
 def login():
-    return render_template('login.html')  # Menampilkan halaman login
+    return render_template('login.html')
 
-# Route untuk login dengan Google
-@app.route('/login-google', methods=['POST'])
-def login_google():
-    # Logika autentikasi Google (misalnya menggunakan OAuth2)
-    return redirect(url_for('dashboard'))  # Ganti dengan logika sesuai aplikasi kamu
+# Halaman Register (Daftar)
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        # Ambil data dari form pendaftaran
+        username = request.form['username']
+        password = request.form['password']
+        
+        # Lakukan proses pendaftaran (misalnya, simpan di database)
+        # Untuk sekarang kita hanya menampilkan username dan password sebagai contoh
+        return f"<h2>Akun berhasil dibuat!</h2><p>Username: {username}</p><p>Password: {password}</p>"
+    
+    # Jika method GET, tampilkan halaman pendaftaran
+    return render_template('register.html')
 
-# Route untuk login dengan Facebook
-@app.route('/login-facebook', methods=['POST'])
-def login_facebook():
-    # Logika autentikasi Facebook (misalnya menggunakan OAuth2)
-    return redirect(url_for('dashboard'))  # Ganti dengan logika sesuai aplikasi kamu
-
-# Route untuk dashboard setelah login berhasil
-@app.route('/dashboard')
-def dashboard():
-    return "<h1>Selamat datang di dashboard!</h1>"
-
-# Route untuk checkout (halaman lain, bisa disesuaikan)
+# Halaman Checkout
 @app.route('/checkout', methods=['GET', 'POST'])
 def checkout():
     if request.method == 'POST':
+        # Ambil data dari formulir POST
         game = request.form['game']
         game_id = request.form['game_id']
         jumlah = request.form['jumlah']
@@ -41,6 +40,7 @@ def checkout():
         # Tampilkan informasi pesanan di halaman baru atau bisa dibuat lebih fancy
         return f"<h2>Pesanan Anda:</h2><p>Game: {game}</p><p>ID: {game_id}</p><p>Diamond: {jumlah}</p><p>Pembayaran: {metode}</p>"
 
+    # Jika GET, ambil data dari query string atau parameter
     game = request.args.get('game', 'Tidak diketahui')  # Default 'Tidak diketahui'
     return render_template('checkout.html', game=game)
 

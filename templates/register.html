@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar - Cuky Top-Up</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    /* Body Styling */
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #FF5D8F, #4CC9F0); /* Latar belakang cerah */
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+    }
+
+    /* Register Box Styling */
+    .register-box {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px); /* Glassmorphism effect */
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    /* Title Styling */
+    .register-box h1 {
+      margin-bottom: 20px;
+      color: #fff;
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, #FFD93D, #FF5D8F, #4CC9F0);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    /* Input Fields */
+    .register-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 2px solid #ddd;
+      font-size: 16px;
+      background-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+
+    /* Button Styling */
+    .register-box button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      background-color: #00bfae;
+      color: white;
+    }
+    .register-box button:hover {
+      background-color: #00a78e;
+    }
+
+    /* Back to Login Link */
+    .back-login {
+      display: block;
+      margin-top: 15px;
+      color: #fff;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .back-login:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="register-box">
+  <h1>Daftar Akun Baru</h1>
+  
+  <!-- Registration Form -->
+  <form action="/register" method="POST">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">Daftar</button>
+  </form>
+
+  <!-- Link to login page -->
+  <a href="/login" class="back-login">← Kembali ke Halaman Login</a>
+</div>
+
+</body>
+</html>
