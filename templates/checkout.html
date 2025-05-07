@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Checkout - {{ game }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 
   <style>
@@ -46,41 +45,40 @@
       color: #0099ff;
     }
     body {
-      padding-top: 80px; /* Supaya isi website tidak ketiban navbar */
+      padding-top: 80px;
+    }
+    .selected {
+      border: 2px solid #0099ff;
+      background: #e6f4ff;
     }
   </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<!-- Navbar di Checkout -->
-<!-- Navbar -->
 <nav class="navbar">
-    <div class="logo">
-      <a href="/">ABC 🎮</a>
-    </div>
-    <ul class="nav-links">
-      <li><a href="/#promo">Promo</a></li> <!-- Ke bagian Promo -->
-      <li><a href="/#games">Games</a></li> <!-- Ke bagian Games -->
-      <li><a href="/login">Login</a></li>
-    </ul>
-    <div class="login-btn">
-      <a href="/login">Login</a>
-    </div>
-  </nav>
-  
-  
+  <div class="logo">
+    <a href="/">ABC 🎮</a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="/#promo">Promo</a></li>
+    <li><a href="/#games">Games</a></li>
+    <li><a href="/login">Login</a></li>
+  </ul>
+  <div class="login-btn">
+    <a href="/login">Login</a>
+  </div>
+</nav>
 
-<!-- Checkout Wrapper -->
 <div class="checkout-wrapper">
   <div class="header-box">
-    <img src="{{ url_for('static', filename='ml.jpeg') }}" alt="Logo" class="logo-img">
+    <img src="{{ url_for('static', filename=image) }}" alt="Logo" class="logo-img">
     <h2>{{ game }}</h2>
     <p>Masukkan data & pilih nominal untuk lanjut top-up</p>
   </div>
 
   <form method="POST" action="/checkout">
     <input type="hidden" name="game" value="{{ game }}">
+    <input type="hidden" name="jumlah" id="jumlah"> <!-- Tambahkan input hidden untuk kirim nominal -->
 
     <div class="form-section">
       <label for="game_id">User ID</label>
@@ -91,26 +89,12 @@
     </div>
 
     <div class="nominal-container">
-        <div class="nominal-item">
-          <img src="{{ url_for('static', filename='wdp.jpeg') }}" alt="Diamond" class="diamond-icon">
-          <p>Weekly Pass<br><span>Rp 24.557</span></p>
-        </div>
-        <div class="nominal-item">
-          <img src="{{ url_for('static', filename='diamond.jpeg') }}" alt="Diamond" class="diamond-icon">
-          <p>Twilight Pass<br><span>Rp 149.900</span></p>
-        </div>
-        <div class="nominal-item">
-          <img src="{{ url_for('static', filename='diamond.jpeg') }}" alt="Diamond" class="diamond-icon">
-          <p>86 Diamonds<br><span>Rp 23.500</span></p>
-        </div>
-        <div class="nominal-item">
-          <img src="{{ url_for('static', filename='diamond.jpeg') }}" alt="Diamond" class="diamond-icon">
-          <p>172 Diamonds<br><span>Rp 47.500</span></p>
-        </div>
-        <div class="nominal-item">
-          <img src="{{ url_for('static', filename='diamond.jpeg') }}" alt="Diamond" class="diamond-icon">
-          <p>257 Diamonds<br><span>Rp 70.000</span></p>
-        </div>
+      {% for item in nominals %}
+      <div class="nominal-item" onclick="selectNominal('{{ item.label }}')">
+        <img src="{{ url_for('static', filename=item.img) }}" alt="Diamond" class="diamond-icon">
+        <p>{{ item.label }}<br><span>{{ item.price }}</span></p>
+      </div>
+      {% endfor %}
     </div>
 
     <div class="promo-row">
@@ -136,16 +120,13 @@
 </div>
 
 <script>
-  const nominalItems = document.querySelectorAll('.nominal-item');
+  function selectNominal(label) {
+    document.getElementById('jumlah').value = label;
 
-  nominalItems.forEach(item => {
-    item.addEventListener('click', () => {
-      nominalItems.forEach(otherItem => {
-        otherItem.classList.remove('selected');
-      });
-      item.classList.add('selected');
-    });
-  });
+    const items = document.querySelectorAll('.nominal-item');
+    items.forEach(item => item.classList.remove('selected'));
+    event.currentTarget.classList.add('selected');
+  }
 </script>
 
 </body>
