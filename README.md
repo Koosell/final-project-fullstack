@@ -5,12 +5,6 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow?logo=javascript)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen)
 
----
-
-## 🌐 Demo
-
-🔗 [Live Demo Here](https://Koosell.github.io/Final_Project)  
-*Replace with your deployed link (Netlify, Vercel, etc).*
 
 ---
 
