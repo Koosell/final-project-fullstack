@@ -1,37 +1,46 @@
-# 🧩 Final_Project — React + Vite
+# Final_Project — React + Vite
 
-This is a **Final Project** built using [React](https://reactjs.org/) and [Vite](https://vitejs.dev/).  
-It includes routing with **React Router**, basic components, and asset management.
-
-![React](https://img.shields.io/badge/Framework-React-blue)
-![Vite](https://img.shields.io/badge/Bundler-Vite-purple)
+![React](https://img.shields.io/badge/React-18.0-blue?logo=react)
+![Vite](https://img.shields.io/badge/Vite-4.0-purple?logo=vite)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow?logo=javascript)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen)
 
 ---
 
-## 🚀 Tech Stack
+## 📋 Deskripsi
 
-- ⚛️ React 19
+Ini adalah proyek final yang dibangun menggunakan **React** dan **Vite**.  
+Proyek ini mencakup fitur:
+- Routing menggunakan React Router
+- Komponen modular
+- Manajemen aset (gambar, CSS)
+- Build cepat dengan Vite
+
+---
+
+## 🧰 Tech Stack
+
+- ⚛️ React 18
 - 🚦 React Router DOM
 - ⚡ Vite
 - 🎨 CSS
 - 📦 Node.js & npm
 
-FINAL_PROJECT/
-├── public/ # Static assets (images, index.html)
-├── src/
-│ ├── assets/ # Custom images
-│ ├── components/ # React components
-│ ├── App.jsx # Main component
-│ ├── main.jsx # React entry point
-│ └── index.css # Styles
-├── templates/ # HTML files for Flask (ignored in GitHub linguist)
-├── app.py # Flask backend entry
-├── vite.config.js # Vite config
-├── .gitattributes
-├── README.md
-└── package.json
+---
 
-yaml
-Copy
-Edit
+## 🗂️ Struktur Folder (Singkat)
+
+FINAL_PROJECT/
+│
+├── public/ # Static assets (images, index.html)
+│ └── images/ # Gambar-gambar game
+│
+├── src/ # Source utama React
+│ ├── assets/ # Aset tambahan
+│ ├── components/ # Komponen seperti Navbar, Checkout*
+│ ├── App.jsx # Main component
+│ └── main.jsx # React entry point
+│
+├── vite.config.js # Konfigurasi Vite
+├── package.json # Dependency dan script
+└── README.md # Dokumentasi ini
