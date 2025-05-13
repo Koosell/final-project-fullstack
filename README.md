@@ -7,40 +7,48 @@
 
 ---
 
-## 📋 Deskripsi
+## 🌐 Demo
 
-Ini adalah proyek final yang dibangun menggunakan **React** dan **Vite**.  
-Proyek ini mencakup fitur:
-- Routing menggunakan React Router
-- Komponen modular
-- Manajemen aset (gambar, CSS)
-- Build cepat dengan Vite
+🔗 [Live Demo Here](https://Koosell.github.io/Final_Project)  
+*Replace with your deployed link (Netlify, Vercel, etc).*
+
+---
+
+## 📋 Description
+
+This is a final project built with **React** and **Vite**.  
+It features:
+
+- Routing with React Router  
+- Modular components  
+- Asset management (images, CSS)  
+- Fast development and build using Vite  
 
 ---
 
 ## 🧰 Tech Stack
 
-- ⚛️ React 18
-- 🚦 React Router DOM
-- ⚡ Vite
-- 🎨 CSS
-- 📦 Node.js & npm
+- ⚛️ React 18  
+- 🚦 React Router DOM  
+- ⚡ Vite  
+- 🎨 CSS  
+- 📦 Node.js & npm  
 
 ---
 
-## 🗂️ Struktur Folder (Singkat)
+## 🗂️ Project Structure (Simplified)
 
 FINAL_PROJECT/
 │
 ├── public/ # Static assets (images, index.html)
-│ └── images/ # Gambar-gambar game
+│ └── images/ # Game-related images
 │
-├── src/ # Source utama React
-│ ├── assets/ # Aset tambahan
-│ ├── components/ # Komponen seperti Navbar, Checkout*
+├── src/ # Main React source code
+│ ├── assets/ # Additional assets
+│ ├── components/ # Components like Navbar, Checkout*
 │ ├── App.jsx # Main component
 │ └── main.jsx # React entry point
 │
-├── vite.config.js # Konfigurasi Vite
-├── package.json # Dependency dan script
-└── README.md # Dokumentasi ini
+├── vite.config.js # Vite configuration
+├── package.json # Project dependencies and scripts
+└── README.md # This documentation
