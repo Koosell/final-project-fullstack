@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout - {{ game }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 30px;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+    .navbar .logo a {
+      font-weight: bold;
+      font-size: 24px;
+      text-decoration: none;
+      color: #333;
+    }
+    .navbar .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+    .navbar .nav-links li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+    .navbar .nav-links li a:hover {
+      color: #0099ff;
+    }
+    body {
+      padding-top: 80px;
+    }
+    .selected {
+      border: 2px solid #0099ff;
+      background: #e6f4ff;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">
+    <a href="/">ABC 🎮</a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="/#promo">Promo</a></li>
+    <li><a href="/#games">Games</a></li>
+    <li><a href="/login">Login</a></li>
+  </ul>
+  <div class="login-btn">
+    <a href="/login">Login</a>
+  </div>
+</nav>
+
+<div class="checkout-wrapper">
+  <div class="header-box">
+    <img src="{{ url_for('static', filename=image) }}" alt="Logo" class="logo-img">
+    <h2>{{ game }}</h2>
+    <p>Masukkan data & pilih nominal untuk lanjut top-up</p>
+  </div>
+
+  <form method="POST" action="/checkout">
+    <input type="hidden" name="game" value="{{ game }}">
+    <input type="hidden" name="jumlah" id="jumlah"> <!-- Tambahkan input hidden untuk kirim nominal -->
+
+    <div class="form-section">
+      <label for="game_id">User ID</label>
+      <input type="text" name="game_id" id="game_id" placeholder="Masukkan User ID" required>
+
+      <label for="server_id">Server ID</label>
+      <input type="text" name="server_id" id="server_id" placeholder="Masukkan Server ID" required>
+    </div>
+
+    <div class="nominal-container">
+      {% for item in nominals %}
+      <div class="nominal-item" onclick="selectNominal('{{ item.label }}')">
+        <img src="{{ url_for('static', filename=item.img) }}" alt="Diamond" class="diamond-icon">
+        <p>{{ item.label }}<br><span>{{ item.price }}</span></p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="promo-row">
+      <label for="kode_promo">🎁 Punya Kode Promo?</label>
+      <select name="kode_promo" id="kode_promo">
+        <option value="">-- Pilih Promo --</option>
+        <option value="PROMO30">Diskon 30%</option>
+        <option value="BONUS10">Bonus 10 Diamond</option>
+      </select>
+    </div>
+
+    <div class="form-section">
+      <label for="metode">Metode Pembayaran</label>
+      <select name="metode" id="metode" required>
+        <option value="Dana">Dana</option>
+        <option value="OVO">OVO</option>
+        <option value="Gopay">Gopay</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn-submit">Bayar Sekarang</button>
+  </form>
+</div>
+
+<script>
+  function selectNominal(label) {
+    document.getElementById('jumlah').value = label;
+
+    const items = document.querySelectorAll('.nominal-item');
+    items.forEach(item => item.classList.remove('selected'));
+    event.currentTarget.classList.add('selected');
+  }
+</script>
+
+</body>
+</html>

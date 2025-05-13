@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - ABC Top-Up</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    /* Body Styling */
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #d9e3f0, #f3e6f9);
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      color: #444;
+      transition: all 0.3s ease;
+    }
+
+    /* Login Box Styling */
+    .login-box {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    /* Title Styling */
+    .login-box h1 {
+      margin-bottom: 20px;
+      color: #6a4c93;
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, #FFD93D, #FF5D8F, #4CC9F0);
+      -webkit-background-clip: text;
+      color: transparent;
+      animation: fadeInDown 1s ease forwards;
+    }
+
+    /* Button Styling */
+    .login-box button {
+      display: block;
+      width: 100%;
+      padding: 15px 0;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      text-align: center;
+    }
+
+    /* Google Button */
+    .btn-google {
+      background-color: #db4437;
+      color: white;
+      font-weight: bold;
+    }
+    .btn-google:hover {
+      background-color: #c23321;
+    }
+
+    /* Facebook Button */
+    .btn-facebook {
+      background-color: #4267B2;
+      color: white;
+      font-weight: bold;
+    }
+    .btn-facebook:hover {
+      background-color: #2d4aa5;
+    }
+
+    /* Register Button */
+    .btn-register {
+      color: #6a4c93;
+      font-weight: bold;
+    }
+    .btn-register:hover {
+      background-color: #e5c0a0;
+    }
+
+    /* Back to Home Link */
+    .back-home {
+      display: block;
+      margin-top: 15px;
+      color: #6a4c93;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .back-home:hover {
+      text-decoration: underline;
+    }
+
+    /* Animation for Title */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-box">
+  <h1>Login ke ABC 🎮</h1>
+  
+  <!-- Login with Google -->
+  <form action="/login-google" method="POST">
+    <button type="submit" class="btn-google">Login dengan Google</button>
+  </form>
+  
+  <!-- Login with Facebook -->
+  <form action="/login-facebook" method="POST">
+    <button type="submit" class="btn-facebook">Login dengan Facebook</button>
+  </form>
+
+  <!-- Register Button -->
+  <a href="/register" class="btn-register">Daftar Akun Baru</a>
+
+  <!-- Back to Home link -->
+  <a href="/" class="back-home">← Kembali ke Beranda</a>
+</div>
+
+</body>
+</html>
