@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 /* RESET */
 * {
   margin: 0;
@@ -547,7 +548,6 @@ background-color: #e68900;
 
 /* Menu Login */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 .login-body {
   display: flex;
@@ -717,5 +717,3 @@ button {
 .back-login:hover {
   text-decoration: underline;
 }
-
-
