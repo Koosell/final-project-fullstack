@@ -70,6 +70,21 @@ const Index = () => {
         </div>
       </div>
 
+      {/* Rating Section (Sidebar) */}
+      <div className="rating-sidebar">
+        <h3>Rate Our Service</h3>
+        <div className="rating-stars">
+          <Link to="/rating">
+            <span className="star">&#9733;</span>
+            <span className="star">&#9733;</span>
+            <span className="star">&#9733;</span>
+            <span className="star">&#9733;</span>
+            <span className="star">&#9733;</span>
+          </Link>
+        </div>
+        <p>Give us a rating and help us improve!</p>
+      </div>
+
       <footer>
         <p>© 2025 ABC Top-up. All rights reserved.</p>
       </footer>

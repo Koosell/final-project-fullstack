@@ -23,6 +23,7 @@ const Navbar = () => {
       <ul className="nav-links">
         <li><Link to="/">Home</Link></li>
         <li><Link to="/login">Login</Link></li>
+        <li><Link to="/tentang-kami">Deskripsi</Link></li>
       </ul>
       <div className="nav-actions">
         <button onClick={openChat} className="btn-chat">💬 Chat</button>
