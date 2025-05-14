@@ -5,7 +5,8 @@ import Index from "./index.jsx";
 import CheckoutML from "./CheckoutML.jsx";
 import CheckoutFF from "./CheckoutFF.jsx";
 import CheckoutPUBG from "./CheckoutPUBG.jsx";
-import Navbar from "./navbar.jsx"; // Pastikan path ke Navbar.jsx benar
+import Navbar from "./navbar.jsx";
+import Login from "./Login";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/checkout/ml" element={<CheckoutML />} />
         <Route path="/checkout/ff" element={<CheckoutFF />} />
         <Route path="/checkout/pubg" element={<CheckoutPUBG />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </>
   </BrowserRouter>
