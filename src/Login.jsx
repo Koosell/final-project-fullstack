@@ -1,7 +1,20 @@
-import React from 'react';
+import React from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./index.css";
 
 const Login = () => {
+  const navigate = useNavigate(); // Inisialisasi useNavigate
+
+  // Fungsi untuk mengarahkan ke halaman register
+  const goToRegister = () => {
+    navigate("/register"); // Arahkan ke halaman register
+  };
+
+  // Fungsi untuk mengarahkan kembali ke beranda
+  const goBackToHome = () => {
+    navigate("/"); // Arahkan ke halaman beranda
+  };
+
   return (
     <div className="login-body">
       <div className="login-box">
@@ -21,13 +34,15 @@ const Login = () => {
           </button>
         </form>
 
-        {/* Register Link */}
-        <a href="/register" className="btn-register">
+        {/* Register Link - Diganti menjadi button dengan onClick */}
+        <button onClick={goToRegister} className="btn-register">
           Daftar Akun Baru
-        </a>
+        </button>
 
-        {/* Back to Home */}
-        <a href="/" className="back-home">← Kembali ke Beranda</a>
+        {/* Back to Home - Diganti menjadi button dengan onClick */}
+        <button onClick={goBackToHome} className="back-home">
+          ← Kembali ke Beranda
+        </button>
       </div>
     </div>
   );

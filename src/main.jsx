@@ -6,6 +6,7 @@ import CheckoutML from "./CheckoutML.jsx";
 import CheckoutFF from "./CheckoutFF.jsx";
 import CheckoutPUBG from "./CheckoutPUBG.jsx";
 import Navbar from "./navbar.jsx";
+import Register from "./Register";
 import Login from "./Login";
 import "./index.css";
 
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/checkout/ff" element={<CheckoutFF />} />
         <Route path="/checkout/pubg" element={<CheckoutPUBG />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </>
   </BrowserRouter>

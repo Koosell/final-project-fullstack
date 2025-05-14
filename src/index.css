@@ -644,3 +644,78 @@ button {
   }
 }
 
+/* Register menu */
+
+.register-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #d9e3f0, #f3e6f9);
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  color: #444;
+}
+
+.register-box {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.register-box h1 {
+  margin-bottom: 20px;
+  color: #6a4c93;
+  font-size: 2.5rem;
+  background: linear-gradient(90deg, #FFD93D, #FF5D8F, #4CC9F0);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.register-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #333;
+}
+
+.register-box button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  background-color: #ffe0b3;
+  color: #6a4c93;
+}
+
+.register-box button:hover {
+  background-color: #e5c0a0;
+}
+
+.back-login {
+  display: block;
+  margin-top: 15px;
+  color: #6a4c93;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.back-login:hover {
+  text-decoration: underline;
+}
+
+
