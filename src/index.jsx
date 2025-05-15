@@ -69,19 +69,6 @@ const Index = () => {
           <Link to="/checkout/ff">Top-up Now</Link>
         </div>
       </div>
-      <div className="contact-info">
-         <a href="https://instagram.com/abc.topup" target="_blank" rel="noopener noreferrer">
-            📷 @abc.topup
-        </a>
-        <span> | </span>
-        <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
-           💬 +62 812-3456-7890
-        </a>
-        <span> | </span>
-        <a href="mailto:support@abc-topup.com">
-           ✉️ support@abc-topup.com
-        </a>
-     </div>
 
       {/* Rating Section (Sidebar) */}
       <div className="rating-sidebar">

@@ -883,5 +883,159 @@ h2 {
   color: #9c7bf9;
 }
 
+/* tanda berhasil register */
+.success-message {
+  color: #28a745;
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tambahan Checkout ML */
+.success-checkout {
+  text-align: center;
+  background-color: #e8fff1;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.success-checkout h3 {
+  color: #2e8b57;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.btn-home {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #2e8b57;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.btn-home:hover {
+  background-color: #24704a;
+}
+
+
+/* Login Form Container */
+.login-box {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  border-radius: 24px;
+  padding: 3rem 2.5rem;
+  max-width: 400px;
+  margin: auto;
+  transition: transform 0.3s ease;
+}
+
+.login-box:hover {
+  transform: translateY(-10px);
+}
+
+/* Title */
+.login-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  background: linear-gradient(90deg, #FFD93D, #FF5D8F, #4CC9F0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeInDown 1s ease forwards;
+  letter-spacing: 1px;
+}
+
+/* Input fields */
+.login-box input[type="email"],
+.login-box input[type="password"] {
+  width: 100%;
+  padding: 14px 18px;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  border: 2px solid #d1c4e9; /* soft purple */
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+  background-color: rgba(255,255,255,0.6);
+  color: #333;
+}
+
+.login-box input[type="email"]:focus,
+.login-box input[type="password"]:focus {
+  border-color: #6a4c93; /* lavender */
+  box-shadow: 0 0 8px rgba(106, 76, 147, 0.6);
+}
+
+/* Buttons */
+.login-box button {
+  width: 100%;
+  background: linear-gradient(90deg, #4CC9F0, #FF5D8F);
+  border: none;
+  border-radius: 12px;
+  padding: 14px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(255, 93, 143, 0.5);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+.login-box button:hover {
+  background: linear-gradient(90deg, #FF5D8F, #4CC9F0);
+  box-shadow: 0 8px 25px rgba(76, 201, 240, 0.8);
+}
+
+/* Links */
+.login-box .btn-register,
+.login-box .back-home {
+  display: inline-block;
+  margin-top: 1.2rem;
+  font-weight: 600;
+  color: #6a4c93;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.login-box .btn-register:hover,
+.login-box .back-home:hover {
+  color: #4CC9F0;
+  text-decoration: underline;
+}
+
+/* Responsive tweaks */
+@media (max-width: 450px) {
+  .login-box {
+    padding: 2rem 1.5rem;
+  }
+
+  .login-title {
+    font-size: 2rem;
+  }
+
+  .login-box button {
+    font-size: 1rem;
+  }
+}
+
+
 
 
