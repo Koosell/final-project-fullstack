@@ -5,6 +5,16 @@ import "./index.css";
 const Index = () => {
   return (
     <div className="container">
+      {/* Video animasi orang */}
+      <video
+        className="animated-user-video"
+        src="/videos/user-anim.mp4"
+        autoPlay
+        loop
+        muted
+      />
+
+      {/* Welcome Section */}
       <div className="content-box">
         <h1>Top-up Game</h1>
         <p>Welcome to ABC Top-up! Select your favorite game to top-up.</p>
@@ -42,35 +52,23 @@ const Index = () => {
       {/* Game Cards */}
       <div className="game-selection">
         <div className="game">
-          <img
-            className="game-img"
-            src="/images/pubg.jpeg"
-            alt="PUBG"
-          />
+          <img className="game-img" src="/images/pubg.jpeg" alt="PUBG" />
           <p>PUBG</p>
           <Link to="/checkout/pubg">Top-up Now</Link>
         </div>
         <div className="game">
-          <img
-            className="game-img"
-            src="/images/mobile-legends.jpeg"
-            alt="Mobile Legends"
-          />
+          <img className="game-img" src="/images/mobile-legends.jpeg" alt="Mobile Legends" />
           <p>Mobile Legends</p>
           <Link to="/checkout/ml">Top-up Now</Link>
         </div>
         <div className="game">
-          <img
-            className="game-img"
-            src="/images/free-fire.jpeg"
-            alt="Free Fire"
-          />
+          <img className="game-img" src="/images/free-fire.jpeg" alt="Free Fire" />
           <p>Free Fire</p>
           <Link to="/checkout/ff">Top-up Now</Link>
         </div>
       </div>
 
-      {/* Rating Section (Sidebar) */}
+      {/* Rating Section */}
       <div className="rating-sidebar">
         <h3>Rate Our Service</h3>
         <div className="rating-stars">
