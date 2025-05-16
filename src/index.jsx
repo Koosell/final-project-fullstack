@@ -5,14 +5,6 @@ import "./index.css";
 const Index = () => {
   return (
     <div className="container">
-      {/* Video animasi orang */}
-      <video
-        className="animated-user-video"
-        src="/videos/user-anim.mp4"
-        autoPlay
-        loop
-        muted
-      />
 
       {/* Welcome Section */}
       <div className="content-box">
