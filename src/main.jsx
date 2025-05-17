@@ -12,6 +12,7 @@ import Rating from './Rating';
 import TentangKami from "./TentangKami.jsx";
 import "./index.css";
 
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <>

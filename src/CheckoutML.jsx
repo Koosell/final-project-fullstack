@@ -30,7 +30,7 @@ const CheckoutML = () => {
     <div className="checkout-wrapper">
       <div className="header-box">
         <img
-          src="/images/mobile-legends.jpeg"
+          src="/src/assets/images/mobile-legends.jpeg"
           alt="Mobile Legends"
           className="logo-img"
         />
@@ -72,7 +72,7 @@ const CheckoutML = () => {
                 onClick={() => setSelectedNominal(nominal.label)}
               >
                 <img
-                  src={`/images/${nominal.img}`}
+                  src={`/src/assets/images/${nominal.img}`}
                   alt={nominal.label}
                   className="nominal-img"
                 />

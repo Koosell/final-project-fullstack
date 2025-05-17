@@ -30,7 +30,7 @@ const CheckoutFF = () => {
     <div className="checkout-wrapper">
       <div className="header-box">
         <img
-          src="/images/free-fire.jpeg"
+          src="/src/assets/images/free-fire.jpeg"
           alt="Free Fire"
           className="logo-img"
         />
@@ -72,7 +72,7 @@ const CheckoutFF = () => {
                 onClick={() => setSelectedNominal(nominal.label)}
               >
                 <img
-                  src={`/images/${nominal.img}`}
+                  src={`/src/assets/images/${nominal.img}`}
                   alt={nominal.label}
                   className="nominal-img"
                 />

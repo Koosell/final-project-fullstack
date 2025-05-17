@@ -16,7 +16,7 @@ const Index = () => {
       <div className="promo-card peach">
         <img
           className="promo-img"
-          src="/images/promo1.jpg"
+          src="/src/assets/images/promo1.jpg"
           alt="Promo 30% Diskon"
         />
         <div className="promo-info">
@@ -30,7 +30,7 @@ const Index = () => {
       <div className="promo-card">
         <img
           className="promo-img"
-          src="/images/promo2.jpg"
+          src="/src/assets/images/promo2.jpg"
           alt="Bonus 10 Diamond"
         />
         <div className="promo-info">
@@ -44,17 +44,17 @@ const Index = () => {
       {/* Game Cards */}
       <div className="game-selection">
         <div className="game">
-          <img className="game-img" src="/images/pubg.jpeg" alt="PUBG" />
+          <img className="game-img" src="/src/assets/images/pubg.jpeg" alt="PUBG" />
           <p>PUBG</p>
           <Link to="/checkout/pubg">Top-up Now</Link>
         </div>
         <div className="game">
-          <img className="game-img" src="/images/mobile-legends.jpeg" alt="Mobile Legends" />
+          <img className="game-img" src="/src/assets/images/mobile-legends.jpeg" alt="Mobile Legends" />
           <p>Mobile Legends</p>
           <Link to="/checkout/ml">Top-up Now</Link>
         </div>
         <div className="game">
-          <img className="game-img" src="/images/free-fire.jpeg" alt="Free Fire" />
+          <img className="game-img" src="/src/assets/images/free-fire.jpeg" alt="Free Fire" />
           <p>Free Fire</p>
           <Link to="/checkout/ff">Top-up Now</Link>
         </div>

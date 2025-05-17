@@ -29,7 +29,7 @@ const CheckoutPUBG = () => {
     <div className="checkout-wrapper">
       <div className="header-box">
         <img
-          src="/images/pubg.jpeg"
+          src="/src/assets/images/pubg.jpeg"
           alt="PUBG"
           className="logo-img"
         />
@@ -71,7 +71,7 @@ const CheckoutPUBG = () => {
                 onClick={() => setSelectedNominal(nominal.label)}
               >
                 <img
-                  src={`/images/${nominal.img}`}
+                  src={`/src/assets/images/${nominal.img}`}
                   alt={nominal.label}
                   className="nominal-img"
                 />
