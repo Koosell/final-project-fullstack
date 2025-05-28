@@ -83,7 +83,7 @@ const Navbar = () => {
         {/* Navigation Links */}
         <ul className="nav-links">
           <li><Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link></li>
-          <li><Link to="/produk" onClick={() => setIsMobileMenuOpen(false)}>Produk</Link></li>
+          <li><Link to="/produkMenu" onClick={() => setIsMobileMenuOpen(false)}>Produk</Link></li>
           <li><Link to="/tentang-kami" onClick={() => setIsMobileMenuOpen(false)}>Tentang Kami</Link></li>
           <li><Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>Kontak</Link></li>
         </ul>

@@ -11,6 +11,7 @@ import Login from "./Login";
 import Rating from './Rating';
 import TentangKami from "./TentangKami.jsx";
 import Contact from "./Contact";
+import ProdukMenu from "./ProdukMenu";
 import "./index.css";
 
 
@@ -29,6 +30,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/register" element={<Register />} />
         <Route path="/navbar" element={<Navbar />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/Produk" element={<ProdukMenu/>} />
       </Routes>
     </>
   </BrowserRouter>
