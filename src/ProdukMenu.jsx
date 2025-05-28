@@ -2,9 +2,9 @@ import React from "react";
 import './css/ProdukMenu.css';
 
 const products = [
-  { name: "Jersey", image: "/jersey.png" },
-  { name: "Gantungan Kunci", image: "/gantungan.png" },
-  { name: "Kaos", image: "/kaos.png" },
+  { name: "Jersey", image: "/src/assets/images/jersey.jpg"},
+  { name: "Gantungan Kunci", image: "/src/assets/images/gantungan kunci panci.jpg" },
+  { name: "Kaos", image: "/src/assets/images/kaos mobile legend.jpg"},
 ];
 
 const ProductCard = ({ name, image }) => (
