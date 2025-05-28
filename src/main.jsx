@@ -11,9 +11,7 @@ import Login from "./Login";
 import Rating from './Rating';
 import TentangKami from "./TentangKami.jsx";
 import Contact from "./Contact";
-
 import ProdukMenu from "./ProdukMenu";
-import "./index.css";
 import Team from "./Team";
 
 
