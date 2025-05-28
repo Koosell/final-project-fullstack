@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import "./css/Checkout.css";
 
-const nominalOptions = [
-  { label: "60 UC", price: "Rp 15.000", img: "uc.jpg", popular: false },
-  { label: "325 UC", price: "Rp 75.000", img: "uc.jpg", popular: true },
-  { label: "660 UC", price: "Rp 145.000", img: "uc.jpg", popular: false },
-  { label: "1800 UC", price: "Rp 375.000", img: "uc.jpg", popular: true },
-  { label: "3850 UC", price: "Rp 750.000", img: "uc.jpg", popular: false },
-  { label: "8100 UC", price: "Rp 1.500.000", img: "uc.jpg", popular: true }
+const productOptions = [
+  { label: "60 Genesis Crystals", price: "Rp 15.000", img: "genesis.jpeg", popular: false },
+  { label: "300 + 30 Genesis Crystals", price: "Rp 75.000", img: "genesis.jpeg", popular: true },
+  { label: "980 + 110 Genesis Crystals", price: "Rp 225.000", img: "genesis.jpeg", popular: false },
+  { label: "Blessing of the Welkin Moon", price: "Rp 75.000", img: "moon.jpeg", popular: true },
+  { label: "1980 + 260 Genesis Crystals", price: "Rp 449.000", img: "genesis.jpeg", popular: false },
+  { label: "3280 + 600 Genesis Crystals", price: "Rp 749.000", img: "genesis.jpeg", popular: true }
 ];
 
-const CheckoutPUBG = () => {
-  const [selectedNominal, setSelectedNominal] = useState("");
+const CheckoutGI = () => {
+  const [selectedProduct, setSelectedProduct] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
     game_id: "",
@@ -27,8 +27,8 @@ const CheckoutPUBG = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!selectedNominal) {
-      alert("Pilih nominal terlebih dahulu!");
+    if (!selectedProduct) {
+      alert("Pilih produk terlebih dahulu!");
       return;
     }
     setTimeout(() => setShowSuccess(true), 1000);
@@ -39,28 +39,36 @@ const CheckoutPUBG = () => {
       {!showSuccess ? (
         <div className="checkout-content">
           <div className="game-header">
-            <img src="/src/assets/images/pubg.jpeg" alt="PUBG" />
+            <img 
+              src="/src/assets/images/gensin.jpeg" 
+              alt="Genshin Impact" 
+              className="game-logo"
+            />
             <div className="game-info">
-              <h2>PUBG MOBILE</h2>
-              <p>Top-up UC untuk berbagai keperluan dalam game</p>
+              <h2>GENSHIN IMPACT</h2>
+              <p>Top-up Genesis Crystals atau Blessing untuk keperluan dalam game</p>
             </div>
           </div>
 
           <div className="checkout-grid">
             <div className="product-section">
-              <h3>Pilih Nominal UC</h3>
+              <h3>Pilih Produk</h3>
               <div className="product-scroller">
-                {nominalOptions.map((nominal, index) => (
+                {productOptions.map((product, index) => (
                   <div 
                     key={index}
-                    className={`product-card ${selectedNominal === nominal.label ? "selected" : ""} ${nominal.popular ? "popular" : ""}`}
-                    onClick={() => setSelectedNominal(nominal.label)}
+                    className={`product-card ${selectedProduct === product.label ? "selected" : ""} ${product.popular ? "popular" : ""}`}
+                    onClick={() => setSelectedProduct(product.label)}
                   >
-                    {nominal.popular && <span className="popular-badge">POPULAR</span>}
-                    <img src={`/src/assets/images/${nominal.img}`} alt={nominal.label} />
+                    {product.popular && <span className="popular-badge">POPULAR</span>}
+                    <img 
+                      src={`/src/assets/images/${product.img}`} 
+                      alt={product.label} 
+                      className="product-image"
+                    />
                     <div className="product-details">
-                      <h4>{nominal.label}</h4>
-                      <p>{nominal.price}</p>
+                      <h4>{product.label}</h4>
+                      <p>{product.price}</p>
                     </div>
                   </div>
                 ))}
@@ -80,18 +88,21 @@ const CheckoutPUBG = () => {
                     required
                   />
                 </div>
-              
 
                 <div className="input-group">
-                  <label>Server ID</label>
-                  <input
-                    type="text"
+                  <label>Server</label>
+                  <select 
                     name="server_id"
-                    placeholder="Masukkan Server ID"
                     value={formData.server_id}
                     onChange={handleInputChange}
                     required
-                  />
+                  >
+                    <option value="" disabled>Pilih Server</option>
+                    <option value="Asia">Asia</option>
+                    <option value="America">America</option>
+                    <option value="Europe">Europe</option>
+                    <option value="TW, HK, MO">TW, HK, MO</option>
+                  </select>
                 </div>
 
                 <div className="input-group">
@@ -137,7 +148,7 @@ const CheckoutPUBG = () => {
             <div className="order-summary">
               <div className="summary-item">
                 <span>Produk</span>
-                <span>{selectedNominal}</span>
+                <span>{selectedProduct}</span>
               </div>
               <div className="summary-item">
                 <span>User ID</span>
@@ -153,7 +164,7 @@ const CheckoutPUBG = () => {
               className="back-btn"
               onClick={() => {
                 setShowSuccess(false);
-                setSelectedNominal("");
+                setSelectedProduct("");
                 setFormData({
                   game_id: "",
                   server_id: "",
@@ -171,4 +182,4 @@ const CheckoutPUBG = () => {
   );
 };
 
-export default CheckoutPUBG;
+export default CheckoutGI;

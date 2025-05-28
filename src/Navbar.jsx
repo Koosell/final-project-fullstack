@@ -83,7 +83,7 @@ const Navbar = () => {
         {/* Navigation Links */}
         <ul className="nav-links">
           <li><Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link></li>
-          <li><Link to="/produkMenu" onClick={() => setIsMobileMenuOpen(false)}>Produk</Link></li>
+          <li><Link to="/produkMenu" onClick={() => setIsMobileMenuOpen(false)}>Produk Lain</Link></li>
           <li><Link to="/tentang-kami" onClick={() => setIsMobileMenuOpen(false)}>Tentang Kami</Link></li>
           <li><Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>Kontak</Link></li>
           <li><Link to="/team" onClick={() => setIsMobileMenuOpen(false)}>Tim</Link></li>
@@ -126,7 +126,7 @@ const Navbar = () => {
 
             {/* Chat Button */}
             <button onClick={openChat} className="btn-chat">
-              💬 Chat <span className="notification-badge">3</span>
+               Chat <span className="notification-badge"></span>
             </button>
 
             {/* Dark Mode Toggle */}
@@ -135,7 +135,7 @@ const Navbar = () => {
               className="btn-darkmode"
               aria-label="Toggle Dark Mode"
             >
-              {darkMode ? "☀️ Light" : "🌙 Dark"}
+              {darkMode ? " Light" : " Dark"}
             </button>
 
             {/* Login Button */}

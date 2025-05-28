@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./css/CheckoutML.css";
+import "./css/Checkout.css";
 
 const productOptions = [
   { label: "Weekly Pass", price: "Rp 24.557", img: "wdp.jpeg", popular: false },

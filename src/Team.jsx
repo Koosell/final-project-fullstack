@@ -7,31 +7,31 @@ const Team = () => {
       name: "Vendri Setyawan",
       nim: "23.11.5523",
       role: "Team Member",
-      photo: "/placeholder.jpg"
+      photo: "/src/assets/images/pepen.jpg"
     },
     {
       name: "Nazal Syamaidzar Mahendra",
       nim: "23.11.5547",
       role: "Team Member",
-      photo: "/placeholder.jpg"
+      photo: "/src/assets/images/nazal.jpg"
     },
     {
       name: "Lekat Citra Fitrianti",
       nim: "23.11.5501",
       role: "Team Member",
-      photo: "/placeholder.jpg"
+      photo: "/src/assets/images/citra.jpg"
     },
     {
       name: "Roy Devgantara Purba",
       nim: "23.11.5565",
       role: "Team Member",
-      photo: "/placeholder.jpg"
+      photo: "/src/assets/images/roy.jpg"
     },
     {
       name: "Muhammad Fachri Agus M",
       nim: "23.11.5544",
       role: "Team Member",
-      photo: "/placeholder.jpg"
+      photo: "/src/assets/images/fahri.jpg"
     }
   ];
 

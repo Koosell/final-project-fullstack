@@ -4,12 +4,12 @@
   --secondary-color: #3f37c9;
   --text-color: #333;
   --bg-color: #ffffff;
-  --nav-bg: rgba(248, 249, 250, 0.95);
-  --hover-color: #e9ecef;
-  --border-color: #dee2e6;
+  --nav-bg: rgba(255, 255, 255, 0.95); /* Warna navbar lebih putih */
+  --hover-color: #f0f4ff; /* Warna hover biru muda */
+  --border-color: #e0e7ff; /* Warna border biru muda */
   --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   --btn-text: #fff;
-  --mobile-menu-bg: rgba(248, 249, 250, 0.98);
+  --mobile-menu-bg: rgba(255, 255, 255, 0.98); /* Warna mobile menu lebih putih */
 }
 
 /* Variabel CSS untuk mode gelap */
@@ -17,13 +17,13 @@
   --primary-color: #4cc9f0;
   --secondary-color: #4895ef;
   --text-color: #f8f9fa;
-  --bg-color: #121212;
-  --nav-bg: rgba(30, 30, 30, 0.95);
-  --hover-color: #2d2d2d;
-  --border-color: #444;
+  --bg-color: #1a1a2e; /* Warna background gelap kebiruan */
+  --nav-bg: rgba(26, 26, 46, 0.95); /* Warna navbar gelap kebiruan */
+  --hover-color: #16213e; /* Warna hover gelap kebiruan */
+  --border-color: #0f3460; /* Warna border gelap kebiruan */
   --shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  --btn-text: #121212;
-  --mobile-menu-bg: rgba(30, 30, 30, 0.98);
+  --btn-text: #ffffff;
+  --mobile-menu-bg: rgba(26, 26, 46, 0.98); /* Warna mobile menu gelap kebiruan */
 }
 
 /* Reset dan Base Styles */

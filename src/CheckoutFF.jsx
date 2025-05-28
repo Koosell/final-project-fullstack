@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./css/CheckoutFF.css";
+import "./css/Checkout.css";
 
 const productOptions = [
   { label: "100 Diamond", price: "Rp 16.000", img: "diamondff.jpg", popular: false },
