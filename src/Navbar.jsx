@@ -86,6 +86,7 @@ const Navbar = () => {
           <li><Link to="/produk" onClick={() => setIsMobileMenuOpen(false)}>Produk</Link></li>
           <li><Link to="/tentang-kami" onClick={() => setIsMobileMenuOpen(false)}>Tentang Kami</Link></li>
           <li><Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>Kontak</Link></li>
+          <li><Link to="/team" onClick={() => setIsMobileMenuOpen(false)}>Tim</Link></li>
         </ul>
         
         {/* Search Bar (Desktop) */}
