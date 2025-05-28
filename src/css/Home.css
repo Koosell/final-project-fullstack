@@ -1,0 +1,219 @@
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+.home-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f7fa;
+}
+
+/* Header Styles */
+.page-header {
+  background-color: #2c3e50;
+  color: white;
+  padding: 3rem 1rem;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.page-header p {
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+/* Promo Banner */
+.promo-banner {
+  display: flex;
+  background-color: #3498db;
+  color: white;
+  margin: 2rem auto;
+  max-width: 1200px;
+  width: 95%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.promo-image {
+  width: 40%;
+  object-fit: cover;
+}
+
+.promo-content {
+  padding: 2rem;
+  flex: 1;
+}
+
+.promo-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.promo-content p {
+  line-height: 1.6;
+}
+
+.promo-content strong {
+  color: #f1c40f;
+}
+
+/* Game Grid */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 0 2rem;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto 3rem;
+}
+
+.game-card {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.game-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.game-card p {
+  padding: 1.2rem 1rem 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.topup-button {
+  display: block;
+  background-color: #2ecc71;
+  color: white;
+  text-align: center;
+  padding: 0.8rem;
+  margin: 1rem;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.topup-button:hover {
+  background-color: #27ae60;
+}
+
+/* Rating Section */
+.rating-section {
+  background-color: white;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 1200px;
+  width: 95%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.rating-section h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.star-rating {
+  margin: 1.5rem 0;
+}
+
+.star {
+  font-size: 2rem;
+  color: #f1c40f;
+  margin: 0 0.3rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.star:hover {
+  transform: scale(1.2);
+}
+
+.rating-section p {
+  color: #7f8c8d;
+}
+
+/* Footer */
+.page-footer {
+  background-color: #2c3e50;
+  color: white;
+  text-align: center;
+  padding: 1.5rem;
+  margin-top: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .promo-banner {
+    flex-direction: column;
+  }
+  
+  .promo-image {
+    width: 100%;
+    height: 200px;
+  }
+  
+  .game-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header {
+    padding: 2rem 1rem;
+  }
+  
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .game-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .game-image {
+    height: 150px;
+  }
+  
+  .rating-section {
+    padding: 1.5rem;
+  }
+}

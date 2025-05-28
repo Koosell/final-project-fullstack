@@ -1,114 +1,169 @@
 import React, { useState } from "react";
-import "./index.css";
+import "./css/CheckoutPUBG.css";
 
 const nominalOptions = [
-  { label: "60 UC", price: "Rp 15.000", img: "uc.jpg" },
-  { label: "325 UC", price: "Rp 75.000", img: "uc.jpg" },
-  { label: "660 UC", price: "Rp 145.000", img: "uc.jpg" },
-  { label: "1800 UC", price: "Rp 375.000", img: "uc.jpg" }
+  { label: "60 UC", price: "Rp 15.000", img: "uc.jpg", popular: false },
+  { label: "325 UC", price: "Rp 75.000", img: "uc.jpg", popular: true },
+  { label: "660 UC", price: "Rp 145.000", img: "uc.jpg", popular: false },
+  { label: "1800 UC", price: "Rp 375.000", img: "uc.jpg", popular: true },
+  { label: "3850 UC", price: "Rp 750.000", img: "uc.jpg", popular: false },
+  { label: "8100 UC", price: "Rp 1.500.000", img: "uc.jpg", popular: true }
 ];
 
 const CheckoutPUBG = () => {
   const [selectedNominal, setSelectedNominal] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    game_id: "",
+    server_id: "",
+    kode_promo: "",
+    metode: "Dana"
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!selectedNominal) {
       alert("Pilih nominal terlebih dahulu!");
       return;
     }
-
-    setTimeout(() => {
-      setShowSuccess(true);
-    }, 1000);
+    setTimeout(() => setShowSuccess(true), 1000);
   };
 
   return (
-    <div className="checkout-wrapper">
-      <div className="header-box">
-        <img
-          src="/src/assets/images/pubg.jpeg"
-          alt="PUBG"
-          className="logo-img"
-        />
-        <h2>PUBG</h2>
-        <p>Masukkan data & pilih nominal untuk lanjut top-up</p>
-      </div>
-
+    <div className="checkout-container">
       {!showSuccess ? (
-        <form onSubmit={handleSubmit}>
-          <input type="hidden" name="game" value="PUBG" />
-          <input type="hidden" name="jumlah" value={selectedNominal} />
-
-          <div className="form-section">
-            <label htmlFor="game_id">User ID</label>
-            <input
-              type="text"
-              name="game_id"
-              id="game_id"
-              placeholder="Masukkan User ID"
-              required
-            />
-            <label htmlFor="server_id">Server ID</label>
-            <input
-              type="text"
-              name="server_id"
-              id="server_id"
-              placeholder="Masukkan Server ID"
-              required
-            />
+        <div className="checkout-content">
+          <div className="game-header">
+            <img src="/src/assets/images/pubg.jpeg" alt="PUBG" />
+            <div className="game-info">
+              <h2>PUBG MOBILE</h2>
+              <p>Top-up UC untuk berbagai keperluan dalam game</p>
+            </div>
           </div>
 
-          <div className="nominal-grid">
-            {nominalOptions.map((nominal, index) => (
-              <div
-                key={index}
-                className={`nominal-box ${
-                  selectedNominal === nominal.label ? "selected" : ""
-                }`}
-                onClick={() => setSelectedNominal(nominal.label)}
-              >
-                <img
-                  src={`/src/assets/images/${nominal.img}`}
-                  alt={nominal.label}
-                  className="nominal-img"
-                />
-                <div className="nominal-info">
-                  <span>{nominal.label}</span>
-                  <span>{nominal.price}</span>
-                </div>
+          <div className="checkout-grid">
+            <div className="product-section">
+              <h3>Pilih Nominal UC</h3>
+              <div className="product-scroller">
+                {nominalOptions.map((nominal, index) => (
+                  <div 
+                    key={index}
+                    className={`product-card ${selectedNominal === nominal.label ? "selected" : ""} ${nominal.popular ? "popular" : ""}`}
+                    onClick={() => setSelectedNominal(nominal.label)}
+                  >
+                    {nominal.popular && <span className="popular-badge">POPULAR</span>}
+                    <img src={`/src/assets/images/${nominal.img}`} alt={nominal.label} />
+                    <div className="product-details">
+                      <h4>{nominal.label}</h4>
+                      <p>{nominal.price}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
 
-          <div className="promo-row">
-            <label htmlFor="kode_promo">🎁 Punya Kode Promo?</label>
-            <select name="kode_promo" id="kode_promo">
-              <option value="">-- Pilih Promo --</option>
-              <option value="PROMO30">Diskon 30%</option>
-              <option value="BONUS10">Bonus 10 UC</option>
-            </select>
-          </div>
+            <div className="form-section">
+              <form onSubmit={handleSubmit}>
+                <div className="input-group">
+                  <label>User ID</label>
+                  <input
+                    type="text"
+                    name="game_id"
+                    placeholder="Masukkan User ID"
+                    value={formData.game_id}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
 
-          <div className="form-section">
-            <label htmlFor="metode">Metode Pembayaran</label>
-            <select name="metode" id="metode" required>
-              <option value="Dana">Dana</option>
-              <option value="OVO">OVO</option>
-              <option value="Gopay">Gopay</option>
-            </select>
-          </div>
+                <div className="input-group">
+                  <label>Server ID</label>
+                  <input
+                    type="text"
+                    name="server_id"
+                    placeholder="Masukkan Server ID"
+                    value={formData.server_id}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
 
-          <button type="submit" className="btn-submit">
-            Bayar Sekarang
-          </button>
-        </form>
+                <div className="input-group">
+                  <label>Metode Pembayaran</label>
+                  <select 
+                    name="metode" 
+                    value={formData.metode}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="Dana">Dana</option>
+                    <option value="OVO">OVO</option>
+                    <option value="Gopay">Gopay</option>
+                    <option value="Bank Transfer">Bank Transfer</option>
+                  </select>
+                </div>
+
+                <div className="input-group">
+                  <label>Kode Promo (Opsional)</label>
+                  <input
+                    type="text"
+                    name="kode_promo"
+                    placeholder="Masukkan kode promo"
+                    value={formData.kode_promo}
+                    onChange={handleInputChange}
+                  />
+                </div>
+
+                <button type="submit" className="submit-btn">
+                  Bayar Sekarang
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
       ) : (
-        <div className="success-box">
-          <h3>✅ Top-up Berhasil!</h3>
-          <p>Terima kasih, pesanan kamu sedang diproses.</p>
+        <div className="success-screen">
+          <div className="success-content">
+            <div className="success-icon">✓</div>
+            <h2>Pembayaran Berhasil!</h2>
+            <p>Pesanan Anda sedang diproses</p>
+            
+            <div className="order-summary">
+              <div className="summary-item">
+                <span>Produk</span>
+                <span>{selectedNominal}</span>
+              </div>
+              <div className="summary-item">
+                <span>User ID</span>
+                <span>{formData.game_id}</span>
+              </div>
+              <div className="summary-item">
+                <span>Metode Pembayaran</span>
+                <span>{formData.metode}</span>
+              </div>
+            </div>
+
+            <button 
+              className="back-btn"
+              onClick={() => {
+                setShowSuccess(false);
+                setSelectedNominal("");
+                setFormData({
+                  game_id: "",
+                  server_id: "",
+                  kode_promo: "",
+                  metode: "Dana"
+                });
+              }}
+            >
+              Beli Lagi
+            </button>
+          </div>
         </div>
       )}
     </div>

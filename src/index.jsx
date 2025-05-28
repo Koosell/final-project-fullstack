@@ -1,69 +1,54 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Menu.css";
+import "./css/Home.css";
 
 const Index = () => {
   return (
-    <div className="container">
-
-      {/* Welcome Section */}
-      <div className="content-box">
+    <div className="home-page">
+      {/* Header Section */}
+      <header className="page-header">
         <h1>Top-up Game</h1>
         <p>Welcome to ABC Top-up! Select your favorite game to top-up.</p>
-      </div>
+      </header>
 
-      {/* Promo Section */}
-      <div className="promo-card peach">
+      {/* Promo Banner */}
+      <section className="promo-banner">
         <img
-          className="promo-img"
-          src="/src/assets/images/promo1.jpg"
-          alt="Promo 30% Diskon"
-        />
-        <div className="promo-info">
-          <h3>Diskon 30% untuk Semua Pembelian!</h3>
-          <p>
-            Gunakan kode promo <strong>PROMO30</strong> saat checkout untuk mendapatkan diskon 30%!
-          </p>
-        </div>
-      </div>
-
-      <div className="promo-card">
-        <img
-          className="promo-img"
+          className="promo-image"
           src="/src/assets/images/promo2.jpg"
           alt="Bonus 10 Diamond"
         />
-        <div className="promo-info">
+        <div className="promo-content">
           <h3>Bonus 10 Diamond</h3>
           <p>
             Gunakan kode promo <strong>BONUS10</strong> untuk mendapatkan bonus 10 diamond pada top-up pertama Anda!
           </p>
         </div>
-      </div>
+      </section>
 
-      {/* Game Cards */}
-      <div className="game-selection">
-        <div className="game">
-          <img className="game-img" src="/src/assets/images/pubg.jpeg" alt="PUBG" />
+      {/* Game Grid */}
+      <main className="game-grid">
+        <div className="game-card">
+          <img className="game-image" src="/src/assets/images/pubg.jpeg" alt="PUBG" />
           <p>PUBG</p>
-          <Link to="/checkout/pubg">Top-up Now</Link>
+          <Link to="/checkout/pubg" className="topup-button">Top-up Now</Link>
         </div>
-        <div className="game">
-          <img className="game-img" src="/src/assets/images/mobile-legends.jpeg" alt="Mobile Legends" />
+        <div className="game-card">
+          <img className="game-image" src="/src/assets/images/mobile-legends.jpeg" alt="Mobile Legends" />
           <p>Mobile Legends</p>
-          <Link to="/checkout/ml">Top-up Now</Link>
+          <Link to="/checkout/ml" className="topup-button">Top-up Now</Link>
         </div>
-        <div className="game">
-          <img className="game-img" src="/src/assets/images/free-fire.jpeg" alt="Free Fire" />
+        <div className="game-card">
+          <img className="game-image" src="/src/assets/images/free-fire.jpeg" alt="Free Fire" />
           <p>Free Fire</p>
-          <Link to="/checkout/ff">Top-up Now</Link>
+          <Link to="/checkout/ff" className="topup-button">Top-up Now</Link>
         </div>
-      </div>
+      </main>
 
       {/* Rating Section */}
-      <div className="rating-sidebar">
+      <section className="rating-section">
         <h3>Rate Our Service</h3>
-        <div className="rating-stars">
+        <div className="star-rating">
           <Link to="/rating">
             <span className="star">&#9733;</span>
             <span className="star">&#9733;</span>
@@ -73,9 +58,10 @@ const Index = () => {
           </Link>
         </div>
         <p>Give us a rating and help us improve!</p>
-      </div>
+      </section>
 
-      <footer>
+      {/* Footer */}
+      <footer className="page-footer">
         <p>© 2025 ABC Top-up. All rights reserved.</p>
       </footer>
     </div>

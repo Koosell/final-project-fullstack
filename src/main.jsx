@@ -5,11 +5,12 @@ import Index from "./index.jsx";
 import CheckoutML from "./CheckoutML.jsx";
 import CheckoutFF from "./CheckoutFF.jsx";
 import CheckoutPUBG from "./CheckoutPUBG.jsx";
-import Navbar from "./navbar.jsx";
+import Navbar from "./Navbar.jsx";
 import Register from "./Register";
 import Login from "./Login";
 import Rating from './Rating';
 import TentangKami from "./TentangKami.jsx";
+import Contact from "./Contact";
 import "./index.css";
 
 
@@ -26,6 +27,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/checkout/pubg" element={<CheckoutPUBG />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/navbar" element={<Navbar />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </>
   </BrowserRouter>
