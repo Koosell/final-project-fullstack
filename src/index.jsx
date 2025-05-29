@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Footer from "./Footer.jsx"; // sesuaikan path jika beda
 import "./css/Home.css";
 
 const promos = [
@@ -36,7 +37,7 @@ const Index = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
-    }, 5000);
+    }, 2000);
     return () => clearInterval(interval);
   }, []);
 
@@ -48,8 +49,7 @@ const Index = () => {
         <p>Selamat datang di ABC Top-up! Pilih game favorit Anda untuk top-up.</p>
       </header>
 
-      {/* Promo Section - Tanpa Container */}
-      
+      {/* Promo Section */}
       <div className="promo-slider">
         <div className="promo-slider-wrapper" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
           {promos.map((promo, index) => (
@@ -127,11 +127,6 @@ const Index = () => {
         </div>
         <p>Beri kami penilaian untuk membantu kami meningkatkan layanan!</p>
       </section>
-
-      {/* Footer */}
-      <footer className="page-footer">
-        <p>© 2025 ABC Top-up. Semua hak dilindungi.</p>
-      </footer>
     </div>
   );
 };

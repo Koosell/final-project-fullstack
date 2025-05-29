@@ -7,7 +7,9 @@ import CheckoutFF from "./CheckoutFF.jsx";
 import CheckoutPUBG from "./CheckoutPUBG.jsx";
 import CheckoutGensin from "./CheckoutGensin.jsx";
 import CheckoutValo from "./CheckoutValo.jsx";
+import CheckoutCOD from "./CheckoutCOD.jsx";
 import Navbar from "./Navbar.jsx";
+import Footer from "./Footer.jsx";
 import Register from "./Register";
 import Login from "./Login";
 import Rating from './Rating';
@@ -23,6 +25,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <>
       <Navbar /> {/* Navbar tetap tampil di semua halaman */}
+      {/* Footer tetap tampil di semua halaman */}
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/rating" element={<Rating />} />
@@ -32,13 +35,16 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/checkout/pubg" element={<CheckoutPUBG />} />
         <Route path="/checkout/gensin" element={<CheckoutGensin />} />
         <Route path="/checkout/valo" element={<CheckoutValo />} />
+        <Route path="/checkout/cod" element={<CheckoutCOD />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/navbar" element={<Navbar />} />
+        <Route path="/footer" element={<Footer />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/team" element={<Team />} />
         <Route path="/ProdukMenu" element={<ProdukMenu />} />
       </Routes>
+      <Footer /> 
     </>
   </BrowserRouter>
 );

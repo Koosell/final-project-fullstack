@@ -1,6 +1,8 @@
+
 import React from "react";
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import "./css/Contact.css";
+import "./css/ContactAnimations.css";
 
 const Contact = () => {
   return (
@@ -14,37 +16,18 @@ const Contact = () => {
       <div className="contact-container">
         {/* Contact Information */}
         <section className="contact-info">
-          <div className="info-card">
-            <div className="info-icon">
-              <FaMapMarkerAlt />
+          {[
+            { icon: <FaMapMarkerAlt />, title: "Alamat", content: "Jl. Top-Up No. 123<br />Yogyakarta, Indonesia" },
+            { icon: <FaPhone />, title: "Telepon", content: "+62 8953-9291-7289<br />+62 821-0987-6543" },
+            { icon: <FaEnvelope />, title: "Email", content: "support@abctopup.com<br />cs@abctopup.com" },
+            { icon: <FaClock />, title: "Jam Operasional", content: "Senin - Minggu<br />24 Jam Non-Stop" }
+          ].map((info, index) => (
+            <div className="info-card" key={index} style={{ '--index': index }}>
+              <div className="info-icon">{info.icon}</div>
+              <h3>{info.title}</h3>
+              <p dangerouslySetInnerHTML={{ __html: info.content }} />
             </div>
-            <h3>Alamat</h3>
-            <p>Jl. Top-Up No. 123<br />Jakarta Selatan, Indonesia</p>
-          </div>
-
-          <div className="info-card">
-            <div className="info-icon">
-              <FaPhone />
-            </div>
-            <h3>Telepon</h3>
-            <p>+62 812-3456-7890<br />+62 821-0987-6543</p>
-          </div>
-
-          <div className="info-card">
-            <div className="info-icon">
-              <FaEnvelope />
-            </div>
-            <h3>Email</h3>
-            <p>support@abctopup.com<br />cs@abctopup.com</p>
-          </div>
-
-          <div className="info-card">
-            <div className="info-icon">
-              <FaClock />
-            </div>
-            <h3>Jam Operasional</h3>
-            <p>Senin - Minggu<br />24 Jam Non-Stop</p>
-          </div>
+          ))}
         </section>
 
         {/* Contact Form */}
@@ -79,15 +62,21 @@ const Contact = () => {
         <section className="social-media">
           <h2>Follow Kami</h2>
           <div className="social-icons">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-              <FaFacebook />
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-              <FaInstagram />
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-              <FaTwitter />
-            </a>
+            {[
+              { href: "https://facebook.com", icon: <FaFacebook /> },
+              { href: "https://instagram.com", icon: <FaInstagram /> },
+              { href: "https://twitter.com", icon: <FaTwitter /> }
+            ].map((social, index) => (
+              <a
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                key={index}
+                style={{ '--index': index }}
+              >
+                {social.icon}
+              </a>
+            ))}
           </div>
         </section>
 
