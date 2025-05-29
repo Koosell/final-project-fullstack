@@ -16,6 +16,12 @@ const promos = [
     image: "https://www.pubgmobile.com/images/event/royalepass/thum1_en.jpg",
     alt: "Diskon 20% Valorant Points"
   },
+  {
+    title: "PUB",
+    description: '<strong> Royale Pass PUBG Mobile: Season Baru, Hadiah Lebih Keren!</strong> Segera top-up dan klaim skin eksklusif, emote keren, dan banyak hadiah menarik!',
+    image: "./src/assets/images/promoValo.jpeg",
+    alt: "Diskon 20% Valorant Points"
+  },
 ];
 
 const Index = () => {
