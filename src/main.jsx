@@ -18,14 +18,10 @@ import Contact from "./Contact";
 import ProdukMenu from "./ProdukMenu";
 import Team from "./Team";
 
-
-
-
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
+  <BrowserRouter basename="/Final_Project">
     <>
-      <Navbar /> {/* Navbar tetap tampil di semua halaman */}
-      {/* Footer tetap tampil di semua halaman */}
+      <Navbar />
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/rating" element={<Rating />} />
@@ -44,7 +40,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/team" element={<Team />} />
         <Route path="/ProdukMenu" element={<ProdukMenu />} />
       </Routes>
-      <Footer /> 
+      <Footer />
     </>
   </BrowserRouter>
 );
