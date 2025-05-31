@@ -41,7 +41,7 @@ const CheckoutValorant = () => {
         <div className="checkout-content">
           <div className="game-header">
             <img 
-              src="/src/assets/images/VALORANT.jpeg" 
+              src="https://i.imgur.com/4WVAckQ.jpeg" 
               alt="Valorant" 
               className="game-logo"
             />
@@ -63,7 +63,7 @@ const CheckoutValorant = () => {
                   >
                     {product.popular && <span className="popular-badge">POPULAR</span>}
                     <img 
-                      src={`/src/assets/images/${product.img}`} 
+                      src={`https://i.imgur.com/4WVAckQ.jpeg/${product.img}`} 
                       alt={product.label} 
                       className="product-image"
                     />

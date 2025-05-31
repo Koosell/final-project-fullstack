@@ -40,7 +40,7 @@ const CheckoutFF = () => {
         <div className="checkout-content">
           <div className="game-header">
             <img 
-              src="/src/assets/images/free-fire.jpeg" 
+              src="https://i.imgur.com/chTbnxD.jpeg" 
               alt="Free Fire" 
               className="game-logo"
             />
@@ -62,7 +62,7 @@ const CheckoutFF = () => {
                   >
                     {product.popular && <span className="popular-badge">POPULAR</span>}
                     <img 
-                      src={`/src/assets/images/${product.img}`} 
+                      src={`https://i.imgur.com/5OItBDb.jpeg/${product.img}`} 
                       alt={product.label} 
                       className="product-image"
                     />

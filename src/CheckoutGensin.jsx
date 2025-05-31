@@ -5,7 +5,7 @@ const productOptions = [
   { label: "60 Genesis Crystals", price: "Rp 15.000", img: "genesis.jpeg", popular: false },
   { label: "300 + 30 Genesis Crystals", price: "Rp 75.000", img: "genesis.jpeg", popular: true },
   { label: "980 + 110 Genesis Crystals", price: "Rp 225.000", img: "genesis.jpeg", popular: false },
-  { label: "Blessing of the Welkin Moon", price: "Rp 75.000", img: "moon.jpeg", popular: true },
+  { label: "Blessing of the Welkin Moon", price: "Rp 75.000", img: "https://i.imgur.com/8g6bwUC.jpeg", popular: true },
   { label: "1980 + 260 Genesis Crystals", price: "Rp 449.000", img: "genesis.jpeg", popular: false },
   { label: "3280 + 600 Genesis Crystals", price: "Rp 749.000", img: "genesis.jpeg", popular: true }
 ];
@@ -40,7 +40,7 @@ const CheckoutGI = () => {
         <div className="checkout-content">
           <div className="game-header">
             <img 
-              src="/src/assets/images/gensin.jpeg" 
+              src="https://i.imgur.com/Q6qj5sG.jpeg" 
               alt="Genshin Impact" 
               className="game-logo"
             />
@@ -62,7 +62,7 @@ const CheckoutGI = () => {
                   >
                     {product.popular && <span className="popular-badge">POPULAR</span>}
                     <img 
-                      src={`/src/assets/images/${product.img}`} 
+                      src={`https://i.imgur.com/8g6bwUC.jpeg/${product.img}`} 
                       alt={product.label} 
                       className="product-image"
                     />

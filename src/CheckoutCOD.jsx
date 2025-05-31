@@ -43,7 +43,7 @@ const CheckoutCOD = () => {
         <div className="checkout-content">
           <div className="game-header">
             <img 
-              src="/src/assets/images/cod.jpeg" 
+              src="https://i.imgur.com/9LP0vMe.jpeg" 
               alt="Call of Duty" 
               className="game-logo"
             />

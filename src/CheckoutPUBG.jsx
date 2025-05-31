@@ -39,7 +39,7 @@ const CheckoutPUBG = () => {
       {!showSuccess ? (
         <div className="checkout-content">
           <div className="game-header">
-            <img src="/src/assets/images/pubg.jpeg" alt="PUBG" />
+            <img src="https://i.imgur.com/Eba983T.jpeg" alt="PUBG" />
             <div className="game-info">
               <h2>PUBG MOBILE</h2>
               <p>Top-up UC untuk berbagai keperluan dalam game</p>
@@ -57,7 +57,7 @@ const CheckoutPUBG = () => {
                     onClick={() => setSelectedNominal(nominal.label)}
                   >
                     {nominal.popular && <span className="popular-badge">POPULAR</span>}
-                    <img src={`/src/assets/images/${nominal.img}`} alt={nominal.label} />
+                    <img src="https://i.imgur.com/ygtcmVZ.jpeg" alt={nominal.label} />
                     <div className="product-details">
                       <h4>{nominal.label}</h4>
                       <p>{nominal.price}</p>
