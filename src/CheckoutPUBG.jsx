@@ -22,6 +22,12 @@ const CheckoutPUBG = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    // Validasi hanya angka untuk User ID dan Server ID
+    if ((name === "game_id" || name === "server_id") && !/^\d*$/.test(value)) {
+      return;
+    }
+
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
@@ -39,7 +45,7 @@ const CheckoutPUBG = () => {
       {!showSuccess ? (
         <div className="checkout-content">
           <div className="game-header">
-            <img src="/src/assets/images/pubg.jpeg" alt="PUBG" />
+            <img src="/src/assets/images/pubg.jpeg" alt="PUBG" className="game-logo" />
             <div className="game-info">
               <h2>PUBG MOBILE</h2>
               <p>Top-up UC untuk berbagai keperluan dalam game</p>
@@ -57,7 +63,7 @@ const CheckoutPUBG = () => {
                     onClick={() => setSelectedNominal(nominal.label)}
                   >
                     {nominal.popular && <span className="popular-badge">POPULAR</span>}
-                    <img src={`/src/assets/images/${nominal.img}`} alt={nominal.label} />
+                    <img src={`/src/assets/images/${nominal.img}`} alt={nominal.label} className="product-image" />
                     <div className="product-details">
                       <h4>{nominal.label}</h4>
                       <p>{nominal.price}</p>
@@ -77,10 +83,11 @@ const CheckoutPUBG = () => {
                     placeholder="Masukkan User ID"
                     value={formData.game_id}
                     onChange={handleInputChange}
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     required
                   />
                 </div>
-              
 
                 <div className="input-group">
                   <label>Server ID</label>
@@ -90,6 +97,8 @@ const CheckoutPUBG = () => {
                     placeholder="Masukkan Server ID"
                     value={formData.server_id}
                     onChange={handleInputChange}
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     required
                   />
                 </div>
@@ -133,7 +142,7 @@ const CheckoutPUBG = () => {
             <div className="success-icon">✓</div>
             <h2>Pembayaran Berhasil!</h2>
             <p>Pesanan Anda sedang diproses</p>
-            
+
             <div className="order-summary">
               <div className="summary-item">
                 <span>Produk</span>
@@ -142,6 +151,10 @@ const CheckoutPUBG = () => {
               <div className="summary-item">
                 <span>User ID</span>
                 <span>{formData.game_id}</span>
+              </div>
+              <div className="summary-item">
+                <span>Server ID</span>
+                <span>{formData.server_id}</span>
               </div>
               <div className="summary-item">
                 <span>Metode Pembayaran</span>

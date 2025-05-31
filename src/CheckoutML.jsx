@@ -24,6 +24,12 @@ const CheckoutML = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    // Validasi hanya angka untuk game_id dan server_id
+    if ((name === "game_id" || name === "server_id") && !/^\d*$/.test(value)) {
+      return;
+    }
+
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
