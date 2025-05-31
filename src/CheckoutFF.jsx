@@ -22,7 +22,13 @@ const CheckoutFF = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+
+    // Hanya izinkan angka untuk game_id dan server_id
+    if ((name === "game_id" || name === "server_id") && !/^\d*$/.test(value)) {
+      return;
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
@@ -41,7 +47,7 @@ const CheckoutFF = () => {
           <div className="game-header">
             <img 
               src="https://i.imgur.com/chTbnxD.jpeg" 
-              alt="Free Fire" 
+              alt="Free Fire"
               className="game-logo"
             />
             <div className="game-info">
@@ -55,7 +61,7 @@ const CheckoutFF = () => {
               <h3>Pilih Produk</h3>
               <div className="product-scroller">
                 {productOptions.map((product, index) => (
-                  <div 
+                  <div
                     key={index}
                     className={`product-card ${selectedProduct === product.label ? "selected" : ""} ${product.popular ? "popular" : ""}`}
                     onClick={() => setSelectedProduct(product.label)}
@@ -85,6 +91,8 @@ const CheckoutFF = () => {
                     placeholder="Masukkan User ID"
                     value={formData.game_id}
                     onChange={handleInputChange}
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     required
                   />
                 </div>
@@ -97,14 +105,16 @@ const CheckoutFF = () => {
                     placeholder="Masukkan Server ID"
                     value={formData.server_id}
                     onChange={handleInputChange}
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     required
                   />
                 </div>
 
                 <div className="input-group">
                   <label>Metode Pembayaran</label>
-                  <select 
-                    name="metode" 
+                  <select
+                    name="metode"
                     value={formData.metode}
                     onChange={handleInputChange}
                     required
@@ -140,7 +150,7 @@ const CheckoutFF = () => {
             <div className="success-icon">✓</div>
             <h2>Pembayaran Berhasil!</h2>
             <p>Pesanan Anda sedang diproses</p>
-            
+
             <div className="order-summary">
               <div className="summary-item">
                 <span>Produk</span>
@@ -156,7 +166,7 @@ const CheckoutFF = () => {
               </div>
             </div>
 
-            <button 
+            <button
               className="back-btn"
               onClick={() => {
                 setShowSuccess(false);

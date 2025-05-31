@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import "./css/Checkout.css";
 
@@ -25,6 +24,8 @@ const CheckoutCOD = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    // Validasi angka saja untuk game_id dan region
+    if ((name === "game_id" || name === "region") && /\D/.test(value)) return;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
@@ -88,18 +89,22 @@ const CheckoutCOD = () => {
                     placeholder="Masukkan User ID"
                     value={formData.game_id}
                     onChange={handleInputChange}
+                    inputMode="numeric"
+                    pattern="\d*"
                     required
                   />
                 </div>
 
                 <div className="input-group">
-                  <label>Region</label>
+                  <label>Region (Angka)</label>
                   <input
                     type="text"
                     name="region"
-                    placeholder="Masukkan Region (contoh: Asia)"
+                    placeholder="Masukkan Region"
                     value={formData.region}
                     onChange={handleInputChange}
+                    inputMode="numeric"
+                    pattern="\d*"
                     required
                   />
                 </div>

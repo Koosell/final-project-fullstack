@@ -22,6 +22,12 @@ const CheckoutGI = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    // Validasi input angka untuk game_id
+    if (name === "game_id" && !/^\d*$/.test(value)) {
+      return;
+    }
+
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
@@ -85,6 +91,8 @@ const CheckoutGI = () => {
                     placeholder="Masukkan User ID"
                     value={formData.game_id}
                     onChange={handleInputChange}
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     required
                   />
                 </div>
@@ -153,6 +161,10 @@ const CheckoutGI = () => {
               <div className="summary-item">
                 <span>User ID</span>
                 <span>{formData.game_id}</span>
+              </div>
+              <div className="summary-item">
+                <span>Server</span>
+                <span>{formData.server_id}</span>
               </div>
               <div className="summary-item">
                 <span>Metode Pembayaran</span>
