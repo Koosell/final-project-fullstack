@@ -2,6 +2,7 @@
 import React from 'react';
 import './css/ProdukMenu.css';
 import './css/ProdukMenuAnimations.css';
+import { Link } from 'react-router-dom';
 
 const ProdukMenu = () => {
   const products = [
@@ -117,7 +118,7 @@ const ProdukMenu = () => {
             <div className="produk-info">
               <h3>{product.name}</h3>
               <p className="produk-price">{product.price}</p>
-              <button className="produk-button">+ Keranjang</button>
+              <Link to="/keranjang" className="produk-button">+ Keranjang</Link>
             </div>
           </div>
         ))}

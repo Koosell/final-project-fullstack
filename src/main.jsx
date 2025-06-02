@@ -17,6 +17,7 @@ import TentangKami from "./TentangKami.jsx";
 import Contact from "./Contact";
 import ProdukMenu from "./ProdukMenu";
 import Team from "./Team";
+import Keranjang from "./Keranjang.jsx";
 
 
 
@@ -43,6 +44,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/contact" element={<Contact />} />
         <Route path="/team" element={<Team />} />
         <Route path="/ProdukMenu" element={<ProdukMenu />} />
+        <Route path="/keranjang" element={<Keranjang />} />
       </Routes>
       <Footer /> 
     </>
