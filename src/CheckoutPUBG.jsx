@@ -27,7 +27,6 @@ const CheckoutPUBG = () => {
     if ((name === "game_id" || name === "server_id") && !/^\d*$/.test(value)) {
       return;
     }
-
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
