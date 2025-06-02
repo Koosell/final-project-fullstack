@@ -51,7 +51,11 @@ const CheckoutValorant = () => {
       {!success ? (
         <div className="checkout-content">
           <header className="game-header">
-            <img src="/src/assets/images/VALORANT.jpeg" alt="Valorant" className="game-logo" />
+            <img 
+              src="https://i.imgur.com/4WVAckQ.jpeg" 
+              alt="Valorant" 
+              className="game-logo"
+            />
             <div className="game-info">
               <h2>VALORANT</h2>
               <p>Top-up Valorant Points dan Battle Pass untuk skin, agen, dan lainnya</p>
@@ -69,7 +73,11 @@ const CheckoutValorant = () => {
                     onClick={() => setSelectedProduct(product.label)}
                   >
                     {product.popular && <span className="popular-badge">POPULAR</span>}
-                    <img src={`/src/assets/images/${product.img}`} alt={product.label} className="product-image" />
+                    <img 
+                      src="https://i.imgur.com/Eba983T.jpeg" 
+                      alt={product.label} 
+                      className="product-image"
+                    />
                     <div className="product-details">
                       <h4>{product.label}</h4>
                       <p>{product.price}</p>

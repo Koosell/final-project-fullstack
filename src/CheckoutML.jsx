@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import "./css/Checkout.css";
 
 const productOptions = [
-  { label: "Weekly Pass", price: "Rp 24.557", img: "wdp.jpeg", popular: false },
-  { label: "Twilight Pass", price: "Rp 149.900", img: "diamond.jpeg", popular: true },
   { label: "86 Diamonds", price: "Rp 23.500", img: "diamond.jpeg", popular: false },
   { label: "172 Diamonds", price: "Rp 47.500", img: "diamond.jpeg", popular: true },
   { label: "257 Diamonds", price: "Rp 70.000", img: "diamond.jpeg", popular: false },
@@ -48,7 +46,7 @@ const CheckoutML = () => {
         <div className="checkout-content">
           <div className="game-header">
             <img 
-              src="/src/assets/images/mobile-legends.jpeg" 
+              src="https://i.imgur.com/q2FAJ3f.jpeg" 
               alt="Mobile Legends" 
               className="game-logo"
             />
@@ -70,7 +68,7 @@ const CheckoutML = () => {
                   >
                     {product.popular && <span className="popular-badge">POPULAR</span>}
                     <img 
-                      src={`/src/assets/images/${product.img}`} 
+                      src="https://i.imgur.com/5OItBDb.jpeg"
                       alt={product.label} 
                       className="product-image"
                     />

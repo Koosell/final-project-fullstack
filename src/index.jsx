@@ -7,7 +7,7 @@ const promos = [
   {
     title: "MLBB X NARUTO SKIN DRAW",
     description: 'Jangan Ketinggalan <strong>MILIKI SEKARANG!!</strong> Segera Top-up Mobile Legends dan dapatkan skin Naruto eksklusif dengan kode <strong>NARUTO10</strong>',
-    image: "./src/assets/images/naruto.jpeg",
+    image: "https://i.imgur.com/LxaW4Ra.jpeg",
     alt: "Bonus 10 Diamond"
   },
   {
@@ -19,7 +19,7 @@ const promos = [
   {
     title: "PUB",
     description: '<strong> Royale Pass PUBG Mobile: Season Baru, Hadiah Lebih Keren!</strong> Segera top-up dan klaim skin eksklusif, emote keren, dan banyak hadiah menarik!',
-    image: "./src/assets/images/promoValo.jpeg",
+    image: "https://i.imgur.com/IW3qA6p.jpeg",
     alt: "Diskon 20% Valorant Points"
   },
 ];
@@ -88,32 +88,32 @@ const Index = () => {
       {/* Game Grid */}
       <main className="game-grid">
         <div className="game-card" style={{ '--index': 0 }}>
-          <img className="game-image" src="/src/assets/images/pubg.jpeg" alt="PUBG" />
+          <img className="game-image" src="https://i.imgur.com/Eba983T.jpeg" alt="PUBG" />
           <p>PUBG</p>
           <Link to="/checkout/pubg" className="topup-button">Top-up Sekarang</Link>
         </div>
         <div className="game-card" style={{ '--index': 1 }}>
-          <img className="game-image" src="/src/assets/images/mobile-legends.jpeg" alt="Mobile Legends" />
+          <img className="game-image" src="https://i.imgur.com/q2FAJ3f.jpeg" alt="Mobile Legends" />
           <p>Mobile Legends</p>
           <Link to="/checkout/ml" className="topup-button">Top-up Sekarang</Link>
         </div>
         <div className="game-card" style={{ '--index': 2 }}>
-          <img className="game-image" src="/src/assets/images/free-fire.jpeg" alt="Free Fire" />
+          <img className="game-image" src="https://i.imgur.com/chTbnxD.jpeg" alt="Free Fire" />
           <p>Free Fire</p>
           <Link to="/checkout/ff" className="topup-button">Top-up Sekarang</Link>
         </div>
         <div className="game-card" style={{ '--index': 3 }}>
-          <img className="game-image" src="/src/assets/images/VALORANT.jpeg" alt="Valorant" />
+          <img className="game-image" src="https://i.imgur.com/4WVAckQ.jpeg" alt="Valorant" />
           <p>Valorant</p>
           <Link to="/checkout/valo" className="topup-button">Top-up Sekarang</Link>
         </div>
         <div className="game-card" style={{ '--index': 4 }}>
-          <img className="game-image" src="/src/assets/images/cod.jpeg" alt="Call Of Duty" />
+          <img className="game-image" src="https://i.imgur.com/9LP0vMe.jpeg" alt="Call Of Duty" />
           <p>Call Of Duty</p>
           <Link to="/checkout/cod" className="topup-button">Top-up Sekarang</Link>
         </div>
         <div className="game-card" style={{ '--index': 5 }}>
-          <img className="game-image" src="/src/assets/images/gensin.jpeg" alt="Genshin Impact" />
+          <img className="game-image" src="https://i.imgur.com/Q6qj5sG.jpeg" alt="Genshin Impact" />
           <p>Genshin Impact</p>
           <Link to="/checkout/gensin" className="topup-button">Top-up Sekarang</Link>
         </div>
