@@ -17,24 +17,80 @@ const CheckoutCOD = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
     game_id: "",
-    region: "",
+    region: "", // Tetap menggunakan "region" seperti di kode asli Anda
     kode_promo: "",
-    metode: "Dana"
+    paymentMethod: "dana", // Mengubah 'metode' menjadi 'paymentMethod'
+    accountNumber: "", // Menambahkan state untuk nomor akun e-wallet
+    bankName: "" // Menambahkan state untuk nama bank
   });
+  const [errors, setErrors] = useState({}); // Menambahkan state untuk error validasi
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // Validasi angka saja untuk game_id dan region
-    if ((name === "game_id" || name === "region") && /\D/.test(value)) return;
-    setFormData(prev => ({ ...prev, [name]: value }));
+
+    // Validasi hanya angka untuk User ID dan Region
+    if ((name === "game_id" || name === "region") && !/^\d*$/.test(value)) {
+      return;
+    }
+
+    // Reset account number dan bank name ketika payment method berubah
+    if (name === "paymentMethod") {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value,
+        accountNumber: "",
+        bankName: ""
+      }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
+
+    // Clear error ketika user mulai mengetik
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!selectedProduct) {
+      newErrors.product = "Pilih produk terlebih dahulu!";
+    }
+
+    if (!formData.game_id) {
+      newErrors.game_id = "User ID wajib diisi";
+    }
+
+    if (!formData.region) {
+      newErrors.region = "Region wajib diisi";
+    }
+
+    if (!formData.paymentMethod) {
+      newErrors.paymentMethod = "Pilih metode pembayaran";
+    }
+
+    // Validasi untuk e-wallet
+    if (formData.paymentMethod && formData.paymentMethod !== "bank" && !formData.accountNumber) {
+      newErrors.accountNumber = `Nomor ${formData.paymentMethod.toUpperCase()} wajib diisi`;
+    }
+
+    // Validasi untuk bank transfer
+    if (formData.paymentMethod === "bank" && !formData.bankName) {
+      newErrors.bankName = "Pilih bank terlebih dahulu";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!selectedProduct) {
-      alert("Pilih produk terlebih dahulu!");
+
+    if (!validateForm()) {
       return;
     }
+
     setTimeout(() => setShowSuccess(true), 1000);
   };
 
@@ -43,9 +99,9 @@ const CheckoutCOD = () => {
       {!showSuccess ? (
         <div className="checkout-content">
           <div className="game-header">
-            <img 
-              src="https://i.imgur.com/9LP0vMe.jpeg" 
-              alt="Call of Duty" 
+            <img
+              src="https://i.imgur.com/9LP0vMe.jpeg"
+              alt="Call of Duty"
               className="game-logo"
             />
             <div className="game-info">
@@ -59,15 +115,16 @@ const CheckoutCOD = () => {
               <h3>Pilih Produk</h3>
               <div className="product-scroller">
                 {productOptions.map((product, index) => (
-                  <div 
+                  <div
                     key={index}
                     className={`product-card ${selectedProduct === product.label ? "selected" : ""} ${product.popular ? "popular" : ""}`}
                     onClick={() => setSelectedProduct(product.label)}
                   >
                     {product.popular && <span className="popular-badge">POPULAR</span>}
-                    <img 
-                      src={`https://i.imgur.com/gCRJcLU.png${product.img}`} 
-                      alt={product.label} 
+                    {/* Perbaiki src gambar, pastikan path atau URL-nya benar */}
+                    <img
+                      src={product.img.includes("https://i.imgur.com/") ? product.img : `https://i.imgur.com/gCRJcLU.png`}
+                      alt={product.label}
                       className="product-image"
                     />
                     <div className="product-details">
@@ -77,6 +134,7 @@ const CheckoutCOD = () => {
                   </div>
                 ))}
               </div>
+              {errors.product && <span className="error">{errors.product}</span>}
             </div>
 
             <div className="form-section">
@@ -90,9 +148,10 @@ const CheckoutCOD = () => {
                     value={formData.game_id}
                     onChange={handleInputChange}
                     inputMode="numeric"
-                    pattern="\d*"
+                    pattern="[0-9]*"
                     required
                   />
+                  {errors.game_id && <span className="error">{errors.game_id}</span>}
                 </div>
 
                 <div className="input-group">
@@ -104,25 +163,94 @@ const CheckoutCOD = () => {
                     value={formData.region}
                     onChange={handleInputChange}
                     inputMode="numeric"
-                    pattern="\d*"
+                    pattern="[0-9]*"
                     required
                   />
+                  {errors.region && <span className="error">{errors.region}</span>}
                 </div>
 
                 <div className="input-group">
                   <label>Metode Pembayaran</label>
-                  <select 
-                    name="metode" 
-                    value={formData.metode}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="Dana">Dana</option>
-                    <option value="OVO">OVO</option>
-                    <option value="Gopay">Gopay</option>
-                    <option value="Bank Transfer">Bank Transfer</option>
-                  </select>
+                  <div className="payment-options">
+                    <label className="payment-option">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="dana"
+                        checked={formData.paymentMethod === "dana"}
+                        onChange={handleInputChange}
+                      />
+                      <span className="payment-label">DANA</span>
+                    </label>
+                    <label className="payment-option">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="ovo"
+                        checked={formData.paymentMethod === "ovo"}
+                        onChange={handleInputChange}
+                      />
+                      <span className="payment-label">OVO</span>
+                    </label>
+                    <label className="payment-option">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="gopay"
+                        checked={formData.paymentMethod === "gopay"}
+                        onChange={handleInputChange}
+                      />
+                      <span className="payment-label">GoPay</span>
+                    </label>
+                    <label className="payment-option">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="bank"
+                        checked={formData.paymentMethod === "bank"}
+                        onChange={handleInputChange}
+                      />
+                      <span className="payment-label">Transfer Bank</span>
+                    </label>
+                  </div>
+                  {errors.paymentMethod && <span className="error">{errors.paymentMethod}</span>}
                 </div>
+
+                {formData.paymentMethod && formData.paymentMethod !== "bank" && (
+                  <div className="input-group">
+                    <label>Nomor Akun {formData.paymentMethod.toUpperCase()}</label>
+                    <input
+                      type="text"
+                      name="accountNumber"
+                      value={formData.accountNumber}
+                      onChange={handleInputChange}
+                      placeholder={`Masukkan nomor ${formData.paymentMethod.toUpperCase()}`}
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                    />
+                    {errors.accountNumber && <span className="error">{errors.accountNumber}</span>}
+                  </div>
+                )}
+
+                {formData.paymentMethod === "bank" && (
+                  <div className="input-group">
+                    <label>Pilih Bank</label>
+                    <select
+                      name="bankName"
+                      value={formData.bankName}
+                      onChange={handleInputChange}
+                    >
+                      <option value="">Pilih bank</option>
+                      <option value="BCA">BCA</option>
+                      <option value="Mandiri">Mandiri</option>
+                      <option value="BNI">BNI</option>
+                      <option value="BRI">BRI</option>
+                      <option value="CIMB Niaga">CIMB Niaga</option>
+                      <option value="Danamon">Danamon</option>
+                    </select>
+                    {errors.bankName && <span className="error">{errors.bankName}</span>}
+                  </div>
+                )}
 
                 <div className="input-group">
                   <label>Kode Promo (Opsional)</label>
@@ -148,7 +276,7 @@ const CheckoutCOD = () => {
             <div className="success-icon">✓</div>
             <h2>Pembayaran Berhasil!</h2>
             <p>Pesanan Anda sedang diproses</p>
-            
+
             <div className="order-summary">
               <div className="summary-item">
                 <span>Produk</span>
@@ -159,12 +287,27 @@ const CheckoutCOD = () => {
                 <span>{formData.game_id}</span>
               </div>
               <div className="summary-item">
-                <span>Metode Pembayaran</span>
-                <span>{formData.metode}</span>
+                <span>Region</span>
+                <span>{formData.region}</span>
               </div>
+              <div className="summary-item">
+                <span>Metode Pembayaran</span>
+                <span>
+                  {formData.paymentMethod === "bank"
+                    ? `Transfer Bank - ${formData.bankName}`
+                    : formData.paymentMethod.toUpperCase()
+                  }
+                </span>
+              </div>
+              {formData.paymentMethod !== "bank" && formData.accountNumber && (
+                <div className="summary-item">
+                  <span>Nomor Akun</span>
+                  <span>{formData.accountNumber}</span>
+                </div>
+              )}
             </div>
 
-            <button 
+            <button
               className="back-btn"
               onClick={() => {
                 setShowSuccess(false);
@@ -173,8 +316,11 @@ const CheckoutCOD = () => {
                   game_id: "",
                   region: "",
                   kode_promo: "",
-                  metode: "Dana"
+                  paymentMethod: "dana",
+                  accountNumber: "",
+                  bankName: ""
                 });
+                setErrors({}); // Reset errors
               }}
             >
               Beli Lagi
