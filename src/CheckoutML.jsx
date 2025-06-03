@@ -17,26 +17,78 @@ const CheckoutML = () => {
     game_id: "",
     server_id: "",
     kode_promo: "",
-    metode: "Dana"
+    paymentMethod: "dana",
+    accountNumber: "",
+    bankName: ""
   });
+  const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    // Validasi hanya angka untuk game_id dan server_id
+    // Validasi hanya angka untuk User ID dan Server ID
     if ((name === "game_id" || name === "server_id") && !/^\d*$/.test(value)) {
       return;
     }
 
-    setFormData(prev => ({ ...prev, [name]: value }));
+    // Reset account number dan bank name ketika payment method berubah
+    if (name === "paymentMethod") {
+      setFormData(prev => ({ 
+        ...prev, 
+        [name]: value,
+        accountNumber: "",
+        bankName: ""
+      }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
+
+    // Clear error ketika user mulai mengetik
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!selectedProduct) {
+      newErrors.product = "Pilih produk terlebih dahulu!";
+    }
+
+    if (!formData.game_id) {
+      newErrors.game_id = "User ID wajib diisi";
+    }
+
+    if (!formData.server_id) {
+      newErrors.server_id = "Server ID wajib diisi";
+    }
+
+    if (!formData.paymentMethod) {
+      newErrors.paymentMethod = "Pilih metode pembayaran";
+    }
+
+    // Validasi untuk e-wallet
+    if (formData.paymentMethod && formData.paymentMethod !== "bank" && !formData.accountNumber) {
+      newErrors.accountNumber = `Nomor ${formData.paymentMethod.toUpperCase()} wajib diisi`;
+    }
+
+    // Validasi untuk bank transfer
+    if (formData.paymentMethod === "bank" && !formData.bankName) {
+      newErrors.bankName = "Pilih bank terlebih dahulu";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!selectedProduct) {
-      alert("Pilih produk terlebih dahulu!");
+    
+    if (!validateForm()) {
       return;
     }
+
     setTimeout(() => setShowSuccess(true), 1000);
   };
 
@@ -79,6 +131,7 @@ const CheckoutML = () => {
                   </div>
                 ))}
               </div>
+              {errors.product && <span className="error">{errors.product}</span>}
             </div>
 
             <div className="form-section">
@@ -91,8 +144,11 @@ const CheckoutML = () => {
                     placeholder="Masukkan User ID"
                     value={formData.game_id}
                     onChange={handleInputChange}
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     required
                   />
+                  {errors.game_id && <span className="error">{errors.game_id}</span>}
                 </div>
 
                 <div className="input-group">
@@ -103,24 +159,95 @@ const CheckoutML = () => {
                     placeholder="Masukkan Server ID"
                     value={formData.server_id}
                     onChange={handleInputChange}
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     required
                   />
+                  {errors.server_id && <span className="error">{errors.server_id}</span>}
                 </div>
 
                 <div className="input-group">
                   <label>Metode Pembayaran</label>
-                  <select 
-                    name="metode" 
-                    value={formData.metode}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="Dana">Dana</option>
-                    <option value="OVO">OVO</option>
-                    <option value="Gopay">Gopay</option>
-                    <option value="Bank Transfer">Bank Transfer</option>
-                  </select>
+                  <div className="payment-options">
+                    <label className="payment-option">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="dana"
+                        checked={formData.paymentMethod === "dana"}
+                        onChange={handleInputChange}
+                      />
+                      <span className="payment-label">DANA</span>
+                    </label>
+                    <label className="payment-option">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="ovo"
+                        checked={formData.paymentMethod === "ovo"}
+                        onChange={handleInputChange}
+                      />
+                      <span className="payment-label">OVO</span>
+                    </label>
+                    <label className="payment-option">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="gopay"
+                        checked={formData.paymentMethod === "gopay"}
+                        onChange={handleInputChange}
+                      />
+                      <span className="payment-label">GoPay</span>
+                    </label>
+                    <label className="payment-option">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="bank"
+                        checked={formData.paymentMethod === "bank"}
+                        onChange={handleInputChange}
+                      />
+                      <span className="payment-label">Transfer Bank</span>
+                    </label>
+                  </div>
+                  {errors.paymentMethod && <span className="error">{errors.paymentMethod}</span>}
                 </div>
+
+                {formData.paymentMethod && formData.paymentMethod !== "bank" && (
+                  <div className="input-group">
+                    <label>Nomor Akun {formData.paymentMethod.toUpperCase()}</label>
+                    <input
+                      type="text"
+                      name="accountNumber"
+                      value={formData.accountNumber}
+                      onChange={handleInputChange}
+                      placeholder={`Masukkan nomor ${formData.paymentMethod.toUpperCase()}`}
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                    />
+                    {errors.accountNumber && <span className="error">{errors.accountNumber}</span>}
+                  </div>
+                )}
+
+                {formData.paymentMethod === "bank" && (
+                  <div className="input-group">
+                    <label>Pilih Bank</label>
+                    <select
+                      name="bankName"
+                      value={formData.bankName}
+                      onChange={handleInputChange}
+                    >
+                      <option value="">Pilih bank</option>
+                      <option value="BCA">BCA</option>
+                      <option value="Mandiri">Mandiri</option>
+                      <option value="BNI">BNI</option>
+                      <option value="BRI">BRI</option>
+                      <option value="CIMB Niaga">CIMB Niaga</option>
+                      <option value="Danamon">Danamon</option>
+                    </select>
+                    {errors.bankName && <span className="error">{errors.bankName}</span>}
+                  </div>
+                )}
 
                 <div className="input-group">
                   <label>Kode Promo (Opsional)</label>
@@ -157,9 +284,24 @@ const CheckoutML = () => {
                 <span>{formData.game_id}</span>
               </div>
               <div className="summary-item">
-                <span>Metode Pembayaran</span>
-                <span>{formData.metode}</span>
+                <span>Server ID</span>
+                <span>{formData.server_id}</span>
               </div>
+              <div className="summary-item">
+                <span>Metode Pembayaran</span>
+                <span>
+                  {formData.paymentMethod === "bank" 
+                    ? `Transfer Bank - ${formData.bankName}` 
+                    : formData.paymentMethod.toUpperCase()
+                  }
+                </span>
+              </div>
+              {formData.paymentMethod !== "bank" && formData.accountNumber && (
+                <div className="summary-item">
+                  <span>Nomor Akun</span>
+                  <span>{formData.accountNumber}</span>
+                </div>
+              )}
             </div>
 
             <button 
@@ -171,8 +313,11 @@ const CheckoutML = () => {
                   game_id: "",
                   server_id: "",
                   kode_promo: "",
-                  metode: "Dana"
+                  paymentMethod: "dana",
+                  accountNumber: "",
+                  bankName: ""
                 });
+                setErrors({});
               }}
             >
               Beli Lagi
