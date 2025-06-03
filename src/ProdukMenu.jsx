@@ -8,7 +8,7 @@ const ProdukMenu = ({ addToCart }) => {
     {
       id: 1,
       name: "Gaming Headset RGB 7.1 Surround",
-      image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?w=400&h=300&fit=crop&auto=format",
+      image: "https://i.imgur.com/bOYAQMk.jpeg",
       price: 759000,
       category: "Audio",
       rating: 4.9,
@@ -26,7 +26,7 @@ const ProdukMenu = ({ addToCart }) => {
     {
       id: 3,
       name: "Gaming T-Shirt Esports Edition",
-      image: "https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=400&h=300&fit=crop&auto=format",
+      image: "https://i.imgur.com/MUXFpkX.jpeg",
       price: 149000,
       category: "Apparel",
       rating: 4.3,
@@ -35,7 +35,7 @@ const ProdukMenu = ({ addToCart }) => {
     {
       id: 4,
       name: "Gaming Backpack RGB",
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=300&fit=crop&auto=format",
+      image: "https://i.imgur.com/3VAnTzm.jpeg",
       price: 399000,
       category: "Accessories",
       rating: 4.6,
@@ -44,7 +44,7 @@ const ProdukMenu = ({ addToCart }) => {
     {
       id: 5,
       name: "Mechanical Keyboard RGB Clicky",
-      image: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=400&h=300&fit=crop&auto=format",
+      image: "https://i.imgur.com/6y4fyQ8.jpeg",
       price: 899000,
       category: "Peripheral",
       rating: 4.8,
@@ -53,7 +53,7 @@ const ProdukMenu = ({ addToCart }) => {
     {
       id: 6,
       name: "Gaming Chair Ergonomic Pro",
-      image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&auto=format",
+      image: "https://i.imgur.com/8lsVPBa.jpeg",
       price: 2499000,
       category: "Furniture",
       rating: 4.9,
@@ -62,7 +62,7 @@ const ProdukMenu = ({ addToCart }) => {
     {
       id: 7,
       name: "Gaming Monitor 144Hz Curved",
-      image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&h=300&fit=crop&auto=format",
+      image: "https://i.imgur.com/XYnESWE.jpeg",
       price: 3299000,
       category: "Display",
       rating: 5.0,
@@ -71,7 +71,7 @@ const ProdukMenu = ({ addToCart }) => {
     {
       id: 8,
       name: "Gaming Mousepad XXL RGB",
-      image: "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=400&h=300&fit=crop&auto=format",
+      image: "https://i.imgur.com/a1oRwdb.jpeg",
       price: 199000,
       category: "Peripheral",
       rating: 4.4,
@@ -80,7 +80,7 @@ const ProdukMenu = ({ addToCart }) => {
     {
       id: 9,
       name: "Webcam 4K Gaming Streamer",
-      image: "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=400&h=300&fit=crop&auto=format",
+      image: "https://i.imgur.com/Xsl0SCA.jpeg",
       price: 1199000,
       category: "Streaming",
       rating: 4.7,
@@ -89,7 +89,7 @@ const ProdukMenu = ({ addToCart }) => {
     {
       id: 10,
       name: "Gaming Phone Cooler Fan",
-      image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop&auto=format",
+      image: "https://i.imgur.com/2v53UWH.jpeg",
       price: 249000,
       category: "Mobile Gaming",
       rating: 4.2,
