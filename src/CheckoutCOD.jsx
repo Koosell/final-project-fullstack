@@ -66,7 +66,7 @@ const CheckoutCOD = () => {
                   >
                     {product.popular && <span className="popular-badge">POPULAR</span>}
                     <img 
-                      src={`/src/assets/images/${product.img}`} 
+                      src={`https://i.imgur.com/gCRJcLU.png${product.img}`} 
                       alt={product.label} 
                       className="product-image"
                     />
