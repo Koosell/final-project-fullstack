@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import "./css/Checkout.css";
 
 const productOptions = [
-  { label: "86 Diamonds", price: "Rp 23.500", img: "diamond.jpeg", popular: false },
-  { label: "172 Diamonds", price: "Rp 47.500", img: "diamond.jpeg", popular: true },
-  { label: "257 Diamonds", price: "Rp 70.000", img: "diamond.jpeg", popular: false },
-  { label: "344 Diamonds", price: "Rp 93.500", img: "diamond.jpeg", popular: false },
-  { label: "429 Diamonds", price: "Rp 116.500", img: "diamond.jpeg", popular: true },
-  { label: "600 Diamonds", price: "Rp 150.000", img: "diamond.jpeg", popular: false }
+  { label: "86 Diamonds", price: 23500, img: "diamond.jpeg", popular: false },
+  { label: "172 Diamonds", price: 47500, img: "diamond.jpeg", popular: true },
+  { label: "257 Diamonds", price: 70000, img: "diamond.jpeg", popular: false },
+  { label: "344 Diamonds", price: 93500, img: "diamond.jpeg", popular: false },
+  { label: "429 Diamonds", price: 116500, img: "diamond.jpeg", popular: true },
+  { label: "600 Diamonds", price: 150000, img: "diamond.jpeg", popular: false }
 ];
 
 const CheckoutML = () => {
@@ -22,6 +22,14 @@ const CheckoutML = () => {
     bankName: ""
   });
   const [errors, setErrors] = useState({});
+
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0
+    }).format(price);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -84,12 +92,36 @@ const CheckoutML = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
-    setTimeout(() => setShowSuccess(true), 1000);
+    // Kirim data ke backend Laravel
+    fetch('http://localhost:8000/api/pesanan', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        produk: selectedProduct,
+        game_id: formData.game_id,
+        server_id: formData.server_id,
+        payment_method: formData.paymentMethod,
+        account_number: formData.accountNumber,
+        bank_name: formData.bankName,
+        kode_promo: formData.kode_promo,
+        total: productOptions.find(p => p.label === selectedProduct)?.price || 0
+      })
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('Gagal');
+        return res.json();
+      })
+      .then(data => {
+        if (data) setShowSuccess(true);
+      })
+      .catch(() => {
+        alert("Gagal mengirim data ke server!");
+      });
   };
 
   return (
@@ -126,7 +158,7 @@ const CheckoutML = () => {
                     />
                     <div className="product-details">
                       <h4>{product.label}</h4>
-                      <p>{product.price}</p>
+                      <p>{formatPrice(product.price)}</p>
                     </div>
                   </div>
                 ))}
@@ -135,7 +167,7 @@ const CheckoutML = () => {
             </div>
 
             <div className="form-section">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} autoComplete="off">
                 <div className="input-group">
                   <label>User ID</label>
                   <input
