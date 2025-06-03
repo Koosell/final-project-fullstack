@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from './css/CheckoutProduk.module.css';
@@ -17,12 +16,15 @@ const CheckoutProduk = ({ cartItems, getTotalPrice, setCartItems }) => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
+    // Menambahkan class ke body saat komponen dimuat
     document.body.classList.add('checkout-produk-page');
+    // Membersihkan class saat komponen tidak lagi digunakan
     return () => document.body.classList.remove('checkout-produk-page');
   }, []);
 
   console.log("CheckoutProduk rendered, cartItems:", cartItems);
 
+  // Fungsi untuk memformat harga ke mata uang Rupiah
   const formatPrice = (price) => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
@@ -30,42 +32,65 @@ const CheckoutProduk = ({ cartItems, getTotalPrice, setCartItems }) => {
     }).format(price);
   };
 
+  // Handler umum untuk input form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    // Hapus error saat pengguna mulai mengetik
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
+  // Handler khusus untuk input telepon (memungkinkan '+' dan angka)
   const handlePhoneInput = (e) => {
     const value = e.target.value;
+    // Memungkinkan angka dan tanda '+' di awal
     if (/^(\+?[0-9]*)$/.test(value)) {
       setFormData((prev) => ({ ...prev, phone: value }));
       setErrors((prev) => ({ ...prev, phone: "" }));
     }
   };
 
+  // Handler khusus untuk input numerik (hanya angka)
+  const handleNumericInput = (e) => {
+    const { name, value } = e.target;
+    // Hanya menerima angka
+    if (/^\d*$/.test(value)) {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  // Fungsi untuk memvalidasi seluruh form
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = "Nama diperlukan";
     if (!formData.address.trim()) newErrors.address = "Alamat diperlukan";
+    // Validasi nomor telepon dengan regex yang lebih spesifik
     if (!formData.phone.match(/^(?:\+62|0)\d{9,15}$/))
       newErrors.phone = "Nomor telepon tidak valid (contoh: +6281234567890 atau 081234567890)";
     if (!formData.paymentMethod) newErrors.paymentMethod = "Pilih metode pembayaran";
-    if (formData.paymentMethod !== "bank" && !formData.accountNumber.trim())
-      newErrors.accountNumber = "Nomor akun e-wallet diperlukan";
+    
+    // Validasi accountNumber: harus angka dan tidak kosong jika metode bukan bank
+    if (formData.paymentMethod !== "bank" && !/^\d+$/.test(formData.accountNumber.trim())) {
+      newErrors.accountNumber = "Nomor akun e-wallet harus berupa angka dan tidak boleh kosong";
+    }
+
     if (formData.paymentMethod === "bank" && !formData.bankName)
       newErrors.bankName = "Pilih bank";
     return newErrors;
   };
 
+  // Handler saat tombol 'Konfirmasi Pesanan' diklik
   const handleConfirmOrder = (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
+    // Jika ada error, set error dan hentikan proses
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
 
+    // Tampilkan alert konfirmasi pesanan
     alert(
       `Pesanan berhasil!\n\nDetail:\nNama: ${formData.name}\nAlamat: ${formData.address}\nNo. Telepon: ${formData.phone}\nMetode Pembayaran: ${
         formData.paymentMethod === "bank"
@@ -76,6 +101,7 @@ const CheckoutProduk = ({ cartItems, getTotalPrice, setCartItems }) => {
       )}`
     );
 
+    // Reset keranjang dan form
     setCartItems([]);
     setFormData({
       name: "",
@@ -85,6 +111,7 @@ const CheckoutProduk = ({ cartItems, getTotalPrice, setCartItems }) => {
       accountNumber: "",
       bankName: "",
     });
+    // Redirect ke halaman ProdukMenu
     navigate("/ProdukMenu");
   };
 
@@ -103,6 +130,7 @@ const CheckoutProduk = ({ cartItems, getTotalPrice, setCartItems }) => {
       </div>
 
       {cartItems.length === 0 ? (
+        // Tampilan jika keranjang kosong
         <div className={styles.emptyCheckout}>
           <svg className={styles.emptyIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -114,6 +142,7 @@ const CheckoutProduk = ({ cartItems, getTotalPrice, setCartItems }) => {
           </Link>
         </div>
       ) : (
+        // Tampilan checkout jika ada item di keranjang
         <div className={styles.checkoutContent}>
           <div className={styles.checkoutItems}>
             <h3>Daftar Pesanan</h3>
@@ -137,6 +166,7 @@ const CheckoutProduk = ({ cartItems, getTotalPrice, setCartItems }) => {
             <div className={styles.formCard}>
               <h3>Detail Pengiriman & Pembayaran</h3>
               <form onSubmit={handleConfirmOrder}>
+                {/* Input Nama Lengkap */}
                 <div className={styles.formGroup}>
                   <label htmlFor="name">Nama Lengkap</label>
                   <input
@@ -149,6 +179,7 @@ const CheckoutProduk = ({ cartItems, getTotalPrice, setCartItems }) => {
                   />
                   {errors.name && <span className={styles.error}>{errors.name}</span>}
                 </div>
+                {/* Input Alamat Pengiriman */}
                 <div className={styles.formGroup}>
                   <label htmlFor="address">Alamat Pengiriman</label>
                   <textarea
@@ -160,6 +191,7 @@ const CheckoutProduk = ({ cartItems, getTotalPrice, setCartItems }) => {
                   />
                   {errors.address && <span className={styles.error}>{errors.address}</span>}
                 </div>
+                {/* Input Nomor Telepon */}
                 <div className={styles.formGroup}>
                   <label htmlFor="phone">Nomor Telepon</label>
                   <input
@@ -174,6 +206,7 @@ const CheckoutProduk = ({ cartItems, getTotalPrice, setCartItems }) => {
                   />
                   {errors.phone && <span className={styles.error}>{errors.phone}</span>}
                 </div>
+                {/* Pilihan Metode Pembayaran */}
                 <div className={styles.formGroup}>
                   <label>Metode Pembayaran</label>
                   <div className={styles.paymentOptions}>
@@ -220,6 +253,7 @@ const CheckoutProduk = ({ cartItems, getTotalPrice, setCartItems }) => {
                   </div>
                   {errors.paymentMethod && <span className={styles.error}>{errors.paymentMethod}</span>}
                 </div>
+                {/* Input Nomor Akun E-wallet (kondisional) */}
                 {formData.paymentMethod && formData.paymentMethod !== "bank" && (
                   <div className={styles.formGroup}>
                     <label htmlFor="accountNumber">Nomor Akun {formData.paymentMethod.toUpperCase()}</label>
@@ -228,12 +262,15 @@ const CheckoutProduk = ({ cartItems, getTotalPrice, setCartItems }) => {
                       id="accountNumber"
                       name="accountNumber"
                       value={formData.accountNumber}
-                      onChange={handleInputChange}
+                      onChange={handleNumericInput} // Menggunakan handler khusus untuk angka
                       placeholder={`Masukkan nomor ${formData.paymentMethod.toUpperCase()}`}
+                      inputMode="numeric" // Menampilkan keyboard numerik pada perangkat seluler
+                      pattern="[0-9]*" // Pola regex untuk validasi angka
                     />
                     {errors.accountNumber && <span className={styles.error}>{errors.accountNumber}</span>}
                   </div>
                 )}
+                {/* Pilihan Bank (kondisional) */}
                 {formData.paymentMethod === "bank" && (
                   <div className={styles.formGroup}>
                     <label htmlFor="bankName">Pilih Bank</label>
@@ -247,10 +284,12 @@ const CheckoutProduk = ({ cartItems, getTotalPrice, setCartItems }) => {
                       <option value="BCA">BCA</option>
                       <option value="Mandiri">Mandiri</option>
                       <option value="BNI">BNI</option>
+                      <option value="BRI">BRI</option>
                     </select>
                     {errors.bankName && <span className={styles.error}>{errors.bankName}</span>}
                   </div>
                 )}
+                {/* Tombol Konfirmasi Pesanan */}
                 <button type="submit" className={styles.checkoutBtn}>
                   Konfirmasi Pesanan
                 </button>
@@ -258,6 +297,7 @@ const CheckoutProduk = ({ cartItems, getTotalPrice, setCartItems }) => {
             </div>
           </div>
 
+          {/* Ringkasan Pembayaran */}
           <div className={styles.checkoutSummary}>
             <div className={styles.summaryCard}>
               <h3>Ringkasan Pembayaran</h3>
