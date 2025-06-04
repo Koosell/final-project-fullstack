@@ -1,0 +1,24 @@
+/* TentangKami.css */
+
+.container {
+  max-width: 768px; /* Maksimal lebar kontainer */
+  margin: auto; /* Pusatkan kontainer */
+  padding: 24px; /* Padding di dalam kontainer */
+  background-color: #ffffff; /* Warna latar belakang putih */
+  border-radius: 12px; /* Sudut melengkung */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Bayangan lembut */
+  margin-top: 40px; /* Jarak atas */
+}
+
+.title {
+  font-size: 2rem; /* Ukuran font judul */
+  font-weight: bold; /* Ketebalan font */
+  color: #4A5568; /* Warna teks abu-abu gelap */
+  margin-bottom: 16px; /* Jarak bawah judul */
+}
+
+.paragraph {
+  color: #4A5568; /* Warna teks */
+  font-size: 1.125rem; /* Ukuran font untuk paragraf */
+  line-height: 1.6; /* Jarak antar baris */
+}

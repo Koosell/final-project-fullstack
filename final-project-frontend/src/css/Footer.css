@@ -1,0 +1,558 @@
+/* src/components/css/Footer.css */
+
+.page-footer {
+  position: relative;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  color: #ffffff;
+  overflow: hidden;
+  border-top: 1px solid rgba(99, 102, 241, 0.3);
+  animation: backgroundShift 10s ease-in-out infinite;
+}
+
+@keyframes backgroundShift {
+  0%, 100% { 
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  }
+  50% { 
+    background: linear-gradient(135deg, #16213e 0%, #0a0a0a 50%, #1a1a2e 100%);
+  }
+}
+
+/* Particles dengan efek lebih keren */
+.footer-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, #6366f1, #3b82f6, #8b5cf6);
+  border-radius: 50%;
+  animation: particleFloat 8s infinite ease-in-out, particleGlow 3s infinite ease-in-out;
+  animation-delay: calc(var(--i) * 0.8s);
+  box-shadow: 0 0 15px #6366f1, 0 0 25px rgba(99, 102, 241, 0.5);
+}
+
+.particle:nth-child(odd) {
+  left: calc(15% + var(--i) * 12%);
+  animation-duration: calc(6s + var(--i) * 1s), 3s;
+}
+
+.particle:nth-child(even) {
+  right: calc(10% + var(--i) * 10%);
+  animation-duration: calc(7s + var(--i) * 0.5s), 4s;
+}
+
+@keyframes particleFloat {
+  0%, 100% { 
+    transform: translateY(0) rotate(0deg) scale(1); 
+    opacity: 0.6; 
+  }
+  25% { 
+    transform: translateY(-30px) rotate(90deg) scale(1.2); 
+    opacity: 1; 
+  }
+  50% { 
+    transform: translateY(-60px) rotate(180deg) scale(0.8); 
+    opacity: 0.8; 
+  }
+  75% { 
+    transform: translateY(-30px) rotate(270deg) scale(1.1); 
+    opacity: 0.9; 
+  }
+}
+
+@keyframes particleGlow {
+  0%, 100% { 
+    box-shadow: 0 0 15px #6366f1, 0 0 25px rgba(99, 102, 241, 0.5);
+  }
+  50% { 
+    box-shadow: 0 0 25px #3b82f6, 0 0 40px rgba(59, 130, 246, 0.8);
+  }
+}
+
+/* Footer Container */
+.footer-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px 20px;
+}
+
+/* Footer Main */
+.footer-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 40px;
+}
+
+/* Brand Section */
+.footer-brand {
+  flex: 1;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.footer-logo:hover {
+  transform: translateY(-2px);
+}
+
+.logo-icon {
+  font-size: 2rem;
+  color: #6366f1;
+  transition: all 0.4s ease;
+  animation: logoBreath 4s infinite ease-in-out;
+}
+
+.footer-logo:hover .logo-icon {
+  color: #3b82f6;
+  transform: rotate(360deg) scale(1.2);
+  text-shadow: 0 0 20px #6366f1;
+}
+
+@keyframes logoBreath {
+  0%, 100% { 
+    transform: scale(1); 
+    color: #6366f1;
+  }
+  50% { 
+    transform: scale(1.05); 
+    color: #3b82f6;
+  }
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, #6366f1, #3b82f6, #8b5cf6, #6366f1);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: textShine 3s infinite ease-in-out;
+}
+
+@keyframes textShine {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.footer-tagline {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 300px;
+}
+
+/* Navigation */
+.footer-nav {
+  display: flex;
+  gap: 30px;
+}
+
+.footer-link {
+  color: #94a3b8;
+  text-decoration: none;
+  padding: 5px 0;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-link:hover {
+  color: #ffffff;
+  transform: translateX(8px) scale(1.05);
+  text-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+}
+
+.footer-link:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #3b82f6, #8b5cf6);
+  transition: left 0.4s ease;
+  border-radius: 1px;
+}
+
+.footer-link:hover:after {
+  left: 0;
+}
+
+.footer-link:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.footer-link:hover:before {
+  left: 100%;
+}
+
+/* Bottom Section */
+.footer-bottom {
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid rgba(99, 102, 241, 0.2);
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  animation: bottomGlow 8s infinite ease-in-out;
+}
+
+@keyframes bottomGlow {
+  0%, 100% { 
+    border-top-color: rgba(99, 102, 241, 0.2);
+  }
+  50% { 
+    border-top-color: rgba(99, 102, 241, 0.5);
+    box-shadow: 0 -2px 20px rgba(99, 102, 241, 0.1);
+  }
+}
+
+/* Tambahan efek hover untuk keseluruhan footer */
+.page-footer:hover .particle {
+  animation-duration: 4s;
+  box-shadow: 0 0 20px #6366f1, 0 0 35px rgba(99, 102, 241, 0.7);
+}
+
+.page-footer:hover .logo-icon {
+  animation-duration: 2s;
+}
+
+/* Efek berkedip untuk tagline */
+.footer-tagline {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 300px;
+  animation: taglineFade 6s infinite ease-in-out;
+}
+
+@keyframes taglineFade {
+  0%, 100% { 
+    opacity: 0.7; 
+    color: #94a3b8; 
+  }
+  50% { 
+    opacity: 1; 
+    color: #cbd5e1; 
+  }
+}
+
+/* Efek wave untuk footer container */
+.footer-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px 20px;
+  animation: containerWave 12s infinite ease-in-out;
+}
+
+@keyframes containerWave {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+.footer-bottom-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-copyright {
+  color: #94a3b8;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+/* Mini Stats */
+.footer-stats-mini {
+  display: flex;
+  gap: 20px;
+}
+
+.stat-mini {
+  color: #6366f1;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 8px 12px;
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 20px;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  animation: statPulse 5s infinite ease-in-out;
+  animation-delay: calc(var(--i, 0) * 0.5s);
+}
+
+.stat-mini:hover {
+  background: rgba(99, 102, 241, 0.2);
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+  color: #ffffff;
+}
+
+.stat-mini:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.stat-mini:hover:before {
+  left: 100%;
+}
+
+@keyframes statPulse {
+  0%, 100% { 
+    border-color: rgba(99, 102, 241, 0.3);
+  }
+  50% { 
+    border-color: rgba(99, 102, 241, 0.6);
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+  }
+}
+
+/* Back to Top Button */
+.back-to-top {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 18px;
+  background: transparent;
+  border: 2px solid #6366f1;
+  border-radius: 25px;
+  color: #6366f1;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.8rem;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  animation: buttonGlow 4s infinite ease-in-out;
+}
+
+.back-to-top:hover {
+  background: linear-gradient(45deg, #6366f1, #3b82f6);
+  color: #ffffff;
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4), 0 0 30px rgba(99, 102, 241, 0.3);
+  border-color: transparent;
+}
+
+.back-to-top:hover svg {
+  transform: translateY(-3px) rotate(360deg);
+}
+
+.back-to-top:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.back-to-top:hover:before {
+  left: 100%;
+}
+
+.back-to-top:active {
+  transform: translateY(-3px) scale(0.98);
+}
+
+@keyframes buttonGlow {
+  0%, 100% { 
+    box-shadow: 0 0 5px rgba(99, 102, 241, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.6), 0 0 30px rgba(99, 102, 241, 0.3);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer-main {
+    flex-direction: column;
+    gap: 25px;
+    text-align: center;
+  }
+
+  .footer-nav {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-bottom-content {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .footer-stats-mini {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+/* Tambahkan selector yang benar, misalnya untuk tombol */
+.button-custom {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: transparent;
+  border: 2px solid #6366f1;
+  border-radius: 25px;
+  color: #6366f1;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+
+.back-to-top:hover {
+  color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+}
+
+.btn-bg {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #6366f1, #3b82f6);
+  transition: left 0.3s ease;
+  z-index: 1;
+}
+
+.back-to-top:hover .btn-bg {
+  left: 0;
+}
+
+.btn-icon, .btn-text {
+  position: relative;
+  z-index: 2;
+}
+
+.btn-icon {
+  transition: transform 0.3s ease;
+}
+
+.back-to-top:hover .btn-icon {
+  transform: translateY(-2px);
+}
+
+.btn-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.back-to-top:active .btn-ripple {
+  width: 100px;
+  height: 100px;
+}
+
+/* Footer Accent Line */
+.footer-accent-line {
+  position: relative;
+  height: 4px;
+  background: linear-gradient(90deg, #6366f1, #3b82f6, #8b5cf6, #6366f1);
+  background-size: 300% 100%;
+  animation: gradientShift 4s ease-in-out infinite;
+}
+
+.accent-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  filter: blur(2px);
+  opacity: 0.7;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer-main {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+  
+  .gaming-stats {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .footer-nav {
+    justify-content: center;
+    gap: 30px;
+  }
+  
+  .footer-bottom-content {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  .achievement-banner {
+    order: -1;
+  }
+}
