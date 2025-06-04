@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./css/Checkout.css";
+
 // Jika Anda ingin menggunakan Axios dengan setup api.js seperti yang disarankan sebelumnya,
 // Anda bisa mengimpornya di sini:
 // import api from './api'; // Pastikan path ke api.js Anda benar
@@ -20,7 +21,7 @@ const CheckoutML = () => {
     game_id: "",
     server_id: "",
     kode_promo: "",
-    paymentMethod: "dana",
+    paymentMethod: "", // Set default kosong, atau sesuaikan dengan salah satu value yang valid
     accountNumber: "",
     bankName: ""
   });
@@ -47,8 +48,8 @@ const CheckoutML = () => {
       setFormData(prev => ({
         ...prev,
         [name]: value,
-        accountNumber: "",
-        bankName: ""
+        accountNumber: "", // Reset saat ganti metode
+        bankName: ""       // Reset saat ganti metode
       }));
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
@@ -78,19 +79,22 @@ const CheckoutML = () => {
       newErrors.paymentMethod = "Pilih metode pembayaran";
     }
 
-    // Validasi untuk e-wallet
-    if (formData.paymentMethod && formData.paymentMethod !== "bank" && !formData.accountNumber) {
-      newErrors.accountNumber = `Nomor ${formData.paymentMethod.toUpperCase()} wajib diisi`;
+    // Validasi untuk e-wallet (selain Transfer Bank)
+    if (formData.paymentMethod && formData.paymentMethod !== "Transfer Bank" && !formData.accountNumber) {
+        newErrors.accountNumber = `Nomor ${formData.paymentMethod.toUpperCase()} wajib diisi`;
     }
 
+
     // Validasi untuk bank transfer
-    if (formData.paymentMethod === "bank" && !formData.bankName) {
+    if (formData.paymentMethod === "Transfer Bank" && !formData.bankName) {
       newErrors.bankName = "Pilih bank terlebih dahulu";
     }
+
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
 
   const handleSubmit = async (e) => { // Menggunakan async/await untuk penanganan fetch yang lebih baik
     e.preventDefault();
@@ -103,7 +107,7 @@ const CheckoutML = () => {
     if (!authToken) {
         alert("Anda harus login untuk melakukan pembelian!");
         // Opsional: Anda mungkin ingin mengarahkan pengguna ke halaman login di sini
-        // Misalnya: navigate('/login'); jika Anda menggunakan react-router-dom
+        // Misalnya: navigate('/login'); // jika Anda menggunakan react-router-dom
         return;
     }
 
@@ -133,7 +137,7 @@ const CheckoutML = () => {
                 quantity: 1, // Asumsi pembelian langsung adalah 1 produk
                 game_id: formData.game_id,
                 server_id: formData.server_id,
-                payment_method: formData.paymentMethod,
+                payment_method: formData.paymentMethod, // Ini akan mengirim nilai yang sudah disesuaikan
                 account_number: formData.accountNumber, // Untuk payment_details di backend
                 bank_name: formData.bankName,           // Untuk payment_details di backend
                 promo_code: formData.kode_promo,
@@ -167,7 +171,7 @@ const CheckoutML = () => {
                 game_id: "",
                 server_id: "",
                 kode_promo: "",
-                paymentMethod: "dana",
+                paymentMethod: "", // Reset ke kosong
                 accountNumber: "",
                 bankName: ""
             });
@@ -179,6 +183,7 @@ const CheckoutML = () => {
         console.error("Fetch error:", error);
     }
   };
+
 
   return (
     <div className="checkout-container">
@@ -261,47 +266,52 @@ const CheckoutML = () => {
                       <input
                         type="radio"
                         name="paymentMethod"
-                        value="dana"
-                        checked={formData.paymentMethod === "dana"}
+                        value="DANA" // UBAH KE "DANA"
+                        checked={formData.paymentMethod === "DANA"}
                         onChange={handleInputChange}
-                      />
+                        required
+                      />{" "}
                       <span className="payment-label">DANA</span>
                     </label>
                     <label className="payment-option">
                       <input
                         type="radio"
                         name="paymentMethod"
-                        value="ovo"
-                        checked={formData.paymentMethod === "ovo"}
+                        value="OVO" // UBAH KE "OVO"
+                        checked={formData.paymentMethod === "OVO"}
                         onChange={handleInputChange}
-                      />
+                        required
+                      />{" "}
                       <span className="payment-label">OVO</span>
                     </label>
                     <label className="payment-option">
                       <input
                         type="radio"
                         name="paymentMethod"
-                        value="gopay"
-                        checked={formData.paymentMethod === "gopay"}
+                        value="GoPay" // UBAH KE "GoPay"
+                        checked={formData.paymentMethod === "GoPay"}
                         onChange={handleInputChange}
-                      />
+                        required
+                      />{" "}
                       <span className="payment-label">GoPay</span>
                     </label>
                     <label className="payment-option">
                       <input
                         type="radio"
                         name="paymentMethod"
-                        value="bank"
-                        checked={formData.paymentMethod === "bank"}
+                        value="Transfer Bank" // UBAH KE "Transfer Bank"
+                        checked={formData.paymentMethod === "Transfer Bank"}
                         onChange={handleInputChange}
-                      />
+                        required
+                      />{" "}
                       <span className="payment-label">Transfer Bank</span>
                     </label>
                   </div>
                   {errors.paymentMethod && <span className="error">{errors.paymentMethod}</span>}
                 </div>
 
-                {formData.paymentMethod && formData.paymentMethod !== "bank" && (
+                {/* Kondisi untuk menampilkan Nomor Akun E-Wallet */}
+                {formData.paymentMethod && formData.paymentMethod !== "Transfer Bank" && (
                   <div className="input-group">
                     <label>Nomor Akun {formData.paymentMethod.toUpperCase()}</label>
                     <input
@@ -317,7 +327,8 @@ const CheckoutML = () => {
                   </div>
                 )}
 
-                {formData.paymentMethod === "bank" && (
+                {/* Kondisi untuk menampilkan Pilihan Bank */}
+                {formData.paymentMethod === "Transfer Bank" && (
                   <div className="input-group">
                     <label>Pilih Bank</label>
                     <select
@@ -378,13 +389,13 @@ const CheckoutML = () => {
               <div className="summary-item">
                 <span>Metode Pembayaran</span>
                 <span>
-                  {formData.paymentMethod === "bank"
+                  {formData.paymentMethod === "Transfer Bank" // Sesuaikan juga di sini
                     ? `Transfer Bank - ${formData.bankName}`
                     : formData.paymentMethod.toUpperCase()
                   }
                 </span>
               </div>
-              {formData.paymentMethod !== "bank" && formData.accountNumber && (
+              {formData.paymentMethod !== "Transfer Bank" && formData.accountNumber && ( // Sesuaikan juga di sini
                 <div className="summary-item">
                   <span>Nomor Akun</span>
                   <span>{formData.accountNumber}</span>
@@ -401,7 +412,7 @@ const CheckoutML = () => {
                   game_id: "",
                   server_id: "",
                   kode_promo: "",
-                  paymentMethod: "dana",
+                  paymentMethod: "", // Reset ke kosong
                   accountNumber: "",
                   bankName: ""
                 });
