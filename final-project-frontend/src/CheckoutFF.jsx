@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import "./css/Checkout.css";
 
 const productOptions = [
-  { label: "100 Diamond", price: "Rp 16.000", img: "diamondff.jpg", popular: false },
-  { label: "210 Diamond", price: "Rp 32.000", img: "diamondff.jpg", popular: true },
-  { label: "530 Diamond", price: "Rp 79.000", img: "diamondff.jpg", popular: false },
-  { label: "Double Daily Diamond", price: "Rp 30.000", img: "diamondff.jpg", popular: true },
-  { label: "1060 Diamond", price: "Rp 149.000", img: "diamondff.jpg", popular: false },
-  { label: "2180 Diamond", price: "Rp 299.000", img: "diamondff.jpg", popular: true }
+  { label: "100 Diamond FF", price: 16000, img: "diamondff.jpg", popular: false },
+  { label: "210 Diamond FF", price: 32000, img: "diamondff.jpg", popular: true },
+  { label: "530 Diamond FF", price: 79000, img: "diamondff.jpg", popular: false },
+  { label: "Double Daily Diamond FF", price: 30000, img: "diamondff.jpg", popular: true },
+  { label: "1060 Diamond FF", price: 149000, img: "diamondff.jpg", popular: false },
+  { label: "2180 Diamond FF", price: 299000, img: "diamondff.jpg", popular: true }
 ];
 
 const CheckoutFF = () => {
@@ -17,11 +17,19 @@ const CheckoutFF = () => {
     game_id: "",
     server_id: "",
     kode_promo: "",
-    paymentMethod: "dana",
+    paymentMethod: "", // Set default kosong, atau sesuaikan dengan salah satu value yang valid
     accountNumber: "",
     bankName: ""
   });
   const [errors, setErrors] = useState({});
+
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0
+    }).format(price);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -36,8 +44,8 @@ const CheckoutFF = () => {
       setFormData(prev => ({ 
         ...prev, 
         [name]: value,
-        accountNumber: "",
-        bankName: ""
+        accountNumber: "", 
+        bankName: ""    
       }));
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
@@ -68,13 +76,13 @@ const CheckoutFF = () => {
       newErrors.paymentMethod = "Pilih metode pembayaran";
     }
 
-    // Validasi untuk e-wallet
-    if (formData.paymentMethod && formData.paymentMethod !== "bank" && !formData.accountNumber) {
+    // Validasi untuk e-wallet (selain Transfer Bank)
+    if (formData.paymentMethod && formData.paymentMethod !== "Transfer Bank" && !formData.accountNumber) {
       newErrors.accountNumber = `Nomor ${formData.paymentMethod.toUpperCase()} wajib diisi`;
     }
 
     // Validasi untuk bank transfer
-    if (formData.paymentMethod === "bank" && !formData.bankName) {
+    if (formData.paymentMethod === "Transfer Bank" && !formData.bankName) {
       newErrors.bankName = "Pilih bank terlebih dahulu";
     }
 
@@ -82,14 +90,83 @@ const CheckoutFF = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  // UBAH FUNGSI HANDLESUBMIT INI AGAR MENGIRIM DATA KE BACKEND
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
     if (!validateForm()) {
       return;
     }
 
-    setTimeout(() => setShowSuccess(true), 1000);
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+        alert("Anda harus login untuk melakukan pembelian!");
+        return;
+    }
+
+    // Temukan harga produk yang dipilih dari productOptions
+    const productPrice = productOptions.find(p => p.label === selectedProduct)?.price || 0;
+
+    try {
+        // Langkah 1: Dapatkan CSRF cookie dari Laravel Sanctum
+        await fetch('http://localhost:8000/sanctum/csrf-cookie', {
+            method: 'GET',
+            credentials: 'include'
+        });
+
+        // Langkah 2: Kirim data pesanan ke backend Laravel
+        const response = await fetch('http://localhost:8000/api/orders', { // URL ke OrderController@store
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                selected_product_label: selectedProduct, // Label produk yang dipilih
+                quantity: 1, // Asumsi pembelian langsung adalah 1 produk
+                game_id: formData.game_id,
+                server_id: formData.server_id,
+                payment_method: formData.paymentMethod, // Ini akan mengirim nilai yang sudah disesuaikan
+                account_number: formData.accountNumber,
+                bank_name: formData.bankName,
+                promo_code: formData.kode_promo,
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            let errorMessage = "Gagal mengirim data ke server!";
+            if (errorData.message) {
+                errorMessage += ` ${errorData.message}`;
+            }
+            if (errorData.errors) {
+                errorMessage += `\nDetail: ${Object.values(errorData.errors).flat().join(', ')}`;
+            }
+            alert(errorMessage);
+            console.error("Backend error response:", errorData);
+            return;
+        }
+
+        const data = await response.json();
+        if (data) {
+            setShowSuccess(true);
+            alert(data.message || "Pesanan berhasil dibuat!");
+            setSelectedProduct("");
+            setFormData({
+                game_id: "",
+                server_id: "",
+                kode_promo: "",
+                paymentMethod: "", // Reset ke kosong
+                accountNumber: "",
+                bankName: ""
+            });
+            setErrors({});
+        }
+    } catch (error) {
+        alert("Terjadi kesalahan koneksi atau server! Silakan coba lagi.");
+        console.error("Fetch error:", error);
+    }
   };
 
   return (
@@ -98,7 +175,7 @@ const CheckoutFF = () => {
         <div className="checkout-content">
           <div className="game-header">
             <img 
-              src="https://i.imgur.com/chTbnxD.jpeg" 
+              src="https://i.imgur.com/chTbnxD.jpeg" // Contoh gambar FF
               alt="Free Fire"
               className="game-logo"
             />
@@ -120,13 +197,13 @@ const CheckoutFF = () => {
                   >
                     {product.popular && <span className="popular-badge">POPULAR</span>}
                     <img 
-                      src={`https://i.imgur.com/5OItBDb.jpeg/${product.img}`} 
+                      src={`https://i.imgur.com/5OItBDb.jpeg/${product.img}`} // Sesuaikan path gambar jika berbeda
                       alt={product.label} 
                       className="product-image"
                     />
                     <div className="product-details">
                       <h4>{product.label}</h4>
-                      <p>{product.price}</p>
+                      <p>{formatPrice(product.price)}</p>
                     </div>
                   </div>
                 ))}
@@ -135,7 +212,7 @@ const CheckoutFF = () => {
             </div>
 
             <div className="form-section">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} autoComplete="off">
                 <div className="input-group">
                   <label>User ID</label>
                   <input
@@ -173,47 +250,52 @@ const CheckoutFF = () => {
                       <input
                         type="radio"
                         name="paymentMethod"
-                        value="dana"
-                        checked={formData.paymentMethod === "dana"}
+                        value="DANA" // UBAH KE "DANA"
+                        checked={formData.paymentMethod === "DANA"}
                         onChange={handleInputChange}
-                      />
+                        required
+                      />{" "}
                       <span className="payment-label">DANA</span>
                     </label>
                     <label className="payment-option">
                       <input
                         type="radio"
                         name="paymentMethod"
-                        value="ovo"
-                        checked={formData.paymentMethod === "ovo"}
+                        value="OVO" // UBAH KE "OVO"
+                        checked={formData.paymentMethod === "OVO"}
                         onChange={handleInputChange}
-                      />
+                        required
+                      />{" "}
                       <span className="payment-label">OVO</span>
                     </label>
                     <label className="payment-option">
                       <input
                         type="radio"
                         name="paymentMethod"
-                        value="gopay"
-                        checked={formData.paymentMethod === "gopay"}
+                        value="GoPay" // UBAH KE "GoPay"
+                        checked={formData.paymentMethod === "GoPay"}
                         onChange={handleInputChange}
-                      />
+                        required
+                      />{" "}
                       <span className="payment-label">GoPay</span>
                     </label>
                     <label className="payment-option">
                       <input
                         type="radio"
                         name="paymentMethod"
-                        value="bank"
-                        checked={formData.paymentMethod === "bank"}
+                        value="Transfer Bank" // UBAH KE "Transfer Bank"
+                        checked={formData.paymentMethod === "Transfer Bank"}
                         onChange={handleInputChange}
-                      />
+                        required
+                      />{" "}
                       <span className="payment-label">Transfer Bank</span>
                     </label>
                   </div>
                   {errors.paymentMethod && <span className="error">{errors.paymentMethod}</span>}
                 </div>
 
-                {formData.paymentMethod && formData.paymentMethod !== "bank" && (
+                {/* Kondisi untuk menampilkan Nomor Akun E-Wallet */}
+                {formData.paymentMethod && formData.paymentMethod !== "Transfer Bank" && (
                   <div className="input-group">
                     <label>Nomor Akun {formData.paymentMethod.toUpperCase()}</label>
                     <input
@@ -229,7 +311,8 @@ const CheckoutFF = () => {
                   </div>
                 )}
 
-                {formData.paymentMethod === "bank" && (
+                {/* Kondisi untuk menampilkan Pilihan Bank */}
+                {formData.paymentMethod === "Transfer Bank" && (
                   <div className="input-group">
                     <label>Pilih Bank</label>
                     <select
@@ -290,13 +373,13 @@ const CheckoutFF = () => {
               <div className="summary-item">
                 <span>Metode Pembayaran</span>
                 <span>
-                  {formData.paymentMethod === "bank" 
-                    ? `Transfer Bank - ${formData.bankName}` 
+                  {formData.paymentMethod === "Transfer Bank"
+                    ? `Transfer Bank - ${formData.bankName}`
                     : formData.paymentMethod.toUpperCase()
                   }
                 </span>
               </div>
-              {formData.paymentMethod !== "bank" && formData.accountNumber && (
+              {formData.paymentMethod !== "Transfer Bank" && formData.accountNumber && (
                 <div className="summary-item">
                   <span>Nomor Akun</span>
                   <span>{formData.accountNumber}</span>
@@ -313,7 +396,7 @@ const CheckoutFF = () => {
                   game_id: "",
                   server_id: "",
                   kode_promo: "",
-                  paymentMethod: "dana",
+                  paymentMethod: "",
                   accountNumber: "",
                   bankName: ""
                 });

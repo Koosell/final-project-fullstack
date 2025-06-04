@@ -6,12 +6,12 @@ import "./css/Checkout.css";
 // import api from './api'; // Pastikan path ke api.js Anda benar
 
 const productOptions = [
-  { label: "86 Diamonds", price: 23500, img: "diamond.jpeg", popular: false },
-  { label: "172 Diamonds", price: 47500, img: "diamond.jpeg", popular: true },
-  { label: "257 Diamonds", price: 70000, img: "diamond.jpeg", popular: false },
-  { label: "344 Diamonds", price: 93500, img: "diamond.jpeg", popular: false },
-  { label: "429 Diamonds", price: 116500, img: "diamond.jpeg", popular: true },
-  { label: "600 Diamonds", price: 150000, img: "diamond.jpeg", popular: false }
+  { label: "86 Diamonds ML", price: 23500, img: "diamond.jpeg", popular: false },
+  { label: "172 Diamonds ML", price: 47500, img: "diamond.jpeg", popular: true },
+  { label: "257 Diamonds ML", price: 70000, img: "diamond.jpeg", popular: false },
+  { label: "344 Diamonds ML", price: 93500, img: "diamond.jpeg", popular: false },
+  { label: "429 Diamonds ML", price: 116500, img: "diamond.jpeg", popular: true },
+  { label: "600 Diamonds ML", price: 150000, img: "diamond.jpeg", popular: false }
 ];
 
 const CheckoutML = () => {
