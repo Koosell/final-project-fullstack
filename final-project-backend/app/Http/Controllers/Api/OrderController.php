@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order; // Pastikan ini ada
-use App\Models\OrderItem; // Pastikan ini ada
-use App\Models\Product; // Pastikan ini ada
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +28,11 @@ class OrderController extends Controller
                 'selected_product_label' => 'required|string',
                 'game_id' => 'required|string',
                 'server_id' => 'required|string',
-                'payment_method' => 'required|string|in:Bank Transfer,E-Wallet', // Sesuaikan metode pembayaran
+                // UBAH BARIS INI: Tambahkan semua metode pembayaran yang dikirim dari frontend
+                'payment_method' => 'required|string|in:DANA,OVO,GoPay,Transfer Bank',
+                'account_number' => 'nullable|string', // Nomor akun e-wallet/bank
+                'bank_name' => 'nullable|string',     // Nama bank
+                'promo_code' => 'nullable|string',
             ]);
         } catch (ValidationException $e) {
             return response()->json([
@@ -56,17 +60,29 @@ class OrderController extends Controller
             return response()->json(['message' => 'Stok produk habis.'], 400);
         }
 
+        // Hitung total_amount
+        $totalAmount = $product->price * 1; // Quantity diasumsikan 1 untuk topup langsung
+
+        // Siapkan detail pembayaran (ini sudah ada di kode Anda, bagus)
+        $paymentDetails = json_encode([
+            'method' => $request->payment_method,
+            'account_number' => $request->account_number,
+            'bank_name' => $request->bank_name,
+        ]);
+
         DB::beginTransaction(); // Mulai transaksi database
 
         try {
             // Buat entri pesanan baru di tabel 'orders'
             $order = Order::create([
                 'user_id' => $user->id,
-                'total_amount' => $product->price, // Untuk pembelian langsung, total_amount = harga produk
+                'total_amount' => $totalAmount, // Menggunakan totalAmount yang sudah dihitung
                 'status' => 'pending', // Atau 'created', 'waiting_payment'
                 'payment_method' => $request->payment_method,
-                'game_id' => $request->game_id, // Kolom baru
-                'server_id' => $request->server_id, // Kolom baru
+                'game_id' => $request->game_id,
+                'server_id' => $request->server_id,
+                'payment_details' => $paymentDetails, // Tambahkan ini jika belum ada di migration
+                'promo_code' => $request->promo_code, // Tambahkan ini jika belum ada di migration
             ]);
 
             // Tambahkan item ke tabel 'order_items'
@@ -89,41 +105,29 @@ class OrderController extends Controller
                 'status' => $order->status,
             ], 201); // 201 Created
 
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Validasi gagal', 'errors' => $e->errors()], 422);
         } catch (\Exception $e) {
-            DB::rollBack(); // Rollback transaksi jika ada error
-            \Log::error('Order creation failed: ' . $e->getMessage()); // Log error untuk debugging lebih lanjut
+            DB::rollBack();
+            \Log::error('Order creation failed: ' . $e->getMessage());
             return response()->json(['message' => 'Gagal membuat pesanan. Terjadi kesalahan server.'], 500);
         }
     }
 
-    /**
-     * Display a listing of the user's orders.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    // ... (metode index dan show lainnya tetap sama)
     public function index()
     {
         $user = Auth::user();
-        $orders = $user->orders()->with('orderItems.product')->get(); // Load order items dan produk terkait
-
+        $orders = $user->orders()->with('orderItems.product')->get();
         return response()->json($orders);
     }
 
-    /**
-     * Display the specified order.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function show(Order $order)
     {
-        // Pastikan user yang login memiliki akses ke order ini
         if ($order->user_id !== Auth::id()) {
             return response()->json(['message' => 'Unauthorized. You do not own this order.'], 403);
         }
-
         return response()->json($order->load('orderItems.product'));
     }
-
-    // Metode lain seperti update dan destroy jika diperlukan
 }
