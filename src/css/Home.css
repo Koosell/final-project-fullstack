@@ -1,0 +1,464 @@
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+.home-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f7fa;
+  position: relative;
+}
+
+/* Subtle background overlay for depth */
+.home-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23e0e0e0" fill-opacity="0.1" d="M0,160L80,176C160,192,320,224,480,213.3C640,203,800,149,960,138.7C1120,128,1280,160,1360,176L1440,192L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path></svg>') no-repeat bottom center;
+  background-size: cover;
+  z-index: -1;
+}
+
+/* Header Styles */
+.page-header {
+  background-color: #2c3e50;
+  color: white;
+  padding: 3rem 1rem;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  animation: fadeInDown 0.6s ease-out;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.8rem;
+  position: relative;
+}
+
+/* Decorative underline for header */
+.page-header h1::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #3498db, #2ecc71);
+  border-radius: 2px;
+}
+
+.page-header p {
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+/* Promo Section - DIPERBESAR */
+.promo-section {
+  width: 100%; /* Full width untuk container */
+  margin: 3rem 0; /* Hilangkan auto margin */
+  padding: 0; /* Hilangkan padding untuk full screen effect */
+}
+
+.promo-section-title {
+  font-size: 2.8rem; /* Diperbesar dari 2rem */
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 2.5rem; /* Diperbesar dari 1.5rem */
+  position: relative;
+  font-weight: 700; /* Tambah bold */
+  padding: 0 1rem; /* Tambah padding untuk title agar tidak mentok pinggir */
+}
+
+.promo-section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px; /* Diperbesar dari -5px */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px; /* Diperbesar dari 60px */
+  height: 4px; /* Diperbesar dari 3px */
+  background: linear-gradient(90deg, #2C3E50, #2ecc71);
+  border-radius: 2px;
+}
+
+/* Promo Slider - DIPERBESAR */
+.promo-slider {
+  position: relative;
+  overflow: hidden;
+}
+
+.promo-slider-wrapper {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+.promo-banner {
+  display: flex;
+  flex-direction: column;
+  background-color: #2C3E50;
+  color: white;
+  width: 100vw; /* Full viewport width */
+  margin-left: calc(-50vw + 50%); /* Trick untuk keluar dari container parent */
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.915);
+  flex: 0 0 100%;
+  animation: fadeIn 0.7s ease-out;
+}
+
+.promo-image {
+  width: 100%;
+  height: 100vh; /* FULL viewport height - satu layar penuh */
+  object-fit: cover;
+  object-position: center center;
+  transition: transform 0.3s ease;
+}
+
+.promo-image:hover {
+  transform: scale(1.02);
+}
+
+.promo-content {
+  padding: 4rem 2rem; /* Padding kiri-kanan untuk konten agar tidak mentok pinggir */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  max-width: 1200px; /* Batasi lebar konten agar tetap readable */
+  margin: 0 auto; /* Center konten */
+}
+
+.promo-content h3 {
+  font-size: 2.2rem; /* Diperbesar dari 1.5rem */
+  margin-bottom: 1.5rem; /* Diperbesar dari 1rem */
+  font-weight: 700;
+}
+
+/* Subtle glow effect on promo heading */
+.promo-content h3::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+  z-index: -1;
+}
+
+.promo-content p {
+  line-height: 1.8; /* Diperbesar dari 1.6 */
+  font-size: 1.1rem; /* Tambah ukuran font */
+}
+
+.promo-content strong {
+  color: #f1c40f;
+  font-size: 1.2rem; /* Tambah ukuran untuk strong text */
+}
+
+.promo-image.no-crop {
+  height: auto; /* Tinggi otomatis sesuai aspek rasio */
+  min-height: 400px; /* DIPERBESAR minimum height dari 300px ke 400px */
+  max-height: 600px; /* DIPERBESAR maximum height dari 500px ke 600px */
+  object-fit: contain; /* Contain agar tidak terpotong */
+  background: linear-gradient(135deg, #3498db, #2980b9); /* Background untuk area kosong */
+}
+
+/* Slider Navigation - DIPERBESAR */
+.slider-prev, .slider-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px; /* Diperbesar dari 40px */
+  height: 50px; /* Diperbesar dari 40px */
+  background: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.3s ease;
+  font-size: 1.2rem; /* Tambah ukuran icon */
+}
+
+.slider-prev:hover, .slider-next:hover {
+  background: #3498db;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.slider-prev {
+  left: 15px; /* Diperbesar dari 10px */
+}
+
+.slider-next {
+  right: 15px; /* Diperbesar dari 10px */
+}
+
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Diperbesar dari 10px */
+}
+
+.slider-dot {
+  width: 15px; /* Diperbesar dari 10px */
+  height: 15px; /* Diperbesar dari 10px */
+  background: #ddd;
+  border-radius: 50%;
+  margin: 0 8px; /* Diperbesar dari 5px */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.slider-dot.active {
+  background: #3498db;
+  transform: scale(1.4);
+}
+
+/* Game Grid */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 0 2rem;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto 3rem;
+}
+
+.game-card {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  animation: fadeInUp 0.5s ease-out;
+  animation-delay: calc(var(--index) * 0.1s);
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.game-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.game-card:hover .game-image {
+  transform: scale(1.05);
+}
+
+.game-card p {
+  padding: 1.2rem 1rem 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.topup-button {
+  display: block;
+  background-color: #2ecc71;
+  color: white;
+  text-align: center;
+  padding: 0.8rem;
+  margin: 1rem;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.topup-button:hover {
+  background-color: #27ae60;
+}
+
+/* Ripple effect on topup button */
+.topup-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.topup-button:hover::after {
+  width: 200px;
+  height: 200px;
+}
+
+/* Rating Section */
+.rating-section {
+  background-color: #2C3E50;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 1200px;
+  width: 95%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  animation: fadeIn 0.7s ease-out;
+}
+
+.rating-section h3 {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  position: relative;
+}
+
+/* Decorative underline for rating heading */
+.rating-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #3498db, #2ecc71);
+  border-radius: 2px;
+}
+
+.star-rating {
+  margin: 1.5rem 0;
+}
+
+.star {
+  font-size: 2rem;
+  color: #f1c40f;
+  margin: 0 0.3rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, text-shadow 0.2s ease;
+}
+
+.star:hover {
+  transform: scale(1.2);
+  text-shadow: 0 0 5px #ffffff(255, 255, 255);
+}
+
+/* Star animation on hover */
+.star:hover::before {
+  content: '★';
+  position: absolute;
+  color: #ffffff(255, 255, 255);
+  transform: scale(1.5);
+  z-index: -1;
+}
+
+.rating-section p {
+  color: #ffffff;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .promo-image {
+    height: 100vh; /* Full viewport height juga untuk tablet */
+  }
+  
+  .promo-content {
+    padding: 3rem 1.5rem; /* Sesuaikan padding untuk tablet */
+  }
+  
+  .promo-content h3 {
+    font-size: 1.8rem; /* Disesuaikan untuk mobile */
+  }
+  
+  .promo-section-title {
+    font-size: 2.2rem; /* Disesuaikan untuk mobile */
+  }
+  
+  .game-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header {
+    padding: 2rem 1rem;
+  }
+  
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .promo-section-title {
+    font-size: 1.8rem;
+    padding: 0 1rem; /* Maintain padding */
+  }
+  
+  .promo-image {
+    height: 100vh; /* Full viewport height juga untuk mobile */
+  }
+  
+  .promo-content h3 {
+    font-size: 1.5rem;
+  }
+  
+  .promo-content {
+    padding: 2rem 1rem; /* Padding mobile */
+  }
+  
+  .game-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .game-image {
+    height: 150px;
+  }
+  
+  .rating-section {
+    padding: 1.5rem;
+  }
+}
