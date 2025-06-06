@@ -9,10 +9,9 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
   const handleLogin = async (e) => { // Menggunakan async untuk fetch request
     e.preventDefault();
-    setIsLoading(true);
+    setIsLoading(true); 
     setErrorMsg(""); // Bersihkan pesan error sebelumnya
 
     try {

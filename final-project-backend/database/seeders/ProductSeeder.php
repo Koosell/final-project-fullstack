@@ -36,5 +36,8 @@ class ProductSeeder extends Seeder
         Product::create(['name' => '1800 UC PUBG', 'description' => '1800 Unknown Cash PUBG Mobile', 'price' => 375000.00, 'stock' => 9999, 'image_url' => 'uc.jpg']);
         Product::create(['name' => '3850 UC PUBG', 'description' => '3850 Unknown Cash PUBG Mobile', 'price' => 750000.00, 'stock' => 9999, 'image_url' => 'uc.jpg']);
         Product::create(['name' => '8100 UC PUBG', 'description' => '8100 Unknown Cash PUBG Mobile', 'price' => 1500000.00, 'stock' => 9999, 'image_url' => 'uc.jpg']);
+
+
+        // --- Data Produk COD Mobile ---
     }
 }
