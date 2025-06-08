@@ -3,15 +3,15 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://Koosell.github.io/Final_Project",
+  "homepage": "https://Koosell.github.io/final-project-fullstack",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
-  },
+  "dev": "vite",
+  "build": "vite build",
+  "lint": "eslint .",
+  "preview": "vite preview",
+  "predeploy": "npm run build", 
+  "deploy": "gh-pages -d dist"  
+},
   "dependencies": {
     "bootstrap": "^5.3.6",
     "framer-motion": "^12.12.1",

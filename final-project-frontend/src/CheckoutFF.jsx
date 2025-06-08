@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; // Hapus useEffect
 import "./css/Checkout.css";
 
 const productOptions = [
   // Harga adalah NUMBER (angka)
   // img adalah URL GAMBAR IMGRUR yang Anda inginkan untuk semua produk FF
-  { label: "100 Diamond FF", price: 16000, img: "https://i.imgur.com/5OItBDb.jpeg", popular: false }, 
-  { label: "210 Diamond FF", price: 32000, img: "https://i.imgur.com/5OItBDb.jpeg", popular: true },
-  { label: "530 Diamond FF", price: 79000, img: "https://i.imgur.com/5OItBDb.jpeg", popular: false },
-  { label: "Double Daily Diamond FF", price: 30000, img: "https://i.imgur.com/5OItBDb.jpeg", popular: true },
-  { label: "1060 Diamond FF", price: 149000, img: "https://i.imgur.com/5OItBDb.jpeg", popular: false },
-  { label: "2180 Diamond FF", price: 299000, img: "https://i.imgur.com/5OItBDb.jpeg", popular: true }
+  { label: "100 Diamond FF", price: 16000, img: "https://i.imgur.com/chTbnxD.jpeg", popular: false }, 
+  { label: "210 Diamond FF", price: 32000, img: "https://i.imgur.com/chTbnxD.jpeg", popular: true },
+  { label: "530 Diamond FF", price: 79000, img: "https://i.imgur.com/chTbnxD.jpeg", popular: false },
+  { label: "Double Daily Diamond FF", price: 30000, img: "https://i.imgur.com/chTbnxD.jpeg", popular: true },
+  { label: "1060 Diamond FF", price: 149000, img: "https://i.imgur.com/chTbnxD.jpeg", popular: false },
+  { label: "2180 Diamond FF", price: 299000, img: "https://i.imgur.com/chTbnxD.jpeg", popular: true }
 ];
 
 const CheckoutFF = () => {
@@ -36,7 +36,7 @@ const CheckoutFF = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if ((name === "game_id" || name === "server_id") && !/^\d*$/.test(value)) {
-      return;
+      return; 
     }
     setFormData(prev => ({ ...prev, [name]: value }));
 
@@ -75,9 +75,7 @@ const CheckoutFF = () => {
 
   const handleSubmit = async (e) => { 
     e.preventDefault();
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) { return; }
 
     const authToken = localStorage.getItem('authToken'); 
     if (!authToken) {
@@ -91,8 +89,8 @@ const CheckoutFF = () => {
         const response = await fetch('http://localhost:8000/api/orders', { 
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
+                'Content-Type': "application/json",
+                'Accept': "application/json",
                 'Authorization': `Bearer ${authToken}`
             },
             credentials: 'include',
@@ -169,7 +167,7 @@ const CheckoutFF = () => {
                     onClick={() => setSelectedProduct(product.label)}
                   >
                     {product.popular && <span className="popular-badge">POPULAR</span>}
-                    {/* Menggunakan URL gambar langsung dari product.img (yang sudah Imgur link) */}
+                    {/* Menggunakan URL gambar langsung dari product.img */}
                     <img src={product.img} alt={product.label} className="product-image" /> 
                     <div className="product-details">
                       <h4>{product.label}</h4>
@@ -252,13 +250,7 @@ const CheckoutFF = () => {
                       value={formData.bankName}
                       onChange={handleInputChange}
                     >
-                      <option value="">Pilih bank</option>
-                      <option value="BCA">BCA</option>
-                      <option value="Mandiri">Mandiri</option>
-                      <option value="BNI">BNI</option>
-                      <option value="BRI">BRI</option>
-                      <option value="CIMB Niaga">CIMB Niaga</option>
-                      <option value="Danamon">Danamon</option>
+                      <option value="">Pilih bank</option><option value="BCA">BCA</option><option value="Mandiri">Mandiri</option><option value="BNI">BNI</option><option value="BRI">BRI</option><option value="CIMB Niaga">CIMB Niaga</option><option value="Danamon">Danamon</option>
                     </select>
                     {errors.bankName && <span className="error">{errors.bankName}</span>}
                   </div>
@@ -266,13 +258,7 @@ const CheckoutFF = () => {
 
                 <div className="input-group">
                   <label>Kode Promo (Opsional)</label>
-                  <input
-                    type="text"
-                    name="kode_promo"
-                    placeholder="Masukkan kode promo"
-                    value={formData.kode_promo}
-                    onChange={handleInputChange}
-                  />
+                  <input type="text" name="kode_promo" placeholder="Masukkan kode promo" value={formData.kode_promo} onChange={handleInputChange} />
                 </div>
 
                 <button type="submit" className="submit-btn">
@@ -302,6 +288,7 @@ const CheckoutFF = () => {
                 <span>Server ID</span>
                 <span>{formData.server_id}</span>
               </div>
+              {/* Ini bagian akhir dari CheckoutFF */}
               <div className="summary-item">
                 <span>Metode Pembayaran</span>
                 <span>
@@ -328,7 +315,7 @@ const CheckoutFF = () => {
                   game_id: "",
                   server_id: "",
                   kode_promo: "",
-                  paymentMethod: "", 
+                  paymentMethod: "",
                   accountNumber: "",
                   bankName: ""
                 });

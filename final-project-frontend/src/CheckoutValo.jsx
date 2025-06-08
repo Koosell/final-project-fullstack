@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; // Hapus useEffect
 import "./css/Checkout.css";
 
-// --- Data Produk Valorant (HARDCODED) ---
-// Ini akan membuat produk tampil tanpa mengambil dari backend.
-// Gambar akan diambil langsung dari URL Imgur.
 const productOptions = [
-  // Pastikan harga adalah NUMBER (angka) agar bisa diformat dengan formatPrice
-  { label: "475 Valorant Points", price: 75000, img: "https://i.imgur.com/kl6R3AX.png", popular: false },
+  // Harga adalah NUMBER (angka)
+  // img adalah URL GAMBAR IMGRUR yang Anda inginkan untuk semua produk Valorant
+  { label: "475 Valorant Points", price: 75000, img: "https://i.imgur.com/kl6R3AX.png", popular: false }, 
   { label: "Battle Pass", price: 149900, img: "https://i.imgur.com/kl6R3AX.png", popular: true },
   { label: "1000 Valorant Points", price: 150000, img: "https://i.imgur.com/kl6R3AX.png", popular: false },
   { label: "2050 Valorant Points", price: 299000, img: "https://i.imgur.com/kl6R3AX.png", popular: true },
@@ -16,21 +14,18 @@ const productOptions = [
 ];
 
 const CheckoutValorant = () => {
-  const [selectedProduct, setSelectedProduct] = useState(""); // Menggunakan string untuk label produk
+  const [selectedProduct, setSelectedProduct] = useState(""); 
   const [showSuccess, setShowSuccess] = useState(false);
-  // Hapus state loading dan error karena tidak lagi fetching dari API
-
   const [formData, setFormData] = useState({
-    game_id: "",    // Menggunakan game_id untuk Riot ID (sesuai backend)
-    server_id: "",  // Menggunakan server_id untuk Tagline (sesuai backend)
+    game_id: "",    // Untuk User ID (akan dipetakan ke Riot ID)
+    server_id: "",  // Untuk Server ID (akan dipetakan ke Tagline)
     kode_promo: "",
-    paymentMethod: "", // Set default kosong
-    accountNumber: "", 
-    bankName: "" 
+    paymentMethod: "", // Default kosong
+    accountNumber: "",
+    bankName: ""
   });
   const [errors, setErrors] = useState({});
 
-  // Fungsi untuk memformat harga ke Rupiah
   const formatPrice = (price) => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
@@ -41,23 +36,21 @@ const CheckoutValorant = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    // Validasi hanya angka untuk User ID dan Server ID
     if ((name === "game_id" || name === "server_id") && !/^\d*$/.test(value)) {
-      return;
+      return; // Hanya angka untuk ID
     }
+    setFormData(prev => ({ ...prev, [name]: value }));
 
     if (name === "paymentMethod") {
       setFormData(prev => ({
         ...prev,
         [name]: value,
-        accountNumber: "", // Reset saat ganti metode
-        bankName: ""       // Reset saat ganti metode
+        accountNumber: "",
+        bankName: ""
       }));
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
     }
-
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: "" }));
     }
@@ -67,14 +60,12 @@ const CheckoutValorant = () => {
     const newErrors = {};
     if (!selectedProduct) { newErrors.product = "Pilih produk terlebih dahulu!"; }
     if (!formData.game_id) { newErrors.game_id = "Riot ID wajib diisi"; }
-    if (!formData.server_id) { newErrors.server_id = "Tagline wajib diisi"; } 
+    if (!formData.server_id) { newErrors.server_id = "Tagline wajib diisi"; }
     if (!formData.paymentMethod) { newErrors.paymentMethod = "Pilih metode pembayaran"; }
     
-    // Validasi untuk e-wallet (selain Transfer Bank) - sesuaikan dengan nilai radio button
     if (formData.paymentMethod && formData.paymentMethod !== "Transfer Bank" && !formData.accountNumber) {
         newErrors.accountNumber = `Nomor ${formData.paymentMethod.toUpperCase()} wajib diisi`;
     }
-    // Validasi untuk bank transfer - sesuaikan dengan nilai radio button
     if (formData.paymentMethod === "Transfer Bank" && !formData.bankName) {
       newErrors.bankName = "Pilih bank terlebih dahulu";
     }
@@ -83,35 +74,33 @@ const CheckoutValorant = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => { 
     e.preventDefault();
     if (!validateForm()) { return; }
 
-    const authToken = localStorage.getItem('authToken'); // Asumsi token disimpan di localStorage
+    const authToken = localStorage.getItem('authToken'); 
     if (!authToken) {
         alert("Anda harus login untuk melakukan pembelian!");
         return;
     }
 
     try {
-        // Langkah 1: Dapatkan CSRF cookie dari Laravel Sanctum
         await fetch('http://localhost:8000/sanctum/csrf-cookie', { credentials: 'include' });
 
-        // Langkah 2: Kirim data pesanan ke backend Laravel
-        const response = await fetch('http://localhost:8000/api/orders', { // Pastikan URL ini benar
+        const response = await fetch('http://localhost:8000/api/orders', { 
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${authToken}` // Mengirim token otentikasi
+                'Content-Type': "application/json",
+                'Accept': "application/json",
+                'Authorization': `Bearer ${authToken}`
             },
-            credentials: 'include', // Penting untuk mengirim cookie sesi/CSRF
+            credentials: 'include',
             body: JSON.stringify({
-                selected_product_label: selectedProduct, // Label produk yang dipilih (string)
-                quantity: 1, // Asumsi pembelian langsung adalah 1 produk
-                game_id: formData.game_id,   // Mengirim Riot ID sebagai game_id ke backend
-                server_id: formData.server_id, // Mengirim Tagline sebagai server_id ke backend
-                payment_method: formData.paymentMethod, // DANA, OVO, GoPay, Transfer Bank (uppercase)
+                selected_product_label: selectedProduct, 
+                quantity: 1, 
+                game_id: formData.game_id,   
+                server_id: formData.server_id, 
+                payment_method: formData.paymentMethod, 
                 account_number: formData.accountNumber, 
                 bank_name: formData.bankName, 
                 promo_code: formData.kode_promo,
@@ -136,12 +125,12 @@ const CheckoutValorant = () => {
             alert(data.message || "Pesanan berhasil dibuat!"); 
             setSelectedProduct("");
             setFormData({
-                game_id: "",
-                server_id: "",
-                kode_promo: "",
-                paymentMethod: "", 
-                accountNumber: "",
-                bankName: ""
+              game_id: "",
+              server_id: "",
+              kode_promo: "",
+              paymentMethod: "", 
+              accountNumber: "",
+              bankName: ""
             });
             setErrors({});
         }
@@ -157,7 +146,6 @@ const CheckoutValorant = () => {
       {!showSuccess ? (
         <div className="checkout-content">
           <div className="game-header">
-            {/* Header gambar Valorant */}
             <img src="https://i.imgur.com/4WVAckQ.jpeg" alt="VALORANT" className="game-logo" />
             <div className="game-info">
               <h2>VALORANT</h2>
@@ -173,14 +161,14 @@ const CheckoutValorant = () => {
                   <div
                     key={index}
                     className={`product-card ${selectedProduct === product.label ? "selected" : ""} ${product.popular ? "popular" : ""}`}
-                    onClick={() => setSelectedProduct(product.label)}
+                    onClick={() => setSelectedProduct(product.label)} // Menggunakan label string
                   >
                     {product.popular && <span className="popular-badge">POPULAR</span>}
                     {/* Menggunakan URL gambar langsung dari product.img */}
                     <img src={product.img} alt={product.label} className="product-image" /> 
                     <div className="product-details">
-                      <h4>{product.label}</h4>
-                      <p>{formatPrice(product.price)}</p>
+                      <h4>{product.label}</h4> 
+                      <p>{formatPrice(product.price)}</p> 
                     </div>
                   </div>
                 ))}
@@ -243,7 +231,6 @@ const CheckoutValorant = () => {
                   {errors.paymentMethod && <span className="error">{errors.paymentMethod}</span>}
                 </div>
 
-                {/* Kondisi untuk menampilkan Nomor Akun E-Wallet */}
                 {formData.paymentMethod && formData.paymentMethod !== "Transfer Bank" && (
                   <div className="input-group">
                     <label>Nomor Akun {formData.paymentMethod.toUpperCase()}</label>
@@ -252,11 +239,14 @@ const CheckoutValorant = () => {
                   </div>
                 )}
 
-                {/* Kondisi untuk menampilkan Pilihan Bank */}
                 {formData.paymentMethod === "Transfer Bank" && (
                   <div className="input-group">
                     <label>Pilih Bank</label>
-                    <select name="bankName" value={formData.bankName} onChange={handleInputChange}>
+                    <select
+                      name="bankName"
+                      value={formData.bankName}
+                      onChange={handleInputChange}
+                    >
                       <option value="">Pilih bank</option><option value="BCA">BCA</option><option value="Mandiri">Mandiri</option><option value="BNI">BNI</option><option value="BRI">BRI</option><option value="CIMB Niaga">CIMB Niaga</option><option value="Danamon">Danamon</option>
                     </select>
                     {errors.bankName && <span className="error">{errors.bankName}</span>}

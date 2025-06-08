@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; // <--- PASTIKAN ADA useState dan useEffect
 import "./css/Checkout.css";
 
 const productOptions = [
   // Harga adalah NUMBER (angka)
-  // img adalah URL GAMBAR IMGRUR yang Anda inginkan
-  { label: "86 Diamonds ML", price: 23500, img: "https://i.imgur.com/5OItBDb.jpeg", popular: false },
+  // img adalah URL GAMBAR IMGRUR yang Anda inginkan untuk semua produk ML
+  { label: "86 Diamonds ML", price: 23500, img: "https://i.imgur.com/5OItBDb.jpeg", popular: false }, 
   { label: "172 Diamonds ML", price: 47500, img: "https://i.imgur.com/5OItBDb.jpeg", popular: true },
   { label: "257 Diamonds ML", price: 70000, img: "https://i.imgur.com/5OItBDb.jpeg", popular: false },
   { label: "344 Diamonds ML", price: 93500, img: "https://i.imgur.com/5OItBDb.jpeg", popular: false },
@@ -13,17 +13,24 @@ const productOptions = [
 ];
 
 const CheckoutML = () => {
-  const [selectedProduct, setSelectedProduct] = useState("");
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(""); // Menggunakan string untuk label produk
+  const [showSuccess, setShowSuccess] = useState(false); // State showSuccess
+  // TIDAK ADA state products, loading, error di sini karena hardcode
+
   const [formData, setFormData] = useState({
-    game_id: "",
-    server_id: "",
+    game_id: "",    // Untuk User ID ML
+    server_id: "",  // Untuk Server ID ML
     kode_promo: "",
     paymentMethod: "", 
     accountNumber: "",
     bankName: ""
   });
   const [errors, setErrors] = useState({});
+
+  // Kosongkan useEffect karena tidak ada fetching API
+  useEffect(() => {
+    // Biarkan kosong atau hapus seluruhnya jika tidak ada fetching API
+  }, []);
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat("id-ID", {
@@ -36,7 +43,7 @@ const CheckoutML = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if ((name === "game_id" || name === "server_id") && !/^\d*$/.test(value)) {
-      return;
+      return; 
     }
     setFormData(prev => ({ ...prev, [name]: value }));
 
@@ -44,8 +51,8 @@ const CheckoutML = () => {
       setFormData(prev => ({
         ...prev,
         [name]: value,
-        accountNumber: "",
-        bankName: ""
+        accountNumber: "", 
+        bankName: "" 
       }));
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
@@ -75,9 +82,7 @@ const CheckoutML = () => {
 
   const handleSubmit = async (e) => { 
     e.preventDefault();
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) { return; }
 
     const authToken = localStorage.getItem('authToken'); 
     if (!authToken) {
@@ -91,14 +96,14 @@ const CheckoutML = () => {
         const response = await fetch('http://localhost:8000/api/orders', { 
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
+                'Content-Type': "application/json",
+                'Accept': "application/json",
                 'Authorization': `Bearer ${authToken}`
             },
             credentials: 'include',
             body: JSON.stringify({
                 selected_product_label: selectedProduct, 
-                quantity: 1, // Kuantitas default
+                quantity: 1, 
                 game_id: formData.game_id,   
                 server_id: formData.server_id, 
                 payment_method: formData.paymentMethod, 
@@ -148,7 +153,7 @@ const CheckoutML = () => {
         <div className="checkout-content">
           <div className="game-header">
             <img
-              src="https://i.imgur.com/q2FAJ3f.jpeg" 
+              src="https://i.imgur.com/q2FAJ3f.jpeg" // Header gambar ML
               alt="Mobile Legends"
               className="game-logo"
             />
@@ -166,14 +171,14 @@ const CheckoutML = () => {
                   <div
                     key={index}
                     className={`product-card ${selectedProduct === product.label ? "selected" : ""} ${product.popular ? "popular" : ""}`}
-                    onClick={() => setSelectedProduct(product.label)}
+                    onClick={() => setSelectedProduct(product.label)} // Menggunakan label string
                   >
                     {product.popular && <span className="popular-badge">POPULAR</span>}
                     {/* Menggunakan URL gambar langsung dari product.img */}
                     <img src={product.img} alt={product.label} className="product-image" /> 
                     <div className="product-details">
-                      <h4>{product.label}</h4>
-                      <p>{formatPrice(product.price)}</p>
+                      <h4>{product.label}</h4> 
+                      <p>{formatPrice(product.price)}</p> 
                     </div>
                   </div>
                 ))}
@@ -239,15 +244,7 @@ const CheckoutML = () => {
                 {formData.paymentMethod && formData.paymentMethod !== "Transfer Bank" && (
                   <div className="input-group">
                     <label>Nomor Akun {formData.paymentMethod.toUpperCase()}</label>
-                    <input
-                      type="text"
-                      name="accountNumber"
-                      value={formData.accountNumber}
-                      onChange={handleInputChange}
-                      placeholder={`Masukkan nomor ${formData.paymentMethod.toUpperCase()}`}
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                    />
+                    <input type="text" name="accountNumber" value={formData.accountNumber} onChange={handleInputChange} placeholder={`Masukkan nomor ${formData.paymentMethod.toUpperCase()}`} inputMode="numeric" pattern="[0-9]*" />
                     {errors.accountNumber && <span className="error">{errors.accountNumber}</span>}
                   </div>
                 )}
@@ -260,13 +257,7 @@ const CheckoutML = () => {
                       value={formData.bankName}
                       onChange={handleInputChange}
                     >
-                      <option value="">Pilih bank</option>
-                      <option value="BCA">BCA</option>
-                      <option value="Mandiri">Mandiri</option>
-                      <option value="BNI">BNI</option>
-                      <option value="BRI">BRI</option>
-                      <option value="CIMB Niaga">CIMB Niaga</option>
-                      <option value="Danamon">Danamon</option>
+                      <option value="">Pilih bank</option><option value="BCA">BCA</option><option value="Mandiri">Mandiri</option><option value="BNI">BNI</option><option value="BRI">BRI</option><option value="CIMB Niaga">CIMB Niaga</option><option value="Danamon">Danamon</option>
                     </select>
                     {errors.bankName && <span className="error">{errors.bankName}</span>}
                   </div>
@@ -274,13 +265,7 @@ const CheckoutML = () => {
 
                 <div className="input-group">
                   <label>Kode Promo (Opsional)</label>
-                  <input
-                    type="text"
-                    name="kode_promo"
-                    placeholder="Masukkan kode promo"
-                    value={formData.kode_promo}
-                    onChange={handleInputChange}
-                  />
+                  <input type="text" name="kode_promo" placeholder="Masukkan kode promo" value={formData.kode_promo} onChange={handleInputChange} />
                 </div>
 
                 <button type="submit" className="submit-btn">
@@ -310,6 +295,7 @@ const CheckoutML = () => {
                 <span>Server ID</span>
                 <span>{formData.server_id}</span>
               </div>
+              {/* Ini bagian akhir dari CheckoutML */}
               <div className="summary-item">
                 <span>Metode Pembayaran</span>
                 <span>

@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; // Hapus useEffect
 import "./css/Checkout.css";
 
-// --- Data Produk Genshin Impact (HARDCODED dengan URL Gambar Eksternal yang Seragam) ---
 const productOptions = [
   // Semua gambar produk Genshin Impact akan menggunakan URL yang sama
   { label: "60 Genesis Crystals", price: 15000, img: "https://i.imgur.com/8g6bwUC.jpeg", popular: false },
@@ -13,16 +12,16 @@ const productOptions = [
   { label: "6480 + 1600 Genesis Crystals", price: 1499000, img: "https://i.imgur.com/8g6bwUC.jpeg", popular: false }
 ];
 
-const CheckoutGI = () => { // <--- NAMA KOMPONENNYA ADALAH CheckoutGI
+const CheckoutGensin = () => {
   const [selectedProduct, setSelectedProduct] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
-    game_id: "",    
-    server_id: "",  
+    game_id: "",    // Untuk User ID Genshin Impact (UID)
+    server_id: "",  // Untuk Server Genshin Impact (Asia, America, dll.)
     kode_promo: "",
     paymentMethod: "", 
-    accountNumber: "", 
-    bankName: "" 
+    accountNumber: "",
+    bankName: ""
   });
   const [errors, setErrors] = useState({});
 
@@ -37,8 +36,9 @@ const CheckoutGI = () => { // <--- NAMA KOMPONENNYA ADALAH CheckoutGI
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "game_id" && !/^\d*$/.test(value)) {
-      return;
+      return; // Hanya angka untuk UID
     }
+    // server_id tidak perlu validasi angka karena itu string (Asia, Europe, dll)
 
     if (name === "paymentMethod") {
       setFormData(prev => ({
@@ -50,7 +50,6 @@ const CheckoutGI = () => { // <--- NAMA KOMPONENNYA ADALAH CheckoutGI
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
     }
-
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: "" }));
     }
@@ -90,8 +89,8 @@ const CheckoutGI = () => { // <--- NAMA KOMPONENNYA ADALAH CheckoutGI
         const response = await fetch('http://localhost:8000/api/orders', { 
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
+                'Content-Type': "application/json",
+                'Accept': "application/json",
                 'Authorization': `Bearer ${authToken}`
             },
             credentials: 'include',
@@ -243,7 +242,11 @@ const CheckoutGI = () => { // <--- NAMA KOMPONENNYA ADALAH CheckoutGI
                 {formData.paymentMethod === "Transfer Bank" && (
                   <div className="input-group">
                     <label>Pilih Bank</label>
-                    <select name="bankName" value={formData.bankName} onChange={handleInputChange}>
+                    <select
+                      name="bankName"
+                      value={formData.bankName}
+                      onChange={handleInputChange}
+                    >
                       <option value="">Pilih bank</option><option value="BCA">BCA</option><option value="Mandiri">Mandiri</option><option value="BNI">BNI</option><option value="BRI">BRI</option><option value="CIMB Niaga">CIMB Niaga</option><option value="Danamon">Danamon</option>
                     </select>
                     {errors.bankName && <span className="error">{errors.bankName}</span>}
@@ -324,4 +327,4 @@ const CheckoutGI = () => { // <--- NAMA KOMPONENNYA ADALAH CheckoutGI
   );
 };
 
-export default CheckoutGI;
+export default CheckoutGensin;
