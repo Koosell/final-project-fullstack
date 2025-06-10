@@ -4,12 +4,12 @@ import "./css/Checkout.css";
 const productOptions = [
   // Harga adalah NUMBER (angka)
   // img adalah URL GAMBAR IMGRUR yang Anda inginkan untuk semua produk PUBG
-  { label: "60 UC PUBG Mobile", price: 15000, img: "https://i.imgur.com/vH3sYj8.jpeg", popular: false },
-  { label: "325 UC PUBG Mobile", price: 75000, img: "https://i.imgur.com/vH3sYj8.jpeg", popular: true },
-  { label: "660 UC PUBG Mobile", price: 145000, img: "https://i.imgur.com/vH3sYj8.jpeg", popular: false },
-  { label: "1800 UC PUBG Mobile", price: 375000, img: "https://i.imgur.com/vH3sYj8.jpeg", popular: false },
-  { label: "3850 UC PUBG Mobile", price: 750000, img: "https://i.imgur.com/vH3sYj8.jpeg", popular: true },
-  { label: "8100 UC PUBG Mobile", price: 1500000, img: "https://i.imgur.com/vH3sYj8.jpeg", popular: false }
+  { label: "60 UC PUBG Mobile", price: 15000, img: "https://i.imgur.com/IILNhVd.jpeg", popular: false },
+  { label: "325 UC PUBG Mobile", price: 75000, img: "https://i.imgur.com/IILNhVd.jpeg", popular: true },
+  { label: "660 UC PUBG Mobile", price: 145000, img: "https://i.imgur.com/IILNhVd.jpeg", popular: false },
+  { label: "1800 UC PUBG Mobile", price: 375000, img: "https://i.imgur.com/IILNhVd.jpeg", popular: false },
+  { label: "3850 UC PUBG Mobile", price: 750000, img: "https://i.imgur.com/IILNhVd.jpeg", popular: true },
+  { label: "8100 UC PUBG Mobile", price: 1500000, img: "https://i.imgur.com/IILNhVd.jpeg", popular: false }
 ];
 
 const CheckoutPUBG = () => {
@@ -146,7 +146,7 @@ const CheckoutPUBG = () => {
         <div className="checkout-content">
           <div className="game-header">
             <img 
-              src="https://i.imgur.com/vH3sYj8.jpeg" // Header gambar PUBG
+              src="https://i.imgur.com/Eba983T.jpeg" // Header gambar PUBG
               alt="PUBG Mobile"
               className="game-logo"
             />

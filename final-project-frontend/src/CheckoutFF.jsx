@@ -4,12 +4,12 @@ import "./css/Checkout.css";
 const productOptions = [
   // Harga adalah NUMBER (angka)
   // img adalah URL GAMBAR IMGRUR yang Anda inginkan untuk semua produk FF
-  { label: "100 Diamond FF", price: 16000, img: "https://i.imgur.com/chTbnxD.jpeg", popular: false }, 
-  { label: "210 Diamond FF", price: 32000, img: "https://i.imgur.com/chTbnxD.jpeg", popular: true },
-  { label: "530 Diamond FF", price: 79000, img: "https://i.imgur.com/chTbnxD.jpeg", popular: false },
-  { label: "Double Daily Diamond FF", price: 30000, img: "https://i.imgur.com/chTbnxD.jpeg", popular: true },
-  { label: "1060 Diamond FF", price: 149000, img: "https://i.imgur.com/chTbnxD.jpeg", popular: false },
-  { label: "2180 Diamond FF", price: 299000, img: "https://i.imgur.com/chTbnxD.jpeg", popular: true }
+  { label: "100 Diamond FF", price: 16000, img: "https://i.imgur.com/5OItBDb.jpeg", popular: false }, 
+  { label: "210 Diamond FF", price: 32000, img: "https://i.imgur.com/5OItBDb.jpeg", popular: true },
+  { label: "530 Diamond FF", price: 79000, img: "https://i.imgur.com/5OItBDb.jpeg", popular: false },
+  { label: "Double Daily Diamond FF", price: 30000, img: "https://i.imgur.com/5OItBDb.jpeg", popular: true },
+  { label: "1060 Diamond FF", price: 149000, img: "https://i.imgur.com/5OItBDb.jpeg", popular: false },
+  { label: "2180 Diamond FF", price: 299000, img: "https://i.imgur.com/5OItBDb.jpeg", popular: true }
 ];
 
 const CheckoutFF = () => {

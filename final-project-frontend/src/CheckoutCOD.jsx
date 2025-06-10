@@ -4,12 +4,12 @@ import "./css/Checkout.css";
 const productOptions = [
   // Harga adalah NUMBER (angka)
   // img adalah URL GAMBAR IMGRUR yang Anda inginkan untuk semua produk COD
-  { label: "80 CP COD Mobile", price: 15000, img: "https://i.imgur.com/8QGj14t.jpeg", popular: false },
-  { label: "170 CP COD Mobile", price: 30000, img: "https://i.imgur.com/8QGj14t.jpeg", popular: true },
-  { label: "340 CP COD Mobile", price: 55000, img: "https://i.imgur.com/8QGj14t.jpeg", popular: false },
-  { label: "690 CP COD Mobile", price: 100000, img: "https://i.imgur.com/8QGj14t.jpeg", popular: false },
-  { label: "1400 CP COD Mobile", price: 190000, img: "https://i.imgur.com/8QGj14t.jpeg", popular: true },
-  { label: "2400 CP COD Mobile", price: 300000, img: "https://i.imgur.com/8QGj14t.jpeg", popular: false }
+  { label: "80 CP COD Mobile", price: 15000, img: "https://i.imgur.com/NnMxOub.png", popular: false },
+  { label: "170 CP COD Mobile", price: 30000, img: "https://i.imgur.com/NnMxOub.png", popular: true },
+  { label: "340 CP COD Mobile", price: 55000, img: "https://i.imgur.com/NnMxOub.png", popular: false },
+  { label: "690 CP COD Mobile", price: 100000, img: "https://i.imgur.com/NnMxOub.png", popular: false },
+  { label: "1400 CP COD Mobile", price: 190000, img: "https://i.imgur.com/NnMxOub.png", popular: true },
+  { label: "2400 CP COD Mobile", price: 300000, img: "https://i.imgur.com/NnMxOub.png", popular: false }
 ];
 
 const CheckoutCOD = () => {
@@ -146,7 +146,7 @@ const CheckoutCOD = () => {
         <div className="checkout-content">
           <div className="game-header">
             <img 
-              src="https://i.imgur.com/8QGj14t.jpeg" // Header gambar COD Mobile
+              src="https://i.imgur.com/9LP0vMe.jpeg" // Header gambar COD Mobile
               alt="Call of Duty Mobile"
               className="game-logo"
             />

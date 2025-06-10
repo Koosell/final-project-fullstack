@@ -55,7 +55,7 @@ const Main = () => {
   };
 
   return (
-    <BrowserRouter basename="/Final_Project">
+    <BrowserRouter basename="/final-project-fullstack">
       <>
         <Navbar />
         <Routes>
