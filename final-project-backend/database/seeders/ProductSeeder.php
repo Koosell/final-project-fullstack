@@ -30,12 +30,13 @@ class ProductSeeder extends Seeder
         Product::create(['name' => '2180 Diamond FF', 'description' => '2180 Diamond Free Fire', 'price' => 299000.00, 'stock' => 9999, 'image_url' => 'diamondff.jpg']);
 
         // --- Data Produk PUBG Mobile (DIKOMENTARI KARENA FRONTEND MENGGUNAKAN HARDCODE) ---
-        Product::create(['name' => '60 UC PUBG', 'description' => '60 Unknown Cash PUBG Mobile', 'price' => 15000.00, 'stock' => 9999, 'image_url' => 'uc.jpg']);
-        Product::create(['name' => '325 UC PUBG', 'description' => '325 Unknown Cash PUBG Mobile', 'price' => 75000.00, 'stock' => 9999, 'image_url' => 'uc.jpg']);
-        Product::create(['name' => '660 UC PUBG', 'description' => '660 Unknown Cash PUBG Mobile', 'price' => 145000.00, 'stock' => 9999, 'image_url' => 'uc.jpg']);
-        Product::create(['name' => '1800 UC PUBG', 'description' => '1800 Unknown Cash PUBG Mobile', 'price' => 375000.00, 'stock' => 9999, 'image_url' => 'uc.jpg']);
-        Product::create(['name' => '3850 UC PUBG', 'description' => '3850 Unknown Cash PUBG Mobile', 'price' => 750000.00, 'stock' => 9999, 'image_url' => 'uc.jpg']);
-        Product::create(['name' => '8100 UC PUBG', 'description' => '8100 Unknown Cash PUBG Mobile', 'price' => 1500000.00, 'stock' => 9999, 'image_url' => 'uc.jpg']);
+        Product::create(['name' => '60 UC PUBG Mobile', 'description' => '60 Unknown Cash PUBG Mobile', 'price' => 15000.00, 'stock' => 9999, 'image_url' => 'uc.jpg']);
+        Product::create(['name' => '325 UC PUBG Mobile', 'description' => '325 Unknown Cash PUBG Mobile', 'price' => 75000.00, 'stock' => 9999, 'image_url' => 'uc.jpg']);
+        Product::create(['name' => '660 UC PUBG Mobile', 'description' => '660 Unknown Cash PUBG Mobile', 'price' => 145000.00, 'stock' => 9999, 'image_url' => 'uc.jpg']);
+        Product::create(['name' => '1800 UC PUBG Mobile', 'description' => '1800 Unknown Cash PUBG Mobile', 'price' => 375000.00, 'stock' => 9999, 'image_url' => 'uc.jpg']);
+        Product::create(['name' => '3850 UC PUBG Mobile', 'description' => '3850 Unknown Cash PUBG Mobile', 'price' => 750000.00, 'stock' => 9999, 'image_url' => 'uc.jpg']);
+        Product::create(['name' => '8100 UC PUBG Mobile', 'description' => '8100 Unknown Cash PUBG Mobile', 'price' => 1500000.00, 'stock' => 9999, 'image_url' => 'uc.jpg']);
+
 
         // --- Data Produk Valorant (DIKOMENTARI KARENA FRONTEND MENGGUNAKAN HARDCODE) ---
         Product::create(['name' => '475 Valorant Points', 'description' => '475 Valorant Points', 'price' => 75000.00, 'stock' => 9999, 'image_url' => 'ValorantProduct.png']); 
