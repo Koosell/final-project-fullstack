@@ -31,11 +31,14 @@ const Login = () => {
 
       if (!response.ok) {
         setErrorMsg(data.message || "Login gagal!");
+        setIsLoading(false);
         return;
       }
 
+      // Pastikan backend Anda mengembalikan 'token'
       if (data.token) {
         // Panggil fungsi 'login' dari Context untuk menangani semuanya
+        // Fungsi ini akan menyimpan token ke localStorage DAN memperbarui state
         login(data.token);
         
         alert("Login berhasil!");
@@ -53,9 +56,7 @@ const Login = () => {
 
   return (
     <div className="login-screen">
-      {/* Seluruh kode JSX Anda sama persis dan tidak perlu diubah */}
-      {/* ... banner, form, tombol, dll. ... */}
-       <div className="game-banner">
+      <div className="game-banner">
         <img
           src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
           alt="Game Banner"

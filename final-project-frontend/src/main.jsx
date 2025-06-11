@@ -43,19 +43,18 @@ const Main = () => {
             <Route path="/tentang-kami" element={<TentangKami />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/team" element={<Team />} />
+            <Route path="/checkout/ml" element={<CheckoutML />} />
+            <Route path="/checkout/ff" element={<CheckoutFF />} />
+            <Route path="/checkout/pubg" element={<CheckoutPUBG />} />
+            <Route path="/checkout/gensin" element={<CheckoutGensin />} />
+            <Route path="/checkout/valo" element={<CheckoutValo />} />
+            <Route path="/checkout/cod" element={<CheckoutCOD />} />
 
             {/* Protected Routes (require login) */}
             <Route element={<ProtectedRoute />}>
               <Route path="/profile" element={<Profile />} />
               <Route path="/keranjang" element={<Keranjang />} />
               <Route path="/checkout/produk" element={<CheckoutProduk />} />
-              {/* Add your game checkout routes here if they require login */}
-              <Route path="/checkout/ml" element={<CheckoutML />} />
-              <Route path="/checkout/ff" element={<CheckoutFF />} />
-              <Route path="/checkout/pubg" element={<CheckoutPUBG />} />
-              <Route path="/checkout/gensin" element={<CheckoutGensin />} />
-              <Route path="/checkout/valo" element={<CheckoutValo />} />
-              <Route path="/checkout/cod" element={<CheckoutCOD />} />
             </Route>
 
           </Routes>

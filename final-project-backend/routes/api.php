@@ -34,12 +34,30 @@ Route::get('/genshin-products', [ProductController::class, 'getGenshinProducts']
 // Route untuk Merchandise
 Route::get('/merchandise', [MerchandiseController::class, 'index']);
 
+// --- DEBUG ROUTES (untuk troubleshooting) ---
+Route::get('/test-auth', function (Request $request) {
+    return response()->json([
+        'message' => 'Public route working',
+        'headers' => $request->headers->all(),
+        'bearer_token' => $request->bearerToken()
+    ]);
+});
 
 // --- Protected Routes (Perlu autentikasi dengan Sanctum) ---
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', function (Request $request) {
         return $request->user();
+    });
+    
+    // Debug route untuk cek auth dalam protected group
+    Route::get('/test-protected', function (Request $request) {
+        return response()->json([
+            'message' => 'Protected route working',
+            'user' => $request->user(),
+            'auth_id' => auth()->id(),
+            'token_name' => $request->user()->currentAccessToken()->name ?? 'No token name'
+        ]);
     });
 
     // Cart API
@@ -52,6 +70,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/orders', [OrderController::class, 'store']);
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{id}', [OrderController::class, 'show']);
+    Route::post('/orders/direct', [OrderController::class, 'directPurchase']); // <-- Tambahan rute baru
 
     // Profile API
     Route::put('/user/profile', [ProfileController::class, 'update']); // <-- 2. TAMBAHKAN INI

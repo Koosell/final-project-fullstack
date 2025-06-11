@@ -82,7 +82,6 @@ export const CartProvider = ({ children }) => {
             await fetchData(token); // Refetch all data after adding an item
             return { success: true };
         } catch (error) {
-            console.error("Failed to add to cart:", error);
             return { success: false, message: 'Gagal menambah item.' };
         }
     };
