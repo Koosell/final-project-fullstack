@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
-            ProductSeeder::class, // <<< PASTIKAN BARIS INI ADA DAN TIDAK DIKOMENTARI
+            ProductSeeder::class,
+            MerchandiseSeeder::class, // <-- TAMBAHKAN BARIS INI
         ]);
     }
 }

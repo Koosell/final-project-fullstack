@@ -6,7 +6,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\OrderController;
-use App\Http\Controllers\Api\MerchandiseController; // <-- 1. TAMBAHKAN BARIS INI
+use App\Http\Controllers\Api\MerchandiseController;
+use App\Http\Controllers\Api\ProfileController; // <-- 1. TAMBAHKAN INI
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +32,7 @@ Route::get('/cod-products', [ProductController::class, 'getCodProducts']);
 Route::get('/genshin-products', [ProductController::class, 'getGenshinProducts']);
 
 // Route untuk Merchandise
-Route::get('/merchandise', [MerchandiseController::class, 'index']); // <-- 2. TAMBAHKAN BARIS INI
+Route::get('/merchandise', [MerchandiseController::class, 'index']);
 
 
 // --- Protected Routes (Perlu autentikasi dengan Sanctum) ---
@@ -44,13 +45,16 @@ Route::middleware('auth:sanctum')->group(function () {
     // Cart API
     Route::get('/cart', [CartController::class, 'index']);
     Route::post('/cart/add', [CartController::class, 'store']);
-    Route::put('/cart/{cartItem}', [CartController::class, 'update']); // Menggunakan {cartItem}
-    Route::delete('/cart/{cartItem}', [CartController::class, 'destroy']); // Menggunakan {cartItem}
+    Route::put('/cart/{cartItem}', [CartController::class, 'update']);
+    Route::delete('/cart/{cartItem}', [CartController::class, 'destroy']);
 
     // Order API
     Route::post('/orders', [OrderController::class, 'store']);
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{id}', [OrderController::class, 'show']);
+
+    // Profile API
+    Route::put('/user/profile', [ProfileController::class, 'update']); // <-- 2. TAMBAHKAN INI
 });
 
 // Route fallback untuk API yang tidak ditemukan

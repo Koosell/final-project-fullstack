@@ -13,11 +13,15 @@ return new class extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
-            // <<< PASTIKAN DUA BARIS INI ADA!
-            $table->foreignId('order_id')->constrained()->onDelete('cascade'); // Foreign key ke tabel orders
-            $table->foreignId('product_id')->constrained()->onDelete('cascade'); // Foreign key ke tabel products
+            $table->foreignId('order_id')->constrained()->onDelete('cascade');
+            
+            // KUNCI PERBAIKAN: Mengganti 'product_id' dengan 'orderable'
+            // Ini akan membuat kolom 'orderable_id' dan 'orderable_type'
+            // yang bisa menampung Product atau Merchandise.
+            $table->morphs('orderable'); 
+            
             $table->integer('quantity');
-            $table->decimal('price_at_purchase', 10, 2);
+            $table->decimal('price', 15, 2); // Menggunakan nama 'price' agar konsisten
             $table->timestamps();
         });
     }
