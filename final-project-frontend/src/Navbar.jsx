@@ -1,33 +1,43 @@
-
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useCart } from './CartContext'; // <-- 1. IMPORT useCart dari Context
 import './css/Navbar.css';
 
 const Navbar = () => {
-  // State untuk mengelola dark mode, menu mobile, dan efek scroll
+  // State dari Navbar asli Anda (dipertahankan)
   const [darkMode, setDarkMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  // Fungsi untuk toggle dark mode
+  // Mengambil data dan fungsi dari Context global
+  const { token, logout, itemCount } = useCart();
+  const navigate = useNavigate();
+
+  // Fungsi dari Navbar asli Anda (dipertahankan)
   const toggleDarkMode = () => {
     document.body.classList.toggle('dark-mode');
     setDarkMode(prev => !prev);
   };
 
-  // Fungsi untuk toggle menu mobile
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(prev => !prev);
   };
 
-  // Fungsi untuk membuka chat (placeholder)
   const openChat = () => {
     alert('Chat support akan segera hadir!');
     setIsMobileMenuOpen(false);
   };
+  
+  // Fungsi baru untuk menangani logout
+  const handleLogout = () => {
+      if (window.confirm('Apakah Anda yakin ingin logout?')) {
+          logout();
+          setIsMobileMenuOpen(false); // Tutup menu mobile setelah logout
+      }
+  };
 
-  // Efek scroll untuk hide/show navbar dan update status scrolled
+  // Efek scroll dari Navbar asli Anda (dipertahankan)
   useEffect(() => {
     const handleScroll = () => {
       const navbar = document.querySelector('.navbar');
@@ -48,12 +58,10 @@ const Navbar = () => {
 
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
-      {/* Logo */}
       <div className="logo">
         <Link to="/">ABC Top-up</Link>
       </div>
 
-      {/* Hamburger Icon (Mobile) */}
       <div
         className={`hamburger ${isMobileMenuOpen ? 'open' : ''}`}
         onClick={toggleMobileMenu}
@@ -64,66 +72,51 @@ const Navbar = () => {
         <span></span>
       </div>
 
-      {/* Mobile Menu Backdrop */}
       {isMobileMenuOpen && (
         <div className="mobile-menu-backdrop" onClick={toggleMobileMenu}></div>
       )}
 
-      {/* Navigation Container */}
       <div className={`nav-container ${isMobileMenuOpen ? 'open' : ''}`}>
-        {/* Navigation Links */}
         <ul className="nav-links">
-          <li>
-            <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/produkMenu" onClick={() => setIsMobileMenuOpen(false)}>
-              Produk Lain
-            </Link>
-          </li>
-          <li>
-            <Link to="/tentang-kami" onClick={() => setIsMobileMenuOpen(false)}>
-              Tentang Kami
-            </Link>
-          </li>
-          <li>
-            <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-              Kontak
-            </Link>
-          </li>
-          <li>
-            <Link to="/team" onClick={() => setIsMobileMenuOpen(false)}>
-              Tim
-            </Link>
-          </li>
+            {/* Menggunakan NavLink untuk styling link aktif */}
+            <li><NavLink to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</NavLink></li>
+            <li><NavLink to="/produkMenu" onClick={() => setIsMobileMenuOpen(false)}>Produk Lain</NavLink></li>
+            <li><NavLink to="/tentang-kami" onClick={() => setIsMobileMenuOpen(false)}>Tentang Kami</NavLink></li>
+            <li><NavLink to="/contact" onClick={() => setIsMobileMenuOpen(false)}>Kontak</NavLink></li>
+            <li><NavLink to="/team" onClick={() => setIsMobileMenuOpen(false)}>Tim</NavLink></li>
         </ul>
 
-        {/* Navigation Actions */}
         <div className="nav-actions">
-          {/* Chat Button */}
+          {/* Link ke Keranjang dengan jumlah item */}
+          <Link to="/keranjang" className="btn-chat" onClick={() => setIsMobileMenuOpen(false)}>
+            Keranjang ({itemCount})
+          </Link>
+          
           <button onClick={openChat} className="btn-chat">
             Chat <span className="notification-badge"></span>
           </button>
-
-          {/* Dark Mode Toggle */}
-          <button
-            onClick={toggleDarkMode}
-            className="btn-darkmode"
-            aria-label="Toggle Dark Mode"
-          >
+          
+          <button onClick={toggleDarkMode} className="btn-darkmode" aria-label="Toggle Dark Mode">
             {darkMode ? 'Light' : 'Dark'}
           </button>
-
-          {/* Login Button */}
-          <Link
-            to="/login"
-            className="login-btn"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Login
-          </Link>
+          
+          {/* --- LOGIKA LOGIN/LOGOUT DITEMPATKAN DI SINI --- */}
+          {token ? (
+            // Jika SUDAH LOGIN
+            <>
+              <button onClick={() => { navigate('/profile'); setIsMobileMenuOpen(false); }} className="login-btn">
+                Profil
+              </button>
+              <button onClick={handleLogout} className="login-btn logout">
+                Logout
+              </button>
+            </>
+          ) : (
+            // Jika BELUM LOGIN
+            <Link to="/login" className="login-btn" onClick={() => setIsMobileMenuOpen(false)}>
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </nav>

@@ -10,28 +10,36 @@ class Order extends Model
     use HasFactory;
 
     /**
-     * The attributes that are mass assignable.
+     * Kolom-kolom yang diizinkan untuk diisi secara massal (mass assignment).
+     * Ini telah disesuaikan agar cocok dengan OrderController.
      *
      * @var array<int, string>
      */
     protected $fillable = [
         'user_id',
-        'total_amount',
-        'status',
+        'customer_name',
+        'shipping_address',
+        'phone_number',
         'payment_method',
-        'game_id',
-        'server_id',
-        'payment_details', // Jika Anda menyimpannya sebagai JSON di kolom ini
-        'promo_code',      // Jika Anda memiliki kolom promo_code
+        'payment_details',
+        'total_price',
+        'status',
     ];
 
-    // Definisikan relasi jika ada
+    /**
+     * Mendefinisikan relasi ke User.
+     * Setiap pesanan dimiliki oleh satu user.
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function orderItems()
+    /**
+     * Mendefinisikan relasi ke OrderItem.
+     * Setiap pesanan memiliki banyak item.
+     */
+    public function items()
     {
         return $this->hasMany(OrderItem::class);
     }

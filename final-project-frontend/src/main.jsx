@@ -20,36 +20,44 @@ import Team from "./Team";
 import Keranjang from "./Keranjang.jsx";
 import CheckoutProduk from "./CheckoutProduk.jsx";
 import GameProducts from "./GameProducts.jsx";
-import { CartProvider } from "./CartContext.jsx";
+import Profile from "./Profile.jsx";
+import ProtectedRoute from "./ProtectedRoute.jsx"; // <-- Import the guard
+import { CartProvider } from "./CartContext.jsx";   // <-- Import the provider
 
 const Main = () => {
   return (
-    // STRUKTUR YANG BENAR: BrowserRouter membungkus semuanya
+    // BrowserRouter must be the outermost component
     <BrowserRouter basename="/final-project-fullstack">
-      {/* CartProvider sekarang berada DI DALAM BrowserRouter */}
+      {/* CartProvider wraps the components that need access to the cart state */}
       <CartProvider>
         <>
           <Navbar />
           <Routes>
+            {/* Public Routes (accessible to everyone) */}
             <Route path="/" element={<Index />} />
-            <Route path="/rating" element={<Rating />} />
-            <Route path="/tentang-kami" element={<TentangKami />} />
-            <Route path="/games" element={<GameProducts />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/games" element={<GameProducts />} />
+            <Route path="/ProdukMenu" element={<ProdukMenu />} />
+            <Route path="/rating" element={<Rating />} />
+            <Route path="/tentang-kami" element={<TentangKami />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/team" element={<Team />} />
-            <Route path="/ProdukMenu" element={<ProdukMenu />} />
-            <Route path="/keranjang" element={<Keranjang />} />
-            <Route path="/checkout/produk" element={<CheckoutProduk />} />
 
-            {/* Hapus rute checkout lama jika sudah tidak dipakai */}
-            <Route path="/checkout/ml" element={<CheckoutML />} />
-            <Route path="/checkout/ff" element={<CheckoutFF />} />
-            <Route path="/checkout/pubg" element={<CheckoutPUBG />} />
-            <Route path="/checkout/gensin" element={<CheckoutGensin />} />
-            <Route path="/checkout/valo" element={<CheckoutValo />} />
-            <Route path="/checkout/cod" element={<CheckoutCOD />} />
+            {/* Protected Routes (require login) */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/keranjang" element={<Keranjang />} />
+              <Route path="/checkout/produk" element={<CheckoutProduk />} />
+              {/* Add your game checkout routes here if they require login */}
+              <Route path="/checkout/ml" element={<CheckoutML />} />
+              <Route path="/checkout/ff" element={<CheckoutFF />} />
+              <Route path="/checkout/pubg" element={<CheckoutPUBG />} />
+              <Route path="/checkout/gensin" element={<CheckoutGensin />} />
+              <Route path="/checkout/valo" element={<CheckoutValo />} />
+              <Route path="/checkout/cod" element={<CheckoutCOD />} />
+            </Route>
+
           </Routes>
           <Footer />
         </>

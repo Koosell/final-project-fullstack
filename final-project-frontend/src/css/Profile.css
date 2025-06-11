@@ -1,0 +1,169 @@
+/* Styling untuk Halaman Profil */
+.profile-container {
+    padding: 2rem 7%;
+    background-color: #f8f9fa;
+    min-height: calc(100vh - 80px); /* 80px adalah perkiraan tinggi navbar */
+    font-family: 'Poppins', sans-serif;
+}
+
+.profile-header {
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.profile-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 0.5rem;
+}
+
+.profile-header p {
+    font-size: 1.1rem;
+    color: #6c757d;
+}
+
+/* Layout utama menggunakan Grid */
+.profile-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Kolom info lebih kecil dari kolom riwayat */
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+/* Styling umum untuk semua kartu */
+.profile-details-card,
+.order-history-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background-color: #f1f3f5;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.card-header .card-icon {
+    font-size: 1.5rem;
+    color: #495057;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Kartu Detail Profil */
+.profile-details-card p {
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    color: #495057;
+}
+.profile-details-card strong {
+    color: #212529;
+}
+
+.edit-profile-btn {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.edit-profile-btn:hover {
+    background-color: #0056b3;
+}
+
+
+/* Kartu Riwayat Pesanan */
+.order-item {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: box-shadow 0.2s ease-in-out;
+}
+.order-item:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+}
+
+.order-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px dashed #ced4da;
+}
+.order-item-header h4 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.order-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.order-status.completed { background-color: #d1fae5; color: #065f46; }
+.order-status.shipping { background-color: #dbeafe; color: #1e40af; }
+.order-status.cancelled { background-color: #fee2e2; color: #991b1b; }
+
+.order-date {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+.order-product-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.order-product-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    font-size: 0.95rem;
+}
+
+.order-total {
+    text-align: right;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e9ecef;
+}
+.order-total strong {
+    color: #007bff;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .profile-content {
+        grid-template-columns: 1fr; /* Tumpuk semua kartu secara vertikal di layar kecil */
+    }
+}

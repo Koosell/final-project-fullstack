@@ -10,19 +10,21 @@ class OrderItem extends Model
     use HasFactory;
 
     /**
-     * The attributes that are mass assignable.
+     * Kolom-kolom yang diizinkan untuk diisi secara massal (mass assignment).
+     * Ini telah disesuaikan agar cocok dengan sistem polimorfik.
      *
      * @var array<int, string>
      */
     protected $fillable = [
         'order_id',
-        'product_id',
+        'orderable_id',   // <-- Menggunakan kolom polimorfik
+        'orderable_type', // <-- Menggunakan kolom polimorfik
         'quantity',
-        'price_at_purchase',
+        'price',
     ];
 
     /**
-     * Get the order that owns the order item.
+     * Mendefinisikan relasi ke model Order.
      */
     public function order()
     {
@@ -30,10 +32,12 @@ class OrderItem extends Model
     }
 
     /**
-     * Get the product associated with the order item.
+     * Mendefinisikan relasi polimorfik "one-to-many".
+     * Ini akan mengambil item yang terhubung, baik itu dari
+     * model Product atau Merchandise.
      */
-    public function product()
+    public function orderable()
     {
-        return $this->belongsTo(Product::class);
+        return $this->morphTo();
     }
 }

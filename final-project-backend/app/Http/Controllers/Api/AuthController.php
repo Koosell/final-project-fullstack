@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash; // Tambahkan ini untuk hashing password jika perlu di register
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -27,10 +27,11 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('auth_token')->plainTextToken;
 
+            // KUNCI PERBAIKAN: Mengirim 'token' agar sesuai dengan frontend.
             return response()->json([
                 'message' => 'Login successful',
                 'user' => $user,
-                'access_token' => $token,
+                'token' => $token, // Ini yang diharapkan oleh Login.jsx
                 'token_type' => 'Bearer',
             ]);
         }
@@ -41,7 +42,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Handle user registration. (Opsional, jika Anda punya fitur register)
+     * Handle user registration.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
@@ -65,7 +66,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Registration successful',
             'user' => $user,
-            'access_token' => $token,
+            'token' => $token, // Mengirim 'token' agar konsisten
             'token_type' => 'Bearer',
         ], 201); // Created
     }
