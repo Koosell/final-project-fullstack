@@ -3,34 +3,36 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\CartItem; // Pastikan Anda memiliki model CartItem
-use App\Models\Product;  // Pastikan Anda memiliki model Product
+use App\Models\CartItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
     /**
-     * Display a listing of the user's cart items.
+     * Menampilkan daftar item di keranjang user yang sedang login.
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $user = Auth::user();
-        if (!$user) {
-            return response()->json(['message' => 'Unauthorized. User not logged in.'], 401);
-        }
+        $user = $request->user();
 
-        // Memuat relasi product dari cartItems
+        // Menggunakan relasi polimorfik 'itemable' untuk mengambil detail item
+        // (bisa dari tabel 'products' atau 'merchandise')
         $cartItems = CartItem::where('user_id', $user->id)
-                             ->with('product') // Load data produk terkait
+                             ->with('itemable') // KUNCI PERUBAHAN ADA DI SINI
                              ->get();
 
-        // Hitung subtotal dan total jika diperlukan di frontend
+        // Menghitung total harga. '$item->itemable' akan berisi objek Product atau Merchandise
         $totalAmount = $cartItems->sum(function($item) {
-            return $item->quantity * $item->product->price;
+            // Pastikan itemable tidak null sebelum mengakses properti price
+            if ($item->itemable) {
+                return $item->quantity * $item->itemable->price;
+            }
+            return 0;
         });
 
         return response()->json([
@@ -40,105 +42,96 @@ class CartController extends Controller
     }
 
     /**
-     * Store a newly created cart item in storage.
-     * (Or update quantity if product already in cart).
+     * Menyimpan item baru (game atau merchandise) di keranjang.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
-        try {
-            $request->validate([
-                'product_id' => 'required|exists:products,id',
-                'quantity' => 'required|integer|min:1',
-            ]);
-        } catch (ValidationException $e) {
-            return response()->json(['message' => 'Validasi gagal', 'errors' => $e->errors()], 422);
+        $user = $request->user();
+
+        // 1. Validasi input baru yang polimorfik
+        $validator = Validator::make($request->all(), [
+            'item_id' => 'required|integer',
+            'item_type' => 'required|string|in:product,merchandise',
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Validasi gagal', 'errors' => $validator->errors()], 422);
         }
 
-        $user = Auth::user();
-        if (!$user) {
-            return response()->json(['message' => 'Unauthorized. User not logged in.'], 401);
+        // 2. Tentukan kelas Model berdasarkan tipe item
+        $modelClass = $request->item_type === 'product'
+            ? \App\Models\Product::class
+            : \App\Models\Merchandise::class;
+
+        // 3. Pastikan itemnya ada di database
+        if (! $modelClass::find($request->item_id)) {
+            return response()->json(['message' => 'Item tidak ditemukan.'], 404);
         }
 
-        $product = Product::find($request->product_id);
-
-        if (!$product) {
-            return response()->json(['message' => 'Product not found'], 404);
-        }
-
-        // Cek apakah produk sudah ada di keranjang user
+        // 4. Cari item di keranjang menggunakan kriteria polimorfik
         $cartItem = CartItem::where('user_id', $user->id)
-                            ->where('product_id', $request->product_id)
+                            ->where('itemable_id', $request->item_id)
+                            ->where('itemable_type', $modelClass)
                             ->first();
 
         if ($cartItem) {
             // Jika sudah ada, update quantity
             $cartItem->quantity += $request->quantity;
             $cartItem->save();
-            $message = 'Quantity updated in cart.';
+            $message = 'Kuantitas item di keranjang berhasil diperbarui.';
         } else {
-            // Jika belum ada, buat item baru
+            // Jika belum ada, buat item baru dengan data polimorfik
             CartItem::create([
                 'user_id' => $user->id,
-                'product_id' => $request->product_id,
+                'itemable_id' => $request->item_id,
+                'itemable_type' => $modelClass,
                 'quantity' => $request->quantity,
             ]);
-            $message = 'Product added to cart.';
+            $message = 'Item berhasil ditambahkan ke keranjang.';
         }
 
         return response()->json(['message' => $message], 200);
     }
 
     /**
-     * Update the specified cart item in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CartItem  $cartItem
-     * @return \Illuminate\Http\JsonResponse
+     * Update item yang sudah ada di keranjang.
+     * FUNGSI INI TIDAK PERLU DIUBAH DARI KODE LAMA ANDA.
      */
     public function update(Request $request, CartItem $cartItem)
     {
-        try {
-            $request->validate([
-                'quantity' => 'required|integer|min:0', // Izinkan 0 untuk menghapus item
-            ]);
-        } catch (ValidationException $e) {
-            return response()->json(['message' => 'Validasi gagal', 'errors' => $e->errors()], 422);
-        }
+        $request->validate(['quantity' => 'required|integer|min:0']);
 
-        // Pastikan user yang login memiliki akses ke cart item ini
         if ($cartItem->user_id !== Auth::id()) {
-            return response()->json(['message' => 'Unauthorized. You do not own this cart item.'], 403);
+            return response()->json(['message' => 'Unauthorized'], 403);
         }
 
         if ($request->quantity == 0) {
             $cartItem->delete();
-            return response()->json(['message' => 'Cart item removed.'], 200);
+            return response()->json(['message' => 'Item berhasil dihapus.'], 200);
         }
 
         $cartItem->quantity = $request->quantity;
         $cartItem->save();
 
-        return response()->json(['message' => 'Cart item updated.'], 200);
+        return response()->json(['message' => 'Item di keranjang berhasil diperbarui.'], 200);
     }
 
     /**
-     * Remove the specified cart item from storage.
-     *
-     * @param  \App\Models\CartItem  $cartItem
-     * @return \Illuminate\Http\JsonResponse
+     * Hapus item dari keranjang.
+     * FUNGSI INI TIDAK PERLU DIUBAH DARI KODE LAMA ANDA.
      */
     public function destroy(CartItem $cartItem)
     {
-        // Pastikan user yang login memiliki akses ke cart item ini
         if ($cartItem->user_id !== Auth::id()) {
-            return response()->json(['message' => 'Unauthorized. You do not own this cart item.'], 403);
+            return response()->json(['message' => 'Unauthorized'], 403);
         }
 
         $cartItem->delete();
 
-        return response()->json(['message' => 'Cart item deleted.'], 200);
+        return response()->json(['message' => 'Item berhasil dihapus.'], 200);
     }
 }
