@@ -1,0 +1,54 @@
+.order-list-container {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.order-list-header {
+    margin-bottom: 25px;
+}
+
+.order-list-header h1 {
+    color: #2c3e50;
+    margin: 0;
+}
+
+/* Kita bisa gunakan kembali style dari ProductList.css untuk tabel dan paginasi */
+/* Namun, kita tambahkan style spesifik untuk status */
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    text-transform: capitalize;
+}
+
+.status-completed {
+    background-color: #27ae60; /* Hijau */
+}
+
+.status-processing {
+    background-color: #3498db; /* Biru */
+}
+
+.status-pending {
+    background-color: #f39c12; /* Oranye */
+}
+
+.status-cancelled, .status-failed {
+    background-color: #e74c3c; /* Merah */
+}
+
+.view-button {
+    background-color: #8e44ad; /* Ungu */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: opacity 0.3s;
+}
+
+.view-button:hover {
+    opacity: 0.85;
+}

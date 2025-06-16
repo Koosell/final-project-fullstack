@@ -9,6 +9,17 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\MerchandiseController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\TestimonialController;
+// --- AWAL PERUBAHAN ---
+// Import Middleware IsAdmin secara langsung
+use App\Http\Middleware\IsAdmin;
+// Import Controller yang akan digunakan untuk Admin Panel
+// Pastikan Anda membuat controller ini nanti jika belum ada
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\MerchandiseController as AdminMerchandiseController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
+// --- AKHIR PERUBAHAN ---
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +74,49 @@ Route::middleware('auth:sanctum')->group(function () {
     // Rute Testimoni (mengirim)
     Route::post('/testimonials', [TestimonialController::class, 'store']);
 });
+
+
+// --- AWAL PERUBAHAN ---
+/*
+|--------------------------------------------------------------------------
+| Admin API Routes
+|--------------------------------------------------------------------------
+|
+| Rute-rute ini khusus untuk Admin Panel.
+| Dilindungi oleh Sanctum dan middleware 'IsAdmin'
+|
+*/
+// Menggunakan kelas middleware secara langsung, bukan alias 'is.admin'
+Route::middleware(['auth:sanctum', IsAdmin::class])->prefix('admin')->group(function () {
+    // Dashboard
+    Route::get('/dashboard/stats', [AdminDashboardController::class, 'getStats']);
+
+    // Manajemen Produk (Top Up)
+    Route::get('/products', [AdminProductController::class, 'index']);
+    Route::post('/products', [AdminProductController::class, 'store']);
+    Route::get('/products/{id}', [AdminProductController::class, 'show']);
+    Route::put('/products/{id}', [AdminProductController::class, 'update']);
+    Route::delete('/products/{id}', [AdminProductController::class, 'destroy']);
+
+    // Manajemen Merchandise
+    Route::get('/merchandise', [AdminMerchandiseController::class, 'index']);
+    Route::post('/merchandise', [AdminMerchandiseController::class, 'store']);
+    Route::get('/merchandise/{id}', [AdminMerchandiseController::class, 'show']);
+    Route::post('/merchandise/{id}', [AdminMerchandiseController::class, 'update']); // Pakai POST untuk update karena form-data
+    Route::delete('/merchandise/{id}', [AdminMerchandiseController::class, 'destroy']);
+
+    // Pantau Penjualan (Orders)
+    Route::get('/orders', [AdminOrderController::class, 'index']);
+    Route::get('/orders/{id}', [AdminOrderController::class, 'show']);
+    Route::put('/orders/{id}/status', [AdminOrderController::class, 'updateStatus']);
+
+    // Manajemen Testimoni
+    Route::get('/testimonials', [AdminTestimonialController::class, 'index']);
+    Route::put('/testimonials/{id}/approve', [AdminTestimonialController::class, 'approve']);
+    Route::delete('/testimonials/{id}', [AdminTestimonialController::class, 'destroy']);
+});
+// --- AKHIR PERUBAHAN ---
+
 
 // Route fallback untuk API yang tidak ditemukan
 Route::fallback(function(){

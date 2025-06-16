@@ -1,0 +1,76 @@
+/* Styling untuk Admin Panel Layout */
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.admin-sidebar {
+    width: 250px;
+    background: #2c3e50; /* Biru Tua */
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-sidebar h2 {
+    text-align: center;
+    border-bottom: 1px solid #4a627a;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.admin-sidebar nav {
+    flex-grow: 1;
+}
+
+.admin-sidebar-link {
+    display: block;
+    color: white;
+    padding: 12px 18px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 8px 0;
+    transition: background-color 0.3s, padding-left 0.3s;
+}
+
+.admin-sidebar-link:hover {
+    background: #34495e; /* Biru sedikit lebih terang */
+    padding-left: 25px;
+}
+
+.admin-main-content {
+    flex-grow: 1;
+    background: #f4f6f9; /* Abu-abu sangat terang */
+}
+
+.admin-header {
+    padding: 20px 30px;
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.logout-button {
+    padding: 9px 18px;
+    background: #e74c3c; /* Merah */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+    background: #c0392b; /* Merah lebih gelap */
+}
+
+.admin-page-content {
+    padding: 30px;
+}

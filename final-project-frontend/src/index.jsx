@@ -17,8 +17,8 @@ const promos = [
     alt: "Diskon 20% Valorant Points"
   },
   {
-    title: "PUB",
-    description: '<strong> Royale Pass PUBG Mobile: Season Baru, Hadiah Lebih Keren!</strong> Segera top-up dan klaim skin eksklusif, emote keren, dan banyak hadiah menarik!',
+    title: "VALORANT POINTS DISKON 20%",
+    description: '<strong> Valorant</strong> Segera top-up dan klaim skin eksklusif, emote keren, dan banyak hadiah menarik!',
     image: "https://i.imgur.com/IW3qA6p.jpeg",
     alt: "Diskon 20% Valorant Points"
   },
