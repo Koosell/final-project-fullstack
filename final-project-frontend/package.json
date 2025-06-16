@@ -22,6 +22,7 @@
     "react-router-dom": "^7.6.1",
     "react-slick": "^0.30.3",
     "slick-carousel": "^1.8.1",
+    "vite": "^6.3.5",
     "vite-plugin-compression": "^0.5.1"
   },
   "devDependencies": {
@@ -37,7 +38,6 @@
     "imagemin": "^9.0.1",
     "imagemin-cli": "^8.0.0",
     "imagemin-mozjpeg": "^10.0.0",
-    "imagemin-pngquant": "^10.0.0",
-    "vite": "^6.3.5"
+    "imagemin-pngquant": "^10.0.0"
   }
 }
