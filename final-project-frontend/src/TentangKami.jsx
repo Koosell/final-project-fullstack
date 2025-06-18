@@ -22,9 +22,6 @@ const TentangKami = () => {
         <p className="paragraph" style={{ '--index': 4 }}>
           Terima kasih telah memilih ABC TOP-UP. Yuk, tingkatkan pengalaman bermain kamu bersama kami — karena di dunia game, waktu dan kenyamanan adalah segalanya!
         </p>
-        <p className="paragraph" style={{ '--index': 4 }}>
-          Anda Admin? --- http://localhost:5173/final-project-fullstack/admin/login 
-        </p>
       </section>
       {/* Decorative Element */}
       <div className="decorative-line"></div>
