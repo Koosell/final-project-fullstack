@@ -100,12 +100,6 @@ const Navbar = () => {
                     {token ? (
                         // Jika SUDAH LOGIN
                         <>
-                            {/* --- TOMBOL ADMIN PANEL BARU --- */}
-                            {isAdmin && (
-                                <Link to="/admin/dashboard" className="login-btn admin-panel" onClick={() => setIsMobileMenuOpen(false)}>
-                                    Admin Panel
-                                </Link>
-                            )}
                             
                             <button onClick={() => { navigate('/profile'); setIsMobileMenuOpen(false); }} className="login-btn">
                                 Profil
