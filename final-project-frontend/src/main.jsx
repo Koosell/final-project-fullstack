@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 // Providers
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { CartProvider } from "./CartContext.jsx";
+import { PaymentProvider } from "./PaymentContext.jsx"; // <-- HANYA MENAMBAH IMPORT INI
 
 // Komponen Utama & Rute Khusus
 import Navbar from "./Navbar.jsx";
@@ -33,6 +34,7 @@ import CheckoutValo from "./CheckoutValo.jsx";
 import CheckoutCOD from "./CheckoutCOD.jsx";
 
 // Komponen Wrapper untuk Logika Tampil/Sembunyi Navbar & Footer
+// TIDAK ADA YANG DIUBAH DI SINI
 const AppContent = () => {
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith('/admin');
@@ -61,11 +63,9 @@ const AppContent = () => {
         <Route path="/checkout/gensin" element={<CheckoutGensin />} />
         <Route path="/checkout/valo" element={<CheckoutValo />} />
         <Route path="/checkout/cod" element={<CheckoutCOD />} />
-        {/* Halaman Profil sekarang TIDAK dilindungi */}
         <Route path="/profile" element={<Profile />} />
 
         {/* --- RUTE YANG DILINDUNGI --- */}
-        {/* Hanya Keranjang dan Checkout Produk yang perlu login */}
         <Route element={<ProtectedRoute />}>
             <Route path="/keranjang" element={<Keranjang />} />
             <Route path="/checkout/produk" element={<CheckoutProduk />} />
@@ -78,12 +78,15 @@ const AppContent = () => {
 };
 
 // Komponen Utama Aplikasi
+// TIDAK ADA YANG DIUBAH DI SINI, HANYA DITAMBAHKAN PEMBUNGKUS
 const Main = () => {
   return (
     <BrowserRouter basename="/final-project-fullstack">
       <AuthProvider>
         <CartProvider>
-          <AppContent />
+          <PaymentProvider> {/* <-- HANYA MENAMBAH PEMBUNGKUS INI */}
+            <AppContent />
+          </PaymentProvider>
         </CartProvider>
       </AuthProvider>
     </BrowserRouter>

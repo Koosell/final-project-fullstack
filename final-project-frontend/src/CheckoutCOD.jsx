@@ -2,36 +2,32 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "./css/Checkout.css";
+import { usePayment } from './PaymentContext'; // <-- 1. Import hook pembayaran
 
 const CheckoutCOD = () => {
-    // State untuk menampung produk yang diambil dari API
     const [codProducts, setCodProducts] = useState([]);
     const [isLoadingProducts, setIsLoadingProducts] = useState(true);
-
-    // Menyimpan seluruh objek produk yang dipilih
     const [selectedProduct, setSelectedProduct] = useState(null);
-    
     const [showSuccess, setShowSuccess] = useState(false);
-    const [formData, setFormData] = useState({
-        game_id: "",
-        server_id: "",
-        kode_promo: "",
-        paymentMethod: "",
-        accountNumber: "",
-        bankName: ""
+    
+    // <-- 2. State form disederhanakan
+    const [formData, setFormData] = useState({ 
+        game_id: "", 
+        kode_promo: ""
     });
+
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const { handlePay } = usePayment(); // <-- 3. Panggil hook
 
-    // Mengambil data produk dari backend saat komponen dimuat
     useEffect(() => {
         const fetchProducts = async () => {
             setIsLoadingProducts(true);
             try {
                 const response = await axios.get('http://127.0.0.1:8000/api/products');
                 if (response.data && Array.isArray(response.data.data)) {
-                    // Filter untuk hanya menampilkan produk yang mengandung "COD"
+                    // Filter sudah benar untuk 'cod'
                     const filtered = response.data.data.filter(p => p.name.toLowerCase().includes(' cod '));
                     setCodProducts(filtered);
                 }
@@ -48,7 +44,8 @@ const CheckoutCOD = () => {
     
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        if ((name === "game_id" || name === "server_id") && !/^\d*$/.test(value)) return;
+        // Hanya izinkan angka untuk game_id
+        if (name === "game_id" && !/^\d*$/.test(value)) return;
         setFormData(prev => ({ ...prev, [name]: value }));
         if (errors[name]) setErrors(prev => ({ ...prev, [name]: "" }));
     };
@@ -56,45 +53,41 @@ const CheckoutCOD = () => {
     const validateForm = () => {
         const newErrors = {};
         if (!selectedProduct) newErrors.product = "Pilih produk terlebih dahulu!";
-        if (!formData.game_id) newErrors.game_id = "User ID wajib diisi";
-        if (!formData.paymentMethod) newErrors.paymentMethod = "Pilih metode pembayaran";
+        if (!formData.game_id) newErrors.game_id = "Open ID wajib diisi";
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
-
-    const handleSubmit = async (e) => {
+    
+    // <-- 4. Logika pembayaran diubah total untuk menggunakan Midtrans
+    const handlePayment = (e) => {
         e.preventDefault();
         if (!validateForm()) return;
-
-        setIsLoading(true);
+        
         const token = localStorage.getItem('token');
         if (!token) {
             alert("Anda harus login untuk melakukan pembelian!");
-            setIsLoading(false);
             navigate('/login');
             return;
         }
 
-        try {
-            const response = await axios.post('http://localhost:8000/api/orders/direct', {
-                product_id: selectedProduct.id,
-                game_id: formData.game_id,
-                server_id: formData.server_id,
-                payment_method: formData.paymentMethod,
-                account_number: formData.accountNumber,
-                bank_name: formData.bankName,
-                promo_code: formData.kode_promo,
-            }, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            alert(response.data.message || "Pesanan berhasil dibuat!");
-            setShowSuccess(true);
-        } catch (error) {
-            const errorMessage = error.response?.data?.message || "Terjadi kesalahan yang tidak diketahui.";
-            alert(`Gagal mengirim data ke server: ${errorMessage}`);
-        } finally {
-            setIsLoading(false);
-        }
+        const orderDetails = {
+            productName: selectedProduct.name,
+            price: selectedProduct.price,
+            quantity: 1,
+        };
+
+        handlePay(orderDetails, {
+            onSuccess: () => {
+                setShowSuccess(true);
+            }
+        });
+    };
+
+    const resetForm = () => {
+        setShowSuccess(false);
+        setSelectedProduct(null);
+        setFormData({ game_id: "", kode_promo: "" });
+        setErrors({});
     };
 
     return (
@@ -108,9 +101,10 @@ const CheckoutCOD = () => {
                             <p>Top-up CP (CoD Points) untuk skin, Battle Pass, dan lainnya</p>
                         </div>
                     </div>
+
                     <div className="checkout-grid">
                         <div className="product-section">
-                            <h3>Pilih Produk</h3>
+                            <h3>1. Pilih Produk</h3>
                             <div className="product-scroller">
                                 {isLoadingProducts ? <p>Memuat produk...</p> : 
                                     codProducts.map((product) => (
@@ -135,50 +129,22 @@ const CheckoutCOD = () => {
                             </div>
                             {errors.product && <span className="error">{errors.product}</span>}
                         </div>
+
                         <div className="form-section">
-                            <form onSubmit={handleSubmit} autoComplete="off">
+                             <h3>2. Masukkan Data Akun</h3>
+                            <form onSubmit={handlePayment} autoComplete="off">
                                 <div className="input-group">
-                                    <label>User ID</label>
-                                    <input type="text" name="game_id" placeholder="Masukkan User ID" value={formData.game_id} onChange={handleInputChange} inputMode="numeric" pattern="[0-9]*" required />
+                                    <label>Open ID</label>
+                                    <input type="text" name="game_id" placeholder="Masukkan Open ID" value={formData.game_id} onChange={handleInputChange} inputMode="numeric" pattern="[0-9]*" required />
                                     {errors.game_id && <span className="error">{errors.game_id}</span>}
                                 </div>
-                                <div className="input-group">
-                                    <label>Server ID</label>
-                                    <input type="text" name="server_id" placeholder="Masukkan Server ID" value={formData.server_id} onChange={handleInputChange} inputMode="numeric" pattern="[0-9]*" />
-                                    {errors.server_id && <span className="error">{errors.server_id}</span>}
-                                </div>
-                                <div className="input-group">
-                                    <label>Metode Pembayaran</label>
-                                    <div className="payment-options">
-                                        <label className="payment-option"><input type="radio" name="paymentMethod" value="DANA" checked={formData.paymentMethod === "DANA"} onChange={handleInputChange} required /> <span className="payment-label">DANA</span></label>
-                                        <label className="payment-option"><input type="radio" name="paymentMethod" value="OVO" checked={formData.paymentMethod === "OVO"} onChange={handleInputChange} required /> <span className="payment-label">OVO</span></label>
-                                        <label className="payment-option"><input type="radio" name="paymentMethod" value="GoPay" checked={formData.paymentMethod === "GoPay"} onChange={handleInputChange} required /> <span className="payment-label">GoPay</span></label>
-                                        <label className="payment-option"><input type="radio" name="paymentMethod" value="Transfer Bank" checked={formData.paymentMethod === "Transfer Bank"} onChange={handleInputChange} required /> <span className="payment-label">Transfer Bank</span></label>
-                                    </div>
-                                    {errors.paymentMethod && <span className="error">{errors.paymentMethod}</span>}
-                                </div>
-                                {formData.paymentMethod && formData.paymentMethod !== "Transfer Bank" && (
-                                    <div className="input-group">
-                                        <label>Nomor Akun {formData.paymentMethod.toUpperCase()}</label>
-                                        <input type="text" name="accountNumber" value={formData.accountNumber} onChange={handleInputChange} placeholder={`Masukkan nomor ${formData.paymentMethod.toUpperCase()}`} inputMode="numeric" pattern="[0-9]*" />
-                                        {errors.accountNumber && <span className="error">{errors.accountNumber}</span>}
-                                    </div>
-                                )}
-                                {formData.paymentMethod === "Transfer Bank" && (
-                                    <div className="input-group">
-                                        <label>Pilih Bank</label>
-                                        <select name="bankName" value={formData.bankName} onChange={handleInputChange}>
-                                            <option value="">Pilih bank</option><option value="BCA">BCA</option><option value="Mandiri">Mandiri</option><option value="BNI">BNI</option><option value="BRI">BRI</option>
-                                        </select>
-                                        {errors.bankName && <span className="error">{errors.bankName}</span>}
-                                    </div>
-                                )}
+                                {/* Bagian Server ID dan Metode Pembayaran lama sudah dihapus */}
                                 <div className="input-group">
                                     <label>Kode Promo (Opsional)</label>
                                     <input type="text" name="kode_promo" placeholder="Masukkan kode promo" value={formData.kode_promo} onChange={handleInputChange} />
                                 </div>
                                 <button type="submit" className="submit-btn" disabled={isLoading}>
-                                    {isLoading ? 'Memproses...' : 'Bayar Sekarang'}
+                                    {isLoading ? 'Memproses...' : 'Beli & Bayar'}
                                 </button>
                             </form>
                         </div>
@@ -188,31 +154,14 @@ const CheckoutCOD = () => {
                 <div className="success-screen">
                     <div className="success-content">
                         <div className="success-icon">✓</div>
-                        <h2>Pembayaran Berhasil!</h2>
-                        <p>Pesanan Anda sedang diproses</p>
+                        <h2>Pembayaran Diproses!</h2>
+                        <p>Pesanan Anda akan segera masuk setelah pembayaran dikonfirmasi.</p>
                         <div className="order-summary">
                             <div className="summary-item"><span>Produk</span><span>{selectedProduct?.name}</span></div>
-                            <div className="summary-item"><span>User ID</span><span>{formData.game_id}</span></div>
-                            <div className="summary-item"><span>Server ID</span><span>{formData.server_id}</span></div>
-                            <div className="summary-item">
-                                <span>Metode Pembayaran</span>
-                                <span>
-                                    {formData.paymentMethod === "Transfer Bank" ? `Transfer Bank - ${formData.bankName}` : formData.paymentMethod.toUpperCase()}
-                                </span>
-                            </div>
-                            {formData.paymentMethod !== "Transfer Bank" && formData.accountNumber && (
-                                <div className="summary-item"><span>Nomor Akun</span><span>{formData.accountNumber}</span></div>
-                            )}
+                            <div className="summary-item"><span>Open ID</span><span>{formData.game_id}</span></div>
+                            <div className="summary-item"><span>Metode Pembayaran</span><span>Midtrans</span></div>
                         </div>
-                        <button
-                            className="back-btn"
-                            onClick={() => {
-                                setShowSuccess(false);
-                                setSelectedProduct(null);
-                                setFormData({ game_id: "", server_id: "", kode_promo: "", paymentMethod: "", accountNumber: "", bankName: "" });
-                                setErrors({});
-                            }}
-                        >
+                        <button className="back-btn" onClick={resetForm}>
                             Beli Lagi
                         </button>
                     </div>

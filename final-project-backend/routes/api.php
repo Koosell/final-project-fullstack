@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\MerchandiseController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\TestimonialController;
+use App\Http\Controllers\Api\PaymentController;
 // --- AWAL PERUBAHAN ---
 // Import Middleware IsAdmin secara langsung
 use App\Http\Middleware\IsAdmin;
@@ -30,6 +31,10 @@ use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialControll
 // --- Rute Publik (Tidak perlu login) ---
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/payment/create', [PaymentController::class, 'createTransaction']);
+Route::post('/payment/webhook', [PaymentController::class, 'webhookHandler']);
+Route::post('/payment/create-topup', [PaymentController::class, 'createTopupTransaction']);
+
 
 // Rute untuk produk & merchandise (dari kode baru)
 Route::get('/products', [ProductController::class, 'index']);
