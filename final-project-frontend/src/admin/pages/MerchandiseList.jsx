@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
-// --- PERBAIKAN DI SINI: Menambahkan ekstensi .jsx pada import ---
 import MerchandiseFormModal from './MerchandiseFormModal.jsx';
-import './ProductList.css'; // Kita bisa gunakan kembali CSS dari ProductList
+import './ProductList.css'; // File CSS untuk styling
+
+// --- Sentralisasi URL API untuk kemudahan maintenance ---
+const API_BASE_URL = 'http://localhost:8000/api/admin/merchandise';
 
 const MerchandiseList = () => {
     const [merchandise, setMerchandise] = useState([]);
@@ -11,14 +13,12 @@ const MerchandiseList = () => {
     const [error, setError] = useState('');
     const { token } = useAuth();
     const [pagination, setPagination] = useState({});
-
-    // --- STATE BARU UNTUK MODAL ---
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editingMerch, setEditingMerch] = useState(null); // Untuk menyimpan data yang diedit
+    const [editingMerch, setEditingMerch] = useState(null);
 
     const fetchMerchandise = (pageUrl) => {
         setLoading(true);
-        const url = pageUrl || 'http://localhost:8000/api/admin/merchandise';
+        const url = pageUrl || API_BASE_URL;
 
         axios.get(url, { headers: { Authorization: `Bearer ${token}` } })
             .then(response => {
@@ -35,17 +35,20 @@ const MerchandiseList = () => {
     };
 
     useEffect(() => {
-        fetchMerchandise();
+        if(token) {
+            fetchMerchandise();
+        }
     }, [token]);
 
-    // --- FUNGSI BARU UNTUK MENANGANI PENYIMPANAN ---
     const handleSave = (formData, id) => {
         const isEditing = !!id;
-        const url = isEditing
-            ? `http://localhost:8000/api/admin/merchandise/${id}`
-            : 'http://localhost:8000/api/admin/merchandise';
-        
-        // Gunakan POST untuk create dan update (karena ada file upload)
+        const url = isEditing ? `${API_BASE_URL}/${id}` : API_BASE_URL;
+
+        // Penting: Tambahkan _method 'PUT' untuk update di Laravel
+        if (isEditing) {
+            formData.append('_method', 'PUT');
+        }
+
         axios.post(url, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -55,23 +58,27 @@ const MerchandiseList = () => {
         .then(() => {
             alert(`Merchandise berhasil ${isEditing ? 'diperbarui' : 'ditambahkan'}!`);
             setIsModalOpen(false);
-            setEditingMerch(null);
-            fetchMerchandise(); // Muat ulang data
+            fetchMerchandise(pagination.path + '?page=' + pagination.current_page);
         })
         .catch(err => {
-            alert(`Gagal menyimpan merchandise.`);
+            const message = err.response?.data?.message || 'Gagal menyimpan merchandise.';
+            alert(message);
             console.error(err.response?.data);
         });
     };
 
     const handleDelete = (id) => {
         if (window.confirm('Apakah Anda yakin ingin menghapus merchandise ini?')) {
-            axios.delete(`http://localhost:8000/api/admin/merchandise/${id}`, {
+            axios.delete(`${API_BASE_URL}/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             .then(() => {
                 alert('Merchandise berhasil dihapus!');
-                fetchMerchandise(pagination.path + '?page=' + pagination.current_page);
+                 if (merchandise.length === 1 && pagination.current_page > 1) {
+                    fetchMerchandise(pagination.prev_page_url);
+                } else {
+                    fetchMerchandise(pagination.path + '?page=' + pagination.current_page);
+                }
             })
             .catch(err => {
                 alert('Gagal menghapus merchandise.');
@@ -80,29 +87,31 @@ const MerchandiseList = () => {
         }
     };
 
-    // --- FUNGSI UNTUK MEMBUKA MODAL ---
     const handleOpenModal = (merch = null) => {
-        setEditingMerch(merch); // Jika null, berarti 'tambah baru'. Jika ada data, berarti 'edit'.
+        setEditingMerch(merch);
         setIsModalOpen(true);
     };
+    
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    }
 
     if (loading) return <div className="loading-message">Memuat data merchandise...</div>;
     if (error) return <div className="error-message">{error}</div>;
 
     return (
-        <div className="product-list-container">
-            {/* Modal untuk form tambah/edit */}
+        <div className="list-container">
             <MerchandiseFormModal
                 isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
+                onClose={handleCloseModal}
                 onSave={handleSave}
                 initialData={editingMerch}
             />
 
-            <div className="product-list-header">
+            <div className="list-header">
                 <h1>Manajemen Merchandise</h1>
                 <button className="add-button" onClick={() => handleOpenModal(null)}>
-                    Tambah Merchandise Baru
+                    Tambah Merchandise
                 </button>
             </div>
 
@@ -121,17 +130,19 @@ const MerchandiseList = () => {
                         <tr key={item.id}>
                             <td>
                                 <img
-                                    src={item.image || 'https://placehold.co/100x100/EEE/31343C?text=No+Image'}
+                                    src={item.image_url || 'https://placehold.co/100x100?text=No+Image'}
                                     alt={item.name}
-                                    className="product-image"
+                                    className="item-image"
                                 />
                             </td>
                             <td>{item.name}</td>
                             <td>Rp {new Intl.NumberFormat('id-ID').format(item.price)}</td>
                             <td>{item.stock}</td>
                             <td>
-                                <button className="edit-button" onClick={() => handleOpenModal(item)}>Edit</button>
-                                <button className="delete-button" onClick={() => handleDelete(item.id)}>Hapus</button>
+                                <div className="action-buttons">
+                                    <button className="edit-button" onClick={() => handleOpenModal(item)}>Edit</button>
+                                    <button className="delete-button" onClick={() => handleDelete(item.id)}>Hapus</button>
+                                </div>
                             </td>
                         </tr>
                     )) : (

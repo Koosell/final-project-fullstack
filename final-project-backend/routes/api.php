@@ -107,7 +107,8 @@ Route::middleware(['auth:sanctum', IsAdmin::class])->prefix('admin')->group(func
     Route::get('/merchandise', [AdminMerchandiseController::class, 'index']);
     Route::post('/merchandise', [AdminMerchandiseController::class, 'store']);
     Route::get('/merchandise/{id}', [AdminMerchandiseController::class, 'show']);
-    Route::post('/merchandise/{id}', [AdminMerchandiseController::class, 'update']); // Pakai POST untuk update karena form-data
+    // PERBAIKAN: Mengganti Route::post menjadi Route::put agar sesuai dengan method yang benar untuk update.
+    Route::put('/merchandise/{id}', [AdminMerchandiseController::class, 'update']);
     Route::delete('/merchandise/{id}', [AdminMerchandiseController::class, 'destroy']);
 
     // Pantau Penjualan (Orders)

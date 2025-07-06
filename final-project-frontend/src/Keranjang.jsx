@@ -5,12 +5,11 @@ import { useCart } from './CartContext'; // <-- Menggunakan hook useCart
 import "./css/Keranjang.css";
 
 const Keranjang = () => {
-    // 1. Ambil semua yang kita butuhkan dari Context.
-    // Tidak perlu lagi useState atau useEffect di sini.
+    // Ambil semua yang kita butuhkan dari Context.
     const { cart, loading, fetchCart } = useCart();
     const navigate = useNavigate();
 
-    // Fungsi untuk mengubah kuantitas (sudah terhubung ke API)
+    // Fungsi untuk mengubah kuantitas
     const handleQuantityChange = async (cartItemId, newQuantity) => {
         const yourAuthToken = localStorage.getItem('token');
         try {
@@ -26,7 +25,7 @@ const Keranjang = () => {
                     { headers: { 'Authorization': `Bearer ${yourAuthToken}` } }
                 );
             }
-            // 2. Cukup panggil fetchCart() dari context untuk me-refresh data
+            // Panggil fetchCart() dari context untuk me-refresh data
             fetchCart(); 
         } catch (error) {
             console.error("Gagal mengubah kuantitas:", error);
@@ -34,7 +33,7 @@ const Keranjang = () => {
         }
     };
 
-    // Fungsi untuk menghapus item (sudah terhubung ke API)
+    // Fungsi untuk menghapus item
     const removeFromCart = async (cartItemId) => {
         const yourAuthToken = localStorage.getItem('token');
         if (window.confirm("Apakah Anda yakin ingin menghapus item ini?")) {
@@ -50,7 +49,7 @@ const Keranjang = () => {
         }
     };
 
-    // Fungsi format harga (tidak berubah)
+    // Fungsi format harga
     const formatPrice = (price) => {
         return new Intl.NumberFormat('id-ID', {
             style: 'currency',
@@ -66,14 +65,12 @@ const Keranjang = () => {
 
     return (
         <div className="keranjang-wrapper">
-            {/* ... Seluruh kode JSX Anda di sini sama persis dan tidak perlu diubah ... */}
             {/* Header */}
             <div className="keranjang-header">
                 <svg className="header-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 11-4 0v-6m4 0V9a2 2 0 10-4 0v4.01" />
                 </svg>
                 <h1 className="keranjang-title">Keranjang Belanja</h1>
-                {/* Gunakan data langsung dari context */}
                 <span className="item-count">{cart?.cart_items?.length || 0} item</span>
             </div>
 
@@ -88,31 +85,51 @@ const Keranjang = () => {
                     <Link to="/ProdukMenu" className="continue-shopping-btn">Lanjut Belanja</Link>
                 </div>
             ) : (
-                 // Konten Keranjang
+                // Konten Keranjang
                 <div className="cart-content">
                     <div className="cart-items">
-                        {cart.cart_items.map((item, index) => (
-                            <div key={item.id} className="cart-item" style={{ '--index': index }}>
-                                <div className="item-details">
-                                    <h3 className="item-name">{item.itemable.name}</h3>
-                                    <p className="item-description">{item.itemable.description || "Deskripsi produk"}</p>
-                                    <div className="item-price">{formatPrice(item.itemable.price)}</div>
-                                </div>
-                                <div className="quantity-controls">
-                                    <button className="quantity-btn" onClick={() => handleQuantityChange(item.id, item.quantity - 1)}>
-                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" /></svg>
+                        {cart.cart_items.map((item, index) => {
+                            // --- PERBAIKAN DI SINI ---
+                            // Cek apakah item.itemable ada sebelum dirender.
+                            // Ini akan mencegah error "Cannot read properties of null".
+                            if (!item.itemable) {
+                                return (
+                                    <div key={item.id} className="cart-item" style={{'--index': index, opacity: 0.6}}>
+                                        <div className="item-details">
+                                            <h3 className="item-name" style={{color: '#dc3545'}}>Item Tidak Tersedia</h3>
+                                            <p className="item-description">Produk ini mungkin telah dihapus.</p>
+                                        </div>
+                                        <button className="remove-btn" onClick={() => removeFromCart(item.id)}>
+                                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                        </button>
+                                    </div>
+                                )
+                            }
+
+                            // Jika item.itemable ada, render seperti biasa.
+                            return (
+                                <div key={item.id} className="cart-item" style={{ '--index': index }}>
+                                    <div className="item-details">
+                                        <h3 className="item-name">{item.itemable.name}</h3>
+                                        <p className="item-description">{item.itemable.description || "Deskripsi produk"}</p>
+                                        <div className="item-price">{formatPrice(item.itemable.price)}</div>
+                                    </div>
+                                    <div className="quantity-controls">
+                                        <button className="quantity-btn" onClick={() => handleQuantityChange(item.id, item.quantity - 1)}>
+                                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" /></svg>
+                                        </button>
+                                        <span className="quantity">{item.quantity}</span>
+                                        <button className="quantity-btn" onClick={() => handleQuantityChange(item.id, item.quantity + 1)}>
+                                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                                        </button>
+                                    </div>
+                                    <div className="item-total">{formatPrice(item.itemable.price * item.quantity)}</div>
+                                    <button className="remove-btn" onClick={() => removeFromCart(item.id)}>
+                                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                                     </button>
-                                    <span className="quantity">{item.quantity}</span>
-                                    <button className="quantity-btn" onClick={() => handleQuantityChange(item.id, item.quantity + 1)}>
-                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-                                    </button>
                                 </div>
-                                <div className="item-total">{formatPrice(item.itemable.price * item.quantity)}</div>
-                                <button className="remove-btn" onClick={() => removeFromCart(item.id)}>
-                                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                </button>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                     <div className="cart-summary">
                         <div className="summary-card">
