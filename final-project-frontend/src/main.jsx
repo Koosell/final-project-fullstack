@@ -81,10 +81,10 @@ const AppContent = () => {
 // TIDAK ADA YANG DIUBAH DI SINI, HANYA DITAMBAHKAN PEMBUNGKUS
 const Main = () => {
   return (
-    <BrowserRouter basename="/final-project-fullstack">
+    <BrowserRouter> {/* <-- HAPUS 'basename' DARI SINI */}
       <AuthProvider>
         <CartProvider>
-          <PaymentProvider> {/* <-- HANYA MENAMBAH PEMBUNGKUS INI */}
+          <PaymentProvider>
             <AppContent />
           </PaymentProvider>
         </CartProvider>
