@@ -4,5 +4,5 @@ import compression from 'vite-plugin-compression'
 
 export default defineConfig({
   plugins: [react(), compression()],
-  base: '/final-project-fullstack/', // <-- KEMBALIKAN KE PENGATURAN INI
+  base: '/', // <-- KEMBALIKAN KE PENGATURAN INI
 })
