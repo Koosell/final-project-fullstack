@@ -12,7 +12,7 @@ const ProdukMenu = () => {
         const fetchMerchandise = async () => {
             try {
                 // PERBAIKAN: Menggunakan endpoint API publik yang baru
-                const response = await axios.get('http://127.0.0.1:8000/api/merchandise');
+                const response = await axios.get('${apiUrl}/api/merchandise');
                 
                 // Ambil data dari properti 'data' karena menggunakan paginasi
                 setMerchandise(response.data.data);
@@ -33,7 +33,7 @@ const ProdukMenu = () => {
         }
         
         try {
-            await axios.post('http://127.0.0.1:8000/api/cart/add', {
+            await axios.post('${apiUrl}/api/cart/add', {
                 item_id: merchItem.id,
                 item_type: 'merchandise', // Pastikan backend mengenali tipe ini
                 quantity: 1
