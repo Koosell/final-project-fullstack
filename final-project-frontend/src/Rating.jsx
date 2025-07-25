@@ -17,6 +17,9 @@ const Rating = () => {
     setRating(index);
   };
 
+  // Mendefinisikan apiUrl dari environment variable
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleSubmit = async () => {
     if (rating === 0) {
         alert("Harap pilih rating bintang terlebih dahulu.");
@@ -31,7 +34,7 @@ const Rating = () => {
 
     setIsLoading(true);
     try {
-        await axios.post('http://127.0.0.1:8000/api/testimonials', 
+        await axios.post(`${apiUrl}/api/testimonials`, 
         {
             rating: rating,
             comment: comment

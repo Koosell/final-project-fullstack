@@ -17,7 +17,8 @@ const ProductList = () => {
 
     const fetchProducts = (pageUrl) => {
         setLoading(true);
-        const url = pageUrl || 'http://localhost:8000/api/admin/products';
+        const apiUrl = import.meta.env.VITE_API_URL;
+        const url = pageUrl || `${apiUrl}/api/admin/products`;
 
         axios.get(url, { headers: { Authorization: `Bearer ${token}` } })
             .then(response => {
@@ -40,9 +41,9 @@ const ProductList = () => {
     const handleSave = (formData, id) => {
         const isEditing = !!id;
         const url = isEditing
-            ? `http://localhost:8000/api/admin/products/${id}`
+            ? `${apiUrl}/api/admin/products/${id}`
             // Untuk update, kita perlu menambahkan _method PUT karena HTML form tidak mendukung PUT
-            : 'http://localhost:8000/api/admin/products';
+            : `${apiUrl}/api/admin/products`;
         
         const method = isEditing ? 'put' : 'post';
 
@@ -69,7 +70,7 @@ const ProductList = () => {
 
     const handleDelete = (id) => {
         if (window.confirm('Apakah Anda yakin ingin menghapus produk ini?')) {
-            axios.delete(`http://localhost:8000/api/admin/products/${id}`, {
+            axios.delete(`${apiUrl}/api/admin/products/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             .then(() => {

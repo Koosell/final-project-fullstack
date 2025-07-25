@@ -12,6 +12,7 @@ const AuthContext = createContext({
   logout: () => {}
 });
 
+
 // 2. Membuat Provider (Penyedia Data)
 // Ini adalah komponen yang akan "mengisi kotak data" dan membagikannya.
 export const AuthProvider = ({ children }) => {
@@ -38,7 +39,8 @@ export const AuthProvider = ({ children }) => {
   // Cek ke backend setiap kali token berubah untuk mendapatkan data user
   useEffect(() => {
     if (token) {
-      axios.get('http://localhost:8000/api/user', { // Ganti URL ini jika berbeda
+      const apiUrl = import.meta.env.VITE_API_URL;
+      axios.get(`${apiUrl}/api/user`, { // Ganti URL ini jika berbeda
         headers: {
           Authorization: `Bearer ${token}`
         }

@@ -37,13 +37,14 @@ const Register = () => {
 
     try {
       // Langkah 1: Dapatkan CSRF cookie dari Laravel Sanctum
-      await fetch('http://localhost:8000/sanctum/csrf-cookie', {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      await fetch(`${apiUrl}/sanctum/csrf-cookie`, {
           method: 'GET',
           credentials: 'include'
       });
 
       // Langkah 2: Kirim data registrasi ke backend Laravel
-      const response = await fetch('http://localhost:8000/api/register', { // Endpoint register Laravel
+      const response = await fetch(`${apiUrl}/api/register`, { // Endpoint register Laravel
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

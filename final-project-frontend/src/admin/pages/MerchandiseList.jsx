@@ -5,7 +5,7 @@ import MerchandiseFormModal from './MerchandiseFormModal.jsx';
 import './ProductList.css'; // File CSS untuk styling
 
 // --- Sentralisasi URL API untuk kemudahan maintenance ---
-const API_BASE_URL = 'http://localhost:8000/api/admin/merchandise';
+const API_BASE_URL = `${import.meta.env.VITE_API_URL}/api/admin/merchandise`;
 
 const MerchandiseList = () => {
     const [merchandise, setMerchandise] = useState([]);

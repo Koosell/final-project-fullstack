@@ -12,7 +12,8 @@ const TestimonialList = () => {
 
     const fetchTestimonials = (pageUrl) => {
         setLoading(true);
-        const url = pageUrl || 'http://localhost:8000/api/admin/testimonials';
+        const apiUrl = import.meta.env.VITE_API_URL;
+        const url = pageUrl || `${apiUrl}/api/admin/testimonials`;
 
         axios.get(url, {
             headers: { Authorization: `Bearer ${token}` }
@@ -36,7 +37,7 @@ const TestimonialList = () => {
 
     const handleApprove = (id) => {
         if (window.confirm('Setujui testimoni ini untuk ditampilkan di halaman utama?')) {
-            axios.put(`http://localhost:8000/api/admin/testimonials/${id}/approve`, {}, {
+            axios.put(`${apiUrl}/api/admin/testimonials/${id}/approve`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             .then(() => {
@@ -52,7 +53,7 @@ const TestimonialList = () => {
 
     const handleDelete = (id) => {
         if (window.confirm('Apakah Anda yakin ingin menghapus testimoni ini?')) {
-            axios.delete(`http://localhost:8000/api/admin/testimonials/${id}`, {
+            axios.delete(`${apiUrl}/api/admin/testimonials/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             .then(() => {

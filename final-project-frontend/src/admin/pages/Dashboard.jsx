@@ -19,7 +19,8 @@ const Dashboard = () => {
             }
 
             try {
-                const response = await axios.get('http://localhost:8000/api/admin/dashboard/stats', {
+                const apiUrl = import.meta.env.VITE_API_URL;
+                const response = await axios.get(`${apiUrl}/api/admin/dashboard/stats`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

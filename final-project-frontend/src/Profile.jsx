@@ -23,6 +23,9 @@ const Profile = () => {
         }
     }, [user]);
 
+    // Mendefinisikan apiUrl dari environment variable
+    const apiUrl = import.meta.env.VITE_API_URL;
+
     useEffect(() => {
         const fetchOrders = async () => {
             const token = localStorage.getItem('token');
@@ -31,7 +34,7 @@ const Profile = () => {
                 return;
             }
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/orders', {
+                const response = await axios.get(`${apiUrl}/api/orders`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (response.data && Array.isArray(response.data.orders)) {
@@ -47,7 +50,7 @@ const Profile = () => {
         if (!userLoading) {
             fetchOrders();
         }
-    }, [userLoading]);
+    }, [userLoading, apiUrl]);
 
     const formatPrice = (price) => {
         return new Intl.NumberFormat("id-ID", {
@@ -84,7 +87,7 @@ const Profile = () => {
         setIsSaving(true);
         const token = localStorage.getItem('token');
         try {
-            await axios.put('http://127.0.0.1:8000/api/user/profile', formData, {
+            await axios.put(`${apiUrl}/api/user/profile`, formData, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             alert('Profil berhasil diperbarui!');

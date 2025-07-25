@@ -12,7 +12,8 @@ const OrderList = () => {
 
     const fetchOrders = (pageUrl) => {
         setLoading(true);
-        const url = pageUrl || 'http://localhost:8000/api/admin/orders';
+        const apiUrl = import.meta.env.VITE_API_URL;
+        const url = pageUrl || `${apiUrl}/api/admin/orders`;
 
         axios.get(url, {
             headers: { Authorization: `Bearer ${token}` }
