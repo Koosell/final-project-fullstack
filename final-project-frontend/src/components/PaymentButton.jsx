@@ -40,7 +40,8 @@ export const PaymentProvider = ({ children }) => {
 
     try {
       // Panggil backend Laravel Anda
-      const response = await axios.post('http://127.0.0.1:8000/api/payment/create', {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.post(`${apiUrl}/api/payment/create`, {
         product_name: orderDetails.productName,
         price: orderDetails.price,
         quantity: orderDetails.quantity,
