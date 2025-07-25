@@ -21,12 +21,15 @@ const CheckoutGensin = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { handlePay } = usePayment(); // <-- 3. Panggil hook
+    // Mendefinisikan apiUrl dari environment variable
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const fetchProducts = async () => {
             setIsLoadingProducts(true);
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/products');
+                // PERBAIKAN: Menggunakan backticks (`) bukan single quotes (')
+                const response = await axios.get(`${apiUrl}/api/products`);
                 if (response.data && Array.isArray(response.data.data)) {
                     // Filter sudah benar untuk produk Genshin
                     const filtered = response.data.data.filter(p => 
@@ -41,7 +44,7 @@ const CheckoutGensin = () => {
             }
         };
         fetchProducts();
-    }, []);
+    }, [apiUrl]); // Tambahkan apiUrl sebagai dependency
 
     const formatPrice = (price) => new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 }).format(price);
     
@@ -118,7 +121,7 @@ const CheckoutGensin = () => {
                                             onClick={() => setSelectedProduct(product)}
                                         >
                                             <img 
-                                                src={`/images/${product.image_url}`} // Sesuaikan jika path berbeda
+                                                src={`${apiUrl}/storage/${product.image_url}`} // PERBAIKAN: Path gambar
                                                 alt={product.name} 
                                                 className="product-image" 
                                                 onError={(e) => { e.target.onerror = null; e.target.src='https://i.imgur.com/8g6bwUC.jpeg'; }}
@@ -153,7 +156,6 @@ const CheckoutGensin = () => {
                                     </select>
                                     {errors.server_id && <span className="error">{errors.server_id}</span>}
                                 </div>
-                                {/* Bagian Metode Pembayaran lama sudah dihapus */}
                                 <div className="input-group">
                                     <label>Kode Promo (Opsional)</label>
                                     <input type="text" name="kode_promo" placeholder="Masukkan kode promo" value={formData.kode_promo} onChange={handleInputChange} />

@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useCart } from './CartContext'; // <-- Import useCart
 import './css/ProdukMenu.css';
 import './css/ProdukMenuAnimations.css';
 
 const ProdukMenu = () => {
     const [merchandise, setMerchandise] = useState([]);
     const navigate = useNavigate();
+    const { addToCart } = useCart(); // <-- Mengambil fungsi dari konteks
+    // Mendefinisikan apiUrl dari environment variable
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const fetchMerchandise = async () => {
             try {
-                // PERBAIKAN: Menggunakan endpoint API publik yang baru
-                const response = await axios.get('${apiUrl}/api/merchandise');
+                // PERBAIKAN: Menggunakan backticks (`) dan apiUrl
+                const response = await axios.get(`${apiUrl}/api/merchandise`);
                 
                 // Ambil data dari properti 'data' karena menggunakan paginasi
                 setMerchandise(response.data.data);
@@ -22,33 +26,17 @@ const ProdukMenu = () => {
             }
         };
         fetchMerchandise();
-    }, []);
+    }, [apiUrl]); // <-- Tambahkan apiUrl sebagai dependency
 
     const handleAddToCart = async (merchItem) => {
-        const yourAuthToken = localStorage.getItem('token');
-        if (!yourAuthToken) {
-            alert("Anda harus login terlebih dahulu!");
-            navigate('/login');
-            return;
-        }
-        
-        try {
-            await axios.post('${apiUrl}/api/cart/add', {
-                item_id: merchItem.id,
-                item_type: 'merchandise', // Pastikan backend mengenali tipe ini
-                quantity: 1
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${yourAuthToken}`
-                }
-            });
-            
+        // Menggunakan fungsi terpusat dari CartContext
+        const { success } = await addToCart(merchItem.id, 'merchandise');
+        if (success) {
             alert(`${merchItem.name} berhasil ditambahkan ke keranjang!`);
             navigate('/keranjang');
-
-        } catch (error) {
-            console.error('Gagal menambahkan ke keranjang:', error.response?.data);
-            alert('Gagal menambahkan item ke keranjang.');
+        } else {
+            alert('Gagal menambahkan item. Mungkin Anda belum login?');
+            navigate('/login');
         }
     };
 
@@ -64,8 +52,8 @@ const ProdukMenu = () => {
                     <div className="produk-card" key={item.id} style={{ '--index': index }}>
                         <div className="produk-badge">NEW!</div>
                         <div className="produk-image-container">
-                            {/* Gunakan 'image_url' yang dikirim dari API Resource */}
-                            <img src={item.image_url} alt={item.name} className="produk-image" loading="lazy" />
+                            {/* PERBAIKAN: Menggunakan path gambar yang lengkap */}
+                            <img src={`${apiUrl}/storage/${item.image_url}`} alt={item.name} className="produk-image" loading="lazy" />
                         </div>
                         <div className="produk-info">
                             <h3>{item.name}</h3>

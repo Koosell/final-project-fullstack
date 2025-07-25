@@ -21,12 +21,15 @@ const CheckoutML = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { handlePay } = usePayment();
+    // Mendefinisikan apiUrl dari environment variable
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const fetchProducts = async () => {
             setIsLoadingProducts(true);
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/products');
+                // PERBAIKAN: Menggunakan backticks (`) bukan single quotes (')
+                const response = await axios.get(`${apiUrl}/api/products`);
                 if (response.data && Array.isArray(response.data.data)) {
                     const filtered = response.data.data.filter(p => p.name.toLowerCase().includes(' ml'));
                     setMlProducts(filtered);
@@ -38,7 +41,7 @@ const CheckoutML = () => {
             }
         };
         fetchProducts();
-    }, []);
+    }, [apiUrl]); // Tambahkan apiUrl sebagai dependency
 
     const formatPrice = (price) => new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 }).format(price);
     
@@ -116,7 +119,7 @@ const CheckoutML = () => {
                                             onClick={() => setSelectedProduct(product)}
                                         >
                                             <img 
-                                                src={`/images/${product.image_url}`} 
+                                                src={`${apiUrl}/storage/${product.image_url}`} 
                                                 alt={product.name} 
                                                 className="product-image"
                                                 onError={(e) => { e.target.onerror = null; e.target.src='https://i.imgur.com/5OItBDb.jpeg'; }}

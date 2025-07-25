@@ -13,6 +13,9 @@ export const CartProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [token, setToken] = useState(localStorage.getItem('token'));
     const [user, setUser] = useState(null);
+    
+    // Mendefinisikan apiUrl dari environment variable
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     // Function to fetch both user and cart data
     const fetchData = async (currentToken) => {
@@ -26,9 +29,10 @@ export const CartProvider = ({ children }) => {
         setLoading(true);
         try {
             // Use Promise.all to fetch data in parallel for better performance
+            // PERBAIKAN: Menggunakan backticks (`) bukan single quotes (')
             const [userResponse, cartResponse] = await Promise.all([
-                axios.get('http://127.0.0.1:8000/api/user', { headers: { 'Authorization': `Bearer ${currentToken}` } }),
-                axios.get('http://127.0.0.1:8000/api/cart', { headers: { 'Authorization': `Bearer ${currentToken}` } })
+                axios.get(`${apiUrl}/api/user`, { headers: { 'Authorization': `Bearer ${currentToken}` } }),
+                axios.get(`${apiUrl}/api/cart`, { headers: { 'Authorization': `Bearer ${currentToken}` } })
             ]);
             setUser(userResponse.data);
             setCart(cartResponse.data);
@@ -61,7 +65,8 @@ export const CartProvider = ({ children }) => {
     const logout = () => {
         const currentToken = localStorage.getItem('token');
         if (currentToken) {
-            axios.post('http://127.0.0.1:8000/api/logout', {}, {
+            // PERBAIKAN: Menggunakan backticks (`) bukan single quotes (')
+            axios.post(`${apiUrl}/api/logout`, {}, {
                 headers: { 'Authorization': `Bearer ${currentToken}` }
             }).catch(err => console.error("Server logout failed:", err));
         }
@@ -75,7 +80,8 @@ export const CartProvider = ({ children }) => {
             return { success: false, message: 'Harus login.' };
         }
         try {
-            await axios.post('http://127.0.0.1:8000/api/cart/add', 
+            // PERBAIKAN: Menggunakan backticks (`) bukan single quotes (')
+            await axios.post(`${apiUrl}/api/cart/add`, 
                 { item_id: itemId, item_type: itemType, quantity: 1 },
                 { headers: { 'Authorization': `Bearer ${token}` } }
             );

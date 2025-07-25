@@ -9,6 +9,8 @@ const GameProducts = () => {
     const [activeFilter, setActiveFilter] = useState('All'); // State untuk filter aktif
     const navigate = useNavigate();
     const { addToCart } = useCart(); // Mengambil fungsi dari konteks
+    // Mendefinisikan apiUrl dari environment variable
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     // Kategori filter, bisa disesuaikan dengan data Anda
     const gameFilters = ['All', 'Valorant', 'ML', 'FF', 'PUBG', 'COD', 'Genshin'];
@@ -17,8 +19,8 @@ const GameProducts = () => {
     useEffect(() => {
         const fetchAllProducts = async () => {
             try {
-                // Mengambil dari endpoint utama yang berisi semua produk game
-                const response = await axios.get('http://127.0.0.1:8000/api/products');
+                // PERBAIKAN: Menggunakan backticks (`) bukan single quotes (')
+                const response = await axios.get(`${apiUrl}/api/products`);
                 setAllProducts(response.data.data); // Asumsi data ada di dalam 'data'
                 setFilteredProducts(response.data.data); // Awalnya tampilkan semua
             } catch (error) {
@@ -26,7 +28,7 @@ const GameProducts = () => {
             }
         };
         fetchAllProducts();
-    }, []);
+    }, [apiUrl]); // Tambahkan apiUrl sebagai dependency
 
     // 2. Fungsi untuk memfilter produk berdasarkan kategori
     const handleFilterChange = (filter) => {
@@ -44,7 +46,7 @@ const GameProducts = () => {
 
     // 3. Fungsi untuk menambahkan item ke keranjang
     const handleAddGameToCart = async (gameProduct) => {
-        const success = await addToCart(gameProduct.id, 'product');
+        const { success } = await addToCart(gameProduct.id, 'product');
         if (success) {
             alert(`${gameProduct.name} berhasil ditambahkan ke keranjang!`);
         } else {
@@ -80,7 +82,7 @@ const GameProducts = () => {
             <div className="product-grid" style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1.5rem'}}>
                 {filteredProducts.map(product => (
                     <div className="product-card" key={product.id} style={{border: '1px solid #eee', padding: '1rem', borderRadius: '8px', textAlign: 'center'}}>
-                        <img src={product.image_url} alt={product.name} style={{width: '100%', height: '120px', objectFit: 'contain', marginBottom: '1rem'}}/>
+                        <img src={`${apiUrl}/storage/${product.image_url}`} alt={product.name} style={{width: '100%', height: '120px', objectFit: 'contain', marginBottom: '1rem'}}/>
                         <h3 style={{fontSize: '1rem', minHeight: '40px'}}>{product.name}</h3>
                         <p style={{fontWeight: 'bold', color: '#333'}}>Rp {product.price.toLocaleString('id-ID')}</p>
                         <button 

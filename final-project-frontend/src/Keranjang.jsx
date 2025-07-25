@@ -8,6 +8,8 @@ const Keranjang = () => {
     // Ambil semua yang kita butuhkan dari Context.
     const { cart, loading, fetchCart } = useCart();
     const navigate = useNavigate();
+    // Mendefinisikan apiUrl dari environment variable
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     // Fungsi untuk mengubah kuantitas
     const handleQuantityChange = async (cartItemId, newQuantity) => {
@@ -15,12 +17,14 @@ const Keranjang = () => {
         try {
             if (newQuantity <= 0) {
                 // Jika kuantitas 0 atau kurang, hapus item
-                await axios.delete(`http://127.0.0.1:8000/api/cart/${cartItemId}`, {
+                // PERBAIKAN: Menggunakan apiUrl
+                await axios.delete(`${apiUrl}/api/cart/${cartItemId}`, {
                     headers: { 'Authorization': `Bearer ${yourAuthToken}` }
                 });
             } else {
                 // Jika tidak, update kuantitas
-                await axios.put(`http://127.0.0.1:8000/api/cart/${cartItemId}`, 
+                // PERBAIKAN: Menggunakan apiUrl
+                await axios.put(`${apiUrl}/api/cart/${cartItemId}`, 
                     { quantity: newQuantity },
                     { headers: { 'Authorization': `Bearer ${yourAuthToken}` } }
                 );
@@ -33,12 +37,12 @@ const Keranjang = () => {
         }
     };
 
-    // Fungsi untuk menghapus item
+    // Fungsi untuk menghapus item (sudah benar)
     const removeFromCart = async (cartItemId) => {
         const yourAuthToken = localStorage.getItem('token');
         if (window.confirm("Apakah Anda yakin ingin menghapus item ini?")) {
             try {
-                await axios.delete(`http://127.0.0.1:8000/api/cart/${cartItemId}`, {
+                await axios.delete(`${apiUrl}/api/cart/${cartItemId}`, {
                     headers: { 'Authorization': `Bearer ${yourAuthToken}` }
                 });
                 fetchCart(); // Refresh data setelah menghapus
@@ -89,9 +93,7 @@ const Keranjang = () => {
                 <div className="cart-content">
                     <div className="cart-items">
                         {cart.cart_items.map((item, index) => {
-                            // --- PERBAIKAN DI SINI ---
                             // Cek apakah item.itemable ada sebelum dirender.
-                            // Ini akan mencegah error "Cannot read properties of null".
                             if (!item.itemable) {
                                 return (
                                     <div key={item.id} className="cart-item" style={{'--index': index, opacity: 0.6}}>

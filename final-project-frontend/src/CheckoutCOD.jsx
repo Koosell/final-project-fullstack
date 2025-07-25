@@ -20,12 +20,15 @@ const CheckoutCOD = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { handlePay } = usePayment(); // <-- 3. Panggil hook
+    // Mendefinisikan apiUrl dari environment variable
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const fetchProducts = async () => {
             setIsLoadingProducts(true);
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/products');
+                // PERBAIKAN: Menggunakan backticks (`) bukan single quotes (')
+                const response = await axios.get(`${apiUrl}/api/products`);
                 if (response.data && Array.isArray(response.data.data)) {
                     // Filter sudah benar untuk 'cod'
                     const filtered = response.data.data.filter(p => p.name.toLowerCase().includes(' cod '));
@@ -38,7 +41,7 @@ const CheckoutCOD = () => {
             }
         };
         fetchProducts();
-    }, []);
+    }, [apiUrl]); // Tambahkan apiUrl sebagai dependency
 
     const formatPrice = (price) => new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 }).format(price);
     
@@ -114,7 +117,7 @@ const CheckoutCOD = () => {
                                             onClick={() => setSelectedProduct(product)}
                                         >
                                             <img 
-                                                src={`/images/${product.image_url}`} 
+                                                src={`${apiUrl}/storage/${product.image_url}`} 
                                                 alt={product.name} 
                                                 className="product-image" 
                                                 onError={(e) => { e.target.onerror = null; e.target.src='https://i.imgur.com/NnMxOub.png'; }}
@@ -131,14 +134,13 @@ const CheckoutCOD = () => {
                         </div>
 
                         <div className="form-section">
-                             <h3>2. Masukkan Data Akun</h3>
+                                <h3>2. Masukkan Data Akun</h3>
                             <form onSubmit={handlePayment} autoComplete="off">
                                 <div className="input-group">
                                     <label>Open ID</label>
                                     <input type="text" name="game_id" placeholder="Masukkan Open ID" value={formData.game_id} onChange={handleInputChange} inputMode="numeric" pattern="[0-9]*" required />
                                     {errors.game_id && <span className="error">{errors.game_id}</span>}
                                 </div>
-                                {/* Bagian Server ID dan Metode Pembayaran lama sudah dihapus */}
                                 <div className="input-group">
                                     <label>Kode Promo (Opsional)</label>
                                     <input type="text" name="kode_promo" placeholder="Masukkan kode promo" value={formData.kode_promo} onChange={handleInputChange} />

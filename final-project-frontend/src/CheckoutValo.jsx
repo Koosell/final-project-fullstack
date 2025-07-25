@@ -12,7 +12,7 @@ const CheckoutValorant = () => {
 
     // <-- 2. State form disederhanakan
     const [formData, setFormData] = useState({
-        game_id: "",   // Untuk Riot ID
+        game_id: "",  // Untuk Riot ID
         server_id: "", // Untuk Tagline
         kode_promo: "",
     });
@@ -21,12 +21,15 @@ const CheckoutValorant = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { handlePay } = usePayment(); // <-- 3. Panggil hook
+    // Mendefinisikan apiUrl dari environment variable
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const fetchProducts = async () => {
             setIsLoadingProducts(true);
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/products');
+                // PERBAIKAN: Menggunakan backticks (`) bukan single quotes (')
+                const response = await axios.get(`${apiUrl}/api/products`);
                 if (response.data && Array.isArray(response.data.data)) {
                     const filtered = response.data.data.filter(p => p.name.toLowerCase().includes('valorant'));
                     setValorantProducts(filtered);
@@ -38,7 +41,7 @@ const CheckoutValorant = () => {
             }
         };
         fetchProducts();
-    }, []);
+    }, [apiUrl]); // Tambahkan apiUrl sebagai dependency
 
     const formatPrice = (price) => new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 }).format(price);
     
@@ -113,7 +116,7 @@ const CheckoutValorant = () => {
                                             onClick={() => setSelectedProduct(product)}
                                         >
                                             <img 
-                                                src={`/images/${product.image_url}`} 
+                                                src={`${apiUrl}/storage/${product.image_url}`} 
                                                 alt={product.name} 
                                                 className="product-image" 
                                                 onError={(e) => { e.target.onerror = null; e.target.src='https://i.imgur.com/kl6R3AX.png'; }}
