@@ -11,12 +11,10 @@ export const usePayment = () => {
 };
 
 export const PaymentProvider = ({ children }) => {
-    // Mendefinisikan apiUrl dari environment variable
     const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const script = document.createElement('script');
-        // Gunakan URL produksi Midtrans jika diperlukan, atau atur via environment variable
         script.src = "https://app.sandbox.midtrans.com/snap/snap.js";
         script.setAttribute('data-client-key', MIDTRANS_CLIENT_KEY);
         script.async = true;
@@ -28,21 +26,35 @@ export const PaymentProvider = ({ children }) => {
     }, []);
 
     const handlePay = useCallback(async (orderDetails, callbacks) => {
-        // Cek apakah ini checkout keranjang (ada 'items') atau top-up
+        // --- PERBAIKAN DIMULAI DI SINI ---
+
+        // 1. Ambil token dari localStorage
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert("Sesi Anda telah berakhir. Silakan login kembali.");
+            // Arahkan ke halaman login jika perlu
+            // navigate('/login'); 
+            return;
+        }
+
         const isCartCheckout = !!orderDetails.items; 
 
-        // PERBAIKAN: Menggunakan apiUrl untuk memilih URL yang benar
         const url = isCartCheckout 
             ? `${apiUrl}/api/payment/create` 
             : `${apiUrl}/api/payment/create-topup`;
 
-        // Menggunakan snake_case agar sesuai dengan backend
         const payload = isCartCheckout
             ? { total_price: orderDetails.totalPrice, items: orderDetails.items }
             : { product_name: orderDetails.productName, price: orderDetails.price, quantity: orderDetails.quantity };
         
         try {
-            const response = await axios.post(url, payload);
+            // 2. Tambahkan header Authorization ke permintaan axios
+            const response = await axios.post(url, payload, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            
             const { snap_token } = response.data;
 
             if (snap_token) {
@@ -54,14 +66,16 @@ export const PaymentProvider = ({ children }) => {
                 });
             }
         } catch (error) {
-            if (error.response && error.response.status === 422) {
+            if (error.response && error.response.status === 401) {
+                alert("Otentikasi gagal. Silakan login kembali.");
+            } else if (error.response && error.response.status === 422) {
                 console.error("Validation Error:", error.response.data.errors);
                 alert("Data yang dikirim tidak lengkap atau tidak valid.");
             } else {
                 console.error("Payment error:", error);
             }
         }
-    }, [apiUrl]); // Tambahkan apiUrl sebagai dependency
+    }, [apiUrl]);
 
 
     return (
