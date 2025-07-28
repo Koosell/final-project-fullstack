@@ -1,254 +1,263 @@
-/* Variabel CSS (diambil dari kode asli Anda) */
+/* Variabel CSS */
 :root {
-  --primary-color: #4361ee;
-  --secondary-color: #3f37c9;
-  --accent-color: #7209b7;
-  --text-color: #333; /* Ini akan di-override di .navbar */
-  --bg-color: #ffffff;
-  --nav-bg: rgba(15, 15, 25, 0.9); /* Sedikit lebih transparan */
-  --hover-color: #f0f4ff;
-  --border-color: #e0e7ff;
-  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  --btn-text: #fff;
-  --mobile-menu-bg: rgba(10, 10, 20, 0.95);
-  --nav-text-color: #ffffff;
-  --glow-color: rgba(67, 97, 238, 0.6);
+    --primary-color: #4361ee;
+    --secondary-color: #3f37c9;
+    --accent-color: #7209b7;
+    --text-color: #333;
+    --bg-color: #ffffff;
+    --nav-bg: rgba(15, 15, 25, 0.9);
+    --hover-color: #f0f4ff;
+    --border-color: #e0e7ff;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --btn-text: #fff;
+    --mobile-menu-bg: rgba(10, 10, 20, 0.95);
+    --nav-text-color: #ffffff;
+    --glow-color: rgba(67, 97, 238, 0.6);
+    --nav-border: var(--border-color); /* Menambahkan variabel yang hilang */
 }
 
 .dark-mode {
-  --primary-color: #4cc9f0;
-  --secondary-color: #4895ef;
-  --accent-color: #f72585;
-  --text-color: #f8f9fa;
-  --bg-color: #0a0a0f;
-  --nav-bg: rgba(8, 8, 15, 0.9); /* Sedikit lebih transparan */
-  --hover-color: #16213e;
-  --border-color: #0f3460;
-  --shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  --btn-text: #ffffff;
-  --mobile-menu-bg: rgba(5, 5, 12, 0.95);
-  --nav-text-color: #ffffff;
-  --glow-color: rgba(76, 201, 240, 0.6);
+    --primary-color: #4cc9f0;
+    --secondary-color: #4895ef;
+    --accent-color: #f72585;
+    --text-color: #f8f9fa;
+    --bg-color: #0a0a0f;
+    --nav-bg: rgba(8, 8, 15, 0.9);
+    --hover-color: #16213e;
+    --border-color: #0f3460;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    --btn-text: #ffffff;
+    --mobile-menu-bg: rgba(5, 5, 12, 0.95);
+    --nav-text-color: #ffffff;
+    --glow-color: rgba(76, 201, 240, 0.6);
 }
 
 /* Base Styles */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Navbar Container (Menggunakan gaya asli Anda) */
+/* Navbar Container */
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: var(--nav-bg);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border-bottom: 1px solid rgba(67, 97, 238, 0.3);
-  transition: transform 0.3s ease-out, background 0.3s ease-out;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: var(--nav-bg);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(67, 97, 238, 0.3);
+    transition: transform 0.3s ease-out, background 0.3s ease-out;
 }
 
-/* Logo (Menggunakan gaya asli Anda) */
+/* Logo */
 .logo a {
-  font-size: 1.8rem;
-  font-weight: 700;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-decoration: none;
-  animation: gradientShift 3s ease-in-out infinite;
-  filter: drop-shadow(0 0 12px var(--glow-color));
-  transition: transform 0.3s ease;
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    animation: gradientShift 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 12px var(--glow-color));
+    transition: transform 0.3s ease;
 }
 
 @keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
 }
 
 .logo a:hover {
-  transform: scale(1.05) rotate(2deg);
+    transform: scale(1.05) rotate(2deg);
 }
 
-/* Navigasi Desktop (Struktur stabil + gaya asli) */
+/* Navigasi Desktop */
 .nav-container {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
 }
 
 .nav-links {
-  display: flex;
-  list-style: none;
-  gap: 1.5rem;
-  margin: 0;
-  padding: 0;
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-links a {
-  text-decoration: none;
-  color: var(--nav-text-color);
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  position: relative;
-  transition: color 0.3s, text-shadow 0.3s;
+    text-decoration: none;
+    color: var(--nav-text-color);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    position: relative;
+    transition: color 0.3s, text-shadow 0.3s;
 }
 
 .nav-links a:hover {
-  color: var(--primary-color);
-  text-shadow: 0 0 15px var(--glow-color);
+    color: var(--primary-color);
+    text-shadow: 0 0 15px var(--glow-color);
 }
 
 .nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 2px;
-  background: var(--primary-color);
-  transition: width 0.3s ease;
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
 }
 
 .nav-links a:hover::after,
 .nav-links a.active::after {
-  width: 100%;
+    width: 100%;
 }
 
 .nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-/* Tombol (Menggunakan gaya asli Anda) */
+/* Tombol */
 .btn-chat, .btn-darkmode, .login-btn {
-  padding: 0.6rem 1.2rem;
-  border: 2px solid var(--primary-color);
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  background: transparent;
-  color: var(--nav-text-color);
-  transition: all 0.2s ease-in-out;
-  text-decoration: none; /* Untuk Link */
-  display: flex;
-  align-items: center;
+    padding: 0.6rem 1.2rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    background: transparent;
+    color: var(--nav-text-color);
+    transition: all 0.2s ease-in-out;
+    text-decoration: none; /* Untuk Link */
+    display: flex;
+    align-items: center;
+    font-family: inherit; /* Mewarisi font */
+    font-size: 1rem; /* Ukuran font konsisten */
 }
 
 .btn-chat {
-  background: var(--primary-color);
-  color: var(--btn-text);
-  border-color: var(--primary-color);
+    background: var(--primary-color);
+    color: var(--btn-text);
+    border-color: var(--primary-color);
 }
 
 .btn-chat:hover, .login-btn:hover {
-  background: var(--secondary-color);
-  color: var(--btn-text);
-  border-color: var(--accent-color);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    background: var(--secondary-color);
+    color: var(--btn-text);
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Hamburger Menu (Animasi 2D yang stabil + gaya asli) */
+/* Hamburger Menu */
 .hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 28px;
-  height: 24px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  z-index: 1001;
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 28px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
 }
 
 .hamburger span {
-  width: 28px;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-  border-radius: 3px;
-  transition: all 0.3s ease-in-out;
-  transform-origin: center;
+    width: 28px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+    transform-origin: center;
 }
 
 .hamburger.open span:nth-child(1) {
-  transform: translateY(8.5px) rotate(45deg);
+    transform: translateY(8.5px) rotate(45deg);
 }
 .hamburger.open span:nth-child(2) {
-  opacity: 0;
+    opacity: 0;
 }
 .hamburger.open span:nth-child(3) {
-  transform: translateY(-8.5px) rotate(-45deg);
+    transform: translateY(-8.5px) rotate(-45deg);
 }
 
 /* Responsive (Mobile) */
 @media (max-width: 992px) {
-  .hamburger {
-    display: flex;
-  }
-  
-  .nav-container {
-    display: flex;
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 280px;
-    height: 100%;
-    /* Menggunakan warna mobile menu asli Anda */
-    background: linear-gradient(135deg, var(--mobile-menu-bg), rgba(15, 15, 25, 0.95));
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 6rem 2rem 2rem;
-    gap: 2rem;
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-left: 2px solid var(--primary-color);
-    /* Animasi geser 2D yang stabil */
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .nav-container.open {
-    transform: translateX(0);
-  }
+    .hamburger {
+        display: flex;
+    }
+    
+    .nav-container {
+        display: flex;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 280px;
+        height: 100%;
+        background: linear-gradient(135deg, var(--mobile-menu-bg), rgba(15, 15, 25, 0.95));
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 6rem 2rem 2rem;
+        gap: 2rem;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-left: 2px solid var(--primary-color);
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .nav-container.open {
+        transform: translateX(0);
+    }
 
-  .nav-links {
-    flex-direction: column;
-    width: 100%;
-    gap: 1.5rem;
-    align-items: flex-start;
-  }
-  
-  .nav-links a {
-    color: var(--nav-text-color); /* Teks putih di mobile menu */
-    font-size: 1.1rem;
-  }
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+        gap: 1.5rem;
+        align-items: flex-start;
+    }
+    
+    .nav-links a {
+        color: var(--nav-text-color);
+        font-size: 1.1rem;
+    }
 
-  .nav-actions {
-    flex-direction: column;
-    width: 100%;
-    gap: 1rem;
-    margin-top: auto;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--nav-border);
-  }
+    .nav-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 1rem;
+        margin-top: auto;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--nav-border);
+    }
 
-  .nav-actions > * {
-      width: 100%;
-      justify-content: center;
-  }
+    .nav-actions > * {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Untuk user-actions di mobile */
+    .user-actions {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 1rem;
+    }
 }

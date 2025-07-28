@@ -11,7 +11,7 @@ const Navbar = () => {
     const [lastScrollY, setLastScrollY] = useState(0);
 
     // Mengambil data dari Context
-    const { token, logout, itemCount } = useCart();
+    const { token, user, logout, itemCount } = useCart();
     const { isAdmin } = useAuth(); // <-- AMBIL STATUS ADMIN DARI AUTHCONTEXT
     const navigate = useNavigate();
 
@@ -57,10 +57,10 @@ const Navbar = () => {
     return (
         <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
             <div className="logo">
-                <Link to="/">ABC Top-up</Link>
+                <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>ABC Top-up</Link>
             </div>
 
-            <div
+            <button
                 className={`hamburger ${isMobileMenuOpen ? 'open' : ''}`}
                 onClick={toggleMobileMenu}
                 aria-label="Toggle Menu"
@@ -68,7 +68,7 @@ const Navbar = () => {
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
 
             {isMobileMenuOpen && (
                 <div className="mobile-menu-backdrop" onClick={toggleMobileMenu}></div>
@@ -76,11 +76,15 @@ const Navbar = () => {
 
             <div className={`nav-container ${isMobileMenuOpen ? 'open' : ''}`}>
                 <ul className="nav-links">
-                    <li><NavLink to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</NavLink></li>
-                    <li><NavLink to="/produkMenu" onClick={() => setIsMobileMenuOpen(false)}>Produk Lain</NavLink></li>
-                    <li><NavLink to="/tentang-kami" onClick={() => setIsMobileMenuOpen(false)}>Tentang Kami</NavLink></li>
-                    <li><NavLink to="/contact" onClick={() => setIsMobileMenuOpen(false)}>Kontak</NavLink></li>
-                    <li><NavLink to="/team" onClick={() => setIsMobileMenuOpen(false)}>Tim</NavLink></li>
+                    <li><NavLink to="/" onClick={() => setIsMobileMenuOpen(false)} className={({isActive}) => isActive ? 'active' : ''}>Home</NavLink></li>
+                    <li><NavLink to="/produkMenu" onClick={() => setIsMobileMenuOpen(false)} className={({isActive}) => isActive ? 'active' : ''}>Produk Lain</NavLink></li>
+                    <li><NavLink to="/tentang-kami" onClick={() => setIsMobileMenuOpen(false)} className={({isActive}) => isActive ? 'active' : ''}>Tentang Kami</NavLink></li>
+                    <li><NavLink to="/contact" onClick={() => setIsMobileMenuOpen(false)} className={({isActive}) => isActive ? 'active' : ''}>Kontak</NavLink></li>
+                    <li><NavLink to="/team" onClick={() => setIsMobileMenuOpen(false)} className={({isActive}) => isActive ? 'active' : ''}>Tim</NavLink></li>
+                    {/* Tampilkan link Admin Panel jika user adalah admin */}
+                    {isAdmin && (
+                        <li><NavLink to="/admin" onClick={() => setIsMobileMenuOpen(false)} className={({isActive}) => isActive ? 'active' : ''}>Admin Panel</NavLink></li>
+                    )}
                 </ul>
 
                 <div className="nav-actions">
@@ -100,9 +104,8 @@ const Navbar = () => {
                     {token ? (
                         // Jika SUDAH LOGIN
                         <>
-                            
                             <button onClick={() => { navigate('/profile'); setIsMobileMenuOpen(false); }} className="login-btn">
-                                Profil
+                                {user ? user.name.split(' ')[0] : 'Profil'}
                             </button>
                             <button onClick={handleLogout} className="login-btn logout">
                                 Logout
