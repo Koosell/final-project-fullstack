@@ -52,9 +52,9 @@ const ProdukMenu = () => {
                     <div className="produk-card" key={item.id} style={{ '--index': index }}>
                         <div className="produk-badge">NEW!</div>
                         <div className="produk-image-container">
-                            {/* PERBAIKAN: Menggunakan path gambar yang lengkap */}
+                            {/* PERBAIKAN: Langsung menggunakan link dari database */}
                             <img 
-                                src={`${apiUrl}/storage/${item.image_url}`} 
+                                src={item.image_url} 
                                 alt={item.name} 
                                 className="produk-image" 
                                 loading="lazy" 
@@ -76,4 +76,3 @@ const ProdukMenu = () => {
 };
 
 export default ProdukMenu;
-    
