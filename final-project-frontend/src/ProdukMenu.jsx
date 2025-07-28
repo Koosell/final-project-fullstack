@@ -53,7 +53,13 @@ const ProdukMenu = () => {
                         <div className="produk-badge">NEW!</div>
                         <div className="produk-image-container">
                             {/* PERBAIKAN: Menggunakan path gambar yang lengkap */}
-                            <img src={`${apiUrl}/storage/${item.image_url}`} alt={item.name} className="produk-image" loading="lazy" />
+                            <img 
+                                src={`${apiUrl}/storage/${item.image_url}`} 
+                                alt={item.name} 
+                                className="produk-image" 
+                                loading="lazy" 
+                                onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/400x400/222/fff?text=Gambar+Error'; }}
+                            />
                         </div>
                         <div className="produk-info">
                             <h3>{item.name}</h3>
